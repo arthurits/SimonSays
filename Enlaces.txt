@@ -1,0 +1,2 @@
+http://www.codeguru.com/columns/dotnet/making-sounds-with-waves-using-c.html
+http://www.codingcraze.com/c-audio-tutorial-10-plotting-audio-waveforms/
