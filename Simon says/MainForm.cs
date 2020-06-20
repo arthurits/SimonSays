@@ -17,29 +17,14 @@ namespace SimonSays
 {
     public partial class frmSimon : Form
     {
-        [DllImport("user32.dll")]
-        static extern bool AnimateWindow(IntPtr hWnd, int time, AnimateWindowFlags flags);
 
         private string _path;
+        private SimonGame _Game;
+
         // Program settings
         private ProgramSettings<string, string> _programSettings;
         private ProgramSettings<string, string> _defaultSettings;
         private static readonly string _programSettingsFileName = @"Configuration.xml";
-
-        [Flags]
-        private enum AnimateWindowFlags
-        {
-            AW_HOR_POSITIVE = 0x00000001,
-            AW_HOR_NEGATIVE = 0x00000002,
-            AW_VER_POSITIVE = 0x00000004,
-            AW_VER_NEGATIVE = 0x00000008,
-            AW_CENTER = 0x00000010,
-            AW_HIDE = 0x00010000,
-            AW_ACTIVATE = 0x00020000,
-            AW_SLIDE = 0x00040000,
-            AW_BLEND = 0x00080000
-        }
-        private SimonGame _Game;
 
         public frmSimon()
         {
@@ -286,17 +271,34 @@ namespace SimonSays
 
         private void frmSimon_Load(object sender, EventArgs e)
         {
-            AnimateWindow(this.Handle, 500, AnimateWindowFlags.AW_BLEND);
+            Win32.Win32API.AnimateWindow(this.Handle, 500, Win32.Win32API.AnimateWindowFlags.AW_BLEND);
         }
 
         private void frmSimon_FormClosing(object sender, FormClosingEventArgs e)
         {
-            AnimateWindow(this.Handle, 500, AnimateWindowFlags.AW_BLEND | AnimateWindowFlags.AW_HIDE);
+            using (new CenterWinDialog(this))
+            {
+                if (DialogResult.No == MessageBox.Show(this,
+                                                        "Are you sure you want to exit\nthe application?",
+                                                        "Exit?",
+                                                        MessageBoxButtons.YesNo,
+                                                        MessageBoxIcon.Question,
+                                                        MessageBoxDefaultButton.Button2))
+                {
+                    // Cancelar el cierre de la ventana
+                    e.Cancel = true;
+                }
+                else
+                    Win32.Win32API.AnimateWindow(this.Handle, 200, Win32.Win32API.AnimateWindowFlags.AW_BLEND | Win32.Win32API.AnimateWindowFlags.AW_HIDE);
+            }
+
+            // Guardar los datos de configuración
+            SaveProgramSettings(_programSettings);
         }
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            _Game.Start();
+            
         }
         private void btnSimon_Click(object sender, EventArgs e)
         {
@@ -311,6 +313,19 @@ namespace SimonSays
 
 
         #region toolStripMain
+        private void toolStripMain_Start_Click(object sender, EventArgs e)
+        {
+            _Game.Start();
+        }
+        private void toolStripMain_Exit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+        private void toolStripMain_About_Click(object sender, EventArgs e)
+        {
+            frmAbout form = new frmAbout();
+            form.ShowDialog(this);
+        }
         #endregion toolStripMain
 
         #region Application settings
@@ -478,5 +493,6 @@ namespace SimonSays
         }
 
         #endregion Application settings
+
     }
 }

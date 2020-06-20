@@ -36,11 +36,15 @@
             this.simonBoard = new CustomBoard.CustomBoard();
             this.toolStripMain = new System.Windows.Forms.ToolStrip();
             this.toolStripMain_Exit = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMain_Start = new System.Windows.Forms.ToolStripButton();
             this.toolStripMain_Stop = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMain_Sound = new System.Windows.Forms.ToolStripButton();
             this.toolStripMain_Stats = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMain_Settings = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMain_About = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.btnRed = new ColorButton.SimonButton();
@@ -57,16 +61,16 @@
             this.tspTop.Name = "tspTop";
             this.tspTop.Orientation = System.Windows.Forms.Orientation.Horizontal;
             this.tspTop.RowMargin = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.tspTop.Size = new System.Drawing.Size(538, 0);
+            this.tspTop.Size = new System.Drawing.Size(570, 0);
             // 
             // tspBottom
             // 
             this.tspBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tspBottom.Location = new System.Drawing.Point(0, 366);
+            this.tspBottom.Location = new System.Drawing.Point(0, 606);
             this.tspBottom.Name = "tspBottom";
             this.tspBottom.Orientation = System.Windows.Forms.Orientation.Horizontal;
             this.tspBottom.RowMargin = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.tspBottom.Size = new System.Drawing.Size(538, 0);
+            this.tspBottom.Size = new System.Drawing.Size(570, 0);
             // 
             // btnStart
             // 
@@ -180,80 +184,114 @@
             this.toolStripMain.ImageScalingSize = new System.Drawing.Size(48, 48);
             this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMain_Exit,
+            this.toolStripSeparator1,
             this.toolStripMain_Start,
             this.toolStripMain_Stop,
+            this.toolStripSeparator2,
             this.toolStripMain_Sound,
             this.toolStripMain_Stats,
+            this.toolStripSeparator3,
             this.toolStripMain_Settings,
+            this.toolStripSeparator4,
             this.toolStripMain_About});
             this.toolStripMain.Location = new System.Drawing.Point(0, 0);
             this.toolStripMain.Name = "toolStripMain";
-            this.toolStripMain.Size = new System.Drawing.Size(570, 55);
+            this.toolStripMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.toolStripMain.Size = new System.Drawing.Size(570, 70);
             this.toolStripMain.TabIndex = 6;
             this.toolStripMain.Text = "toolStripMain";
             // 
             // toolStripMain_Exit
             // 
-            this.toolStripMain_Exit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripMain_Exit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_Exit.Image")));
             this.toolStripMain_Exit.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_Exit.Name = "toolStripMain_Exit";
-            this.toolStripMain_Exit.Size = new System.Drawing.Size(52, 52);
-            this.toolStripMain_Exit.Text = "toolStripButton1";
+            this.toolStripMain_Exit.Size = new System.Drawing.Size(52, 67);
+            this.toolStripMain_Exit.Text = "Exit";
+            this.toolStripMain_Exit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripMain_Exit.ToolTipText = "Exit application";
+            this.toolStripMain_Exit.Click += new System.EventHandler(this.toolStripMain_Exit_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 70);
             // 
             // toolStripMain_Start
             // 
-            this.toolStripMain_Start.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripMain_Start.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_Start.Image")));
             this.toolStripMain_Start.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_Start.Name = "toolStripMain_Start";
-            this.toolStripMain_Start.Size = new System.Drawing.Size(52, 52);
-            this.toolStripMain_Start.Text = "toolStripButton1";
+            this.toolStripMain_Start.Size = new System.Drawing.Size(52, 67);
+            this.toolStripMain_Start.Text = "Start";
+            this.toolStripMain_Start.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripMain_Start.ToolTipText = "Start the game";
+            this.toolStripMain_Start.Click += new System.EventHandler(this.toolStripMain_Start_Click);
             // 
             // toolStripMain_Stop
             // 
-            this.toolStripMain_Stop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripMain_Stop.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_Stop.Image")));
             this.toolStripMain_Stop.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_Stop.Name = "toolStripMain_Stop";
-            this.toolStripMain_Stop.Size = new System.Drawing.Size(52, 52);
-            this.toolStripMain_Stop.Text = "toolStripButton1";
+            this.toolStripMain_Stop.Size = new System.Drawing.Size(52, 67);
+            this.toolStripMain_Stop.Text = "Stop";
+            this.toolStripMain_Stop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripMain_Stop.ToolTipText = "Stop the game";
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 70);
             // 
             // toolStripMain_Sound
             // 
-            this.toolStripMain_Sound.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripMain_Sound.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_Sound.Image")));
             this.toolStripMain_Sound.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_Sound.Name = "toolStripMain_Sound";
-            this.toolStripMain_Sound.Size = new System.Drawing.Size(52, 52);
-            this.toolStripMain_Sound.Text = "toolStripButton1";
+            this.toolStripMain_Sound.Size = new System.Drawing.Size(63, 67);
+            this.toolStripMain_Sound.Text = "Sound off";
+            this.toolStripMain_Sound.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
             // toolStripMain_Stats
             // 
-            this.toolStripMain_Stats.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripMain_Stats.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_Stats.Image")));
             this.toolStripMain_Stats.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_Stats.Name = "toolStripMain_Stats";
-            this.toolStripMain_Stats.Size = new System.Drawing.Size(52, 52);
-            this.toolStripMain_Stats.Text = "toolStripButton1";
+            this.toolStripMain_Stats.Size = new System.Drawing.Size(57, 67);
+            this.toolStripMain_Stats.Text = "Statistics";
+            this.toolStripMain_Stats.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripMain_Stats.ToolTipText = "View statistics";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 70);
             // 
             // toolStripMain_Settings
             // 
-            this.toolStripMain_Settings.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripMain_Settings.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_Settings.Image")));
             this.toolStripMain_Settings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_Settings.Name = "toolStripMain_Settings";
-            this.toolStripMain_Settings.Size = new System.Drawing.Size(52, 52);
-            this.toolStripMain_Settings.Text = "toolStripButton1";
+            this.toolStripMain_Settings.Size = new System.Drawing.Size(53, 67);
+            this.toolStripMain_Settings.Text = "Settings";
+            this.toolStripMain_Settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripMain_Settings.ToolTipText = "View settings";
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 70);
             // 
             // toolStripMain_About
             // 
-            this.toolStripMain_About.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripMain_About.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_About.Image")));
             this.toolStripMain_About.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_About.Name = "toolStripMain_About";
-            this.toolStripMain_About.Size = new System.Drawing.Size(52, 52);
-            this.toolStripMain_About.Text = "toolStripButton1";
+            this.toolStripMain_About.Size = new System.Drawing.Size(52, 67);
+            this.toolStripMain_About.Text = "About";
+            this.toolStripMain_About.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripMain_About.ToolTipText = "About this software";
+            this.toolStripMain_About.Click += new System.EventHandler(this.toolStripMain_About_Click);
             // 
             // statusStrip
             // 
@@ -328,6 +366,8 @@
             this.ClientSize = new System.Drawing.Size(570, 606);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStripMain);
+            this.Controls.Add(this.tspBottom);
+            this.Controls.Add(this.tspTop);
             this.Controls.Add(this.simonBoard);
             this.Controls.Add(this.btnBlue);
             this.Controls.Add(this.btnYellow);
@@ -367,6 +407,10 @@
         private ColorButton.SimonButton btnRed;
         private ColorButton.SimonButton btnBlue;
         private ColorButton.SimonButton btnGreen;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }
 
