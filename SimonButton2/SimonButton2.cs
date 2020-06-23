@@ -85,7 +85,13 @@ namespace SimonSays
             _fRadiusInner = 0.65f*_fRadiusOutter;
             //_fAngle = 36;
 
-            RectangleF rectOut = new RectangleF(_fRegionOffset / 2, _fRegionOffset / 2, 2*_fRadiusOutter - _fRegionOffset, 2*_fRadiusOutter - _fRegionOffset);
+            float TotalRadiusOutter = 2 * _fRadiusOutter - _fRegionOffset;
+            float TotalRadiusInner = 2 * _fRadiusInner + _fRegionOffset;
+            float AngleOffsetOutter = (180 * 0.9f / TotalRadiusOutter) / (float)Math.PI;
+            float AngleOffsetInner = (180 * 0.9f / TotalRadiusInner) / (float)Math.PI;
+
+            RectangleF rectOut = new RectangleF(_fRegionOffset / 2, _fRegionOffset / 2, 2 * _fRadiusOutter - _fRegionOffset, 2 * _fRadiusOutter - _fRegionOffset);
+            //RectangleF rectIn = new RectangleF(_fRegionOffset / 2, _fRegionOffset / 2, 2 * _fRadiusInner + _fRegionOffset, 2 * _fRadiusInner + _fRegionOffset);
             RectangleF rectIn = RectangleF.Inflate(rectOut, -(_fRadiusOutter - _fRadiusInner), -(_fRadiusOutter - _fRadiusInner));                // Mantains the rectangle's geometric center.
             //RectangleF rectRegion = RectangleF.Inflate(rectOut, 0.5f, 0.5f);
             RectangleF rectRegionOut = RectangleF.Inflate(rectOut, _fRegionOffset / 2, _fRegionOffset / 2);    // Inflates in both + and - directions, hence _fRegionOffset / 2 for a total of _fRegionOffset
@@ -97,8 +103,8 @@ namespace SimonSays
             path.CloseFigure();
 
             GraphicsPath pathRegion = new GraphicsPath();
-            pathRegion.AddArc(rectRegionOut, 0 - 0.5f, _fAngle + 2 * 0.5f);
-            pathRegion.AddArc(rectRegionIn, _fAngle + 0.5f, -_fAngle - 2 * 0.5f);
+            pathRegion.AddArc(rectRegionOut, 0 - AngleOffsetOutter, _fAngle + 2 * AngleOffsetOutter);
+            pathRegion.AddArc(rectRegionIn, _fAngle + AngleOffsetInner, -_fAngle - 2 * AngleOffsetInner);
             pathRegion.CloseFigure();
 
             dc.FillPath(new SolidBrush(Color.DarkRed), path);
