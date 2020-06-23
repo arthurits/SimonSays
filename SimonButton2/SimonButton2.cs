@@ -66,7 +66,7 @@ namespace SimonSays
             SetStyle(ControlStyles.ResizeRedraw, true);
 
             this.DoubleBuffered = true;
-            this.FlatAppearance.MouseOverBackColor = Color.AliceBlue;
+            this.FlatAppearance.MouseOverBackColor = Color.Blue;
             this.FlatAppearance.MouseDownBackColor = Color.DarkSeaGreen;
         }
 
@@ -97,13 +97,13 @@ namespace SimonSays
             path.CloseFigure();
 
             GraphicsPath pathRegion = new GraphicsPath();
-            pathRegion.AddArc(rectRegionOut, 0, _fAngle);
-            pathRegion.AddArc(rectRegionIn, _fAngle, -_fAngle);
+            pathRegion.AddArc(rectRegionOut, 0-0.5f, _fAngle+2*0.5f);
+            pathRegion.AddArc(rectRegionIn, _fAngle+0.5f, -_fAngle-2*0.5f);
             pathRegion.CloseFigure();
 
             dc.FillPath(new SolidBrush(Color.DarkRed), path);
             this.Region = new Region(pathRegion);
-
+            
             /*
             if (_showBorder)
             {

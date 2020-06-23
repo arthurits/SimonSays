@@ -65,7 +65,7 @@
             // 
             // simonButton21
             // 
-            this.simonButton21.AngleSwept = 90F;
+            this.simonButton21.AngleSwept = 75F;
             this.simonButton21.BackColor = System.Drawing.Color.Transparent;
             this.simonButton21.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.simonButton21.Location = new System.Drawing.Point(23, 23);
