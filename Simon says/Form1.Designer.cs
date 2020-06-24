@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.simonButton1 = new ColorButton.SimonButton();
             this.button1 = new System.Windows.Forms.Button();
             this.simonButton21 = new SimonSays.SimonButton2();
@@ -54,8 +55,8 @@
             // 
             // button1
             // 
-            this.button1.FlatAppearance.BorderSize = 5;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.button1.Location = new System.Drawing.Point(460, 38);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(114, 55);
@@ -65,12 +66,15 @@
             // 
             // simonButton21
             // 
+            this.simonButton21.AngleRotation = 0F;
             this.simonButton21.AngleSwept = 75F;
             this.simonButton21.BackColor = System.Drawing.Color.Transparent;
+            this.simonButton21.CenterButton = ((System.Drawing.PointF)(resources.GetObject("simonButton21.CenterButton")));
+            this.simonButton21.CenterRotation = ((System.Drawing.PointF)(resources.GetObject("simonButton21.CenterRotation")));
             this.simonButton21.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.simonButton21.Location = new System.Drawing.Point(23, 23);
             this.simonButton21.Name = "simonButton21";
-            this.simonButton21.RegionOffset = 10F;
+            this.simonButton21.RegionOffset = 1F;
             this.simonButton21.Size = new System.Drawing.Size(300, 300);
             this.simonButton21.TabIndex = 1;
             this.simonButton21.Text = "simonButton21";

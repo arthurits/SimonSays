@@ -18,7 +18,8 @@ namespace SimonSays
     {
         #region Private variables
 
-        private float _fAngle = 90f;
+        private float _fAngleSwept = 90f;
+        private float _fAngleRotation = 90f;
         private PointF _fCenterButton;
         private float _fRegionOffset = 1f;
         private PointF _fCenterRotation;
@@ -38,14 +39,28 @@ namespace SimonSays
         DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public float AngleSwept
         {
-            get { return _fAngle; }
-            set { _fAngle = value; Invalidate(); }
+            get { return _fAngleSwept; }
+            set { _fAngleSwept = value; Invalidate(); }
         }
 
         /// <summary>
-        /// Region offset of the control (typically 1 px)
+        /// Rotation angle in degrees
         /// </summary>
-        [Description("Region offset of the control (typically 1 px)"),
+        [Description("Rotation angle in degrees"),
+        Category("Button properties"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public float AngleRotation
+        {
+            get { return _fAngleRotation; }
+            set { _fAngleRotation = value; Invalidate(); }
+        }
+
+        /// <summary>
+        /// Region offset in pixels of the control to allocate the antialias rendering (typically 1 px)
+        /// </summary>
+        [Description("Region offset in pixels of the control to allocate the antialias rendering (typically 1 px)"),
         Category("Button properties"),
         Browsable(true),
         EditorBrowsable(EditorBrowsableState.Always),
@@ -54,6 +69,34 @@ namespace SimonSays
         {
             get { return _fRegionOffset; }
             set { _fRegionOffset = value; Invalidate(); }
+        }
+
+        /// <summary>
+        /// The center (axis) location of all the buttons
+        /// </summary>
+        [Description("The center (axis) location of all the buttons"),
+        Category("Button properties"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public PointF CenterButton
+        {
+            get { return _fCenterButton; }
+            set { _fCenterButton = value; Invalidate(); }
+        }
+
+        /// <summary>
+        /// The location of the rotation axis
+        /// </summary>
+        [Description("The location of the rotation axis"),
+        Category("Button properties"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public PointF CenterRotation
+        {
+            get { return _fCenterRotation; }
+            set { _fCenterRotation = value; Invalidate(); }
         }
         #endregion Public interface
 
@@ -83,29 +126,40 @@ namespace SimonSays
 
             _fRadiusOutter = this.ClientRectangle.Width/2;
             _fRadiusInner = 0.65f*_fRadiusOutter;
-            //_fAngle = 36;
+            //_fAngleSwept = 36;
+            _fCenterRotation = new PointF(this.ClientRectangle.Width / 2, this.ClientRectangle.Height / 2);
 
-            float TotalRadiusOutter = 2 * _fRadiusOutter - _fRegionOffset;
-            float TotalRadiusInner = 2 * _fRadiusInner + _fRegionOffset;
-            float AngleOffsetOutter = (180 * 0.9f / TotalRadiusOutter) / (float)Math.PI;
-            float AngleOffsetInner = (180 * 0.9f / TotalRadiusInner) / (float)Math.PI;
-
-            RectangleF rectOut = new RectangleF(_fRegionOffset / 2, _fRegionOffset / 2, 2 * _fRadiusOutter - _fRegionOffset, 2 * _fRadiusOutter - _fRegionOffset);
+            float TotalRadiusOutter = _fRadiusOutter - _fRegionOffset / 2;
+            float TotalRadiusInner = _fRadiusInner + _fRegionOffset / 2;
+            float AngleOffsetOutter = (180 * 0.5f * _fRegionOffset / TotalRadiusOutter) / (float)Math.PI;
+            float AngleOffsetInner = (180 * 0.5f * _fRegionOffset / TotalRadiusInner) / (float)Math.PI;
+            
+            RectangleF rectOut = new RectangleF(_fRegionOffset / 2, _fRegionOffset / 2, 2 * TotalRadiusOutter, 2 * TotalRadiusOutter);
             //RectangleF rectIn = new RectangleF(_fRegionOffset / 2, _fRegionOffset / 2, 2 * _fRadiusInner + _fRegionOffset, 2 * _fRadiusInner + _fRegionOffset);
-            RectangleF rectIn = RectangleF.Inflate(rectOut, -(_fRadiusOutter - _fRadiusInner), -(_fRadiusOutter - _fRadiusInner));                // Mantains the rectangle's geometric center.
+            //RectangleF rectIn = RectangleF.Inflate(rectOut, -(_fRadiusOutter - _fRadiusInner) + _fRegionOffset, -(_fRadiusOutter - _fRadiusInner) + _fRegionOffset);                // Mantains the rectangle's geometric center.
+            RectangleF rectIn = RectangleF.Inflate(rectOut, -(TotalRadiusOutter - TotalRadiusInner), -(TotalRadiusOutter - TotalRadiusInner));                // Mantains the rectangle's geometric center.
             //RectangleF rectRegion = RectangleF.Inflate(rectOut, 0.5f, 0.5f);
             RectangleF rectRegionOut = RectangleF.Inflate(rectOut, _fRegionOffset / 2, _fRegionOffset / 2);    // Inflates in both + and - directions, hence _fRegionOffset / 2 for a total of _fRegionOffset
             RectangleF rectRegionIn = RectangleF.Inflate(rectIn, -_fRegionOffset / 2, -_fRegionOffset / 2);    // Inflates in both + and - directions, hence _fRegionOffset / 2 for a total of _fRegionOffset
 
             GraphicsPath path = new GraphicsPath();
-            path.AddArc(rectOut, 0, _fAngle);
-            path.AddArc(rectIn, _fAngle, -_fAngle);
+            path.AddArc(rectOut, 0, _fAngleSwept);
+            path.AddArc(rectIn, _fAngleSwept, -_fAngleSwept);
             path.CloseFigure();
 
             GraphicsPath pathRegion = new GraphicsPath();
-            pathRegion.AddArc(rectRegionOut, 0 - AngleOffsetOutter, _fAngle + 2 * AngleOffsetOutter);
-            pathRegion.AddArc(rectRegionIn, _fAngle + AngleOffsetInner, -_fAngle - 2 * AngleOffsetInner);
+            pathRegion.AddArc(rectRegionOut, 0 - AngleOffsetOutter, _fAngleSwept + 2 * AngleOffsetOutter);
+            pathRegion.AddArc(rectRegionIn, _fAngleSwept + AngleOffsetInner, -_fAngleSwept - 2 * AngleOffsetInner);
             pathRegion.CloseFigure();
+
+            if (_fAngleRotation > 0 && _fAngleRotation < 360)
+            {
+                Matrix matrix = new Matrix();
+                matrix.RotateAt(_fAngleRotation, _fCenterRotation);
+
+                path.Transform(matrix);
+                pathRegion.Transform(matrix);
+            }
 
             dc.FillPath(new SolidBrush(Color.DarkRed), path);
             this.Region = new Region(pathRegion);
