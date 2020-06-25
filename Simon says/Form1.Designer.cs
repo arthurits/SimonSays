@@ -67,10 +67,12 @@
             // simonButton21
             // 
             this.simonButton21.AngleRotation = 0F;
-            this.simonButton21.AngleSwept = 75F;
+            this.simonButton21.AngleSwept = 90F;
             this.simonButton21.BackColor = System.Drawing.Color.Transparent;
             this.simonButton21.CenterButton = ((System.Drawing.PointF)(resources.GetObject("simonButton21.CenterButton")));
             this.simonButton21.CenterRotation = ((System.Drawing.PointF)(resources.GetObject("simonButton21.CenterRotation")));
+            this.simonButton21.Clicked = false;
+            this.simonButton21.ColorValue = 0;
             this.simonButton21.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.simonButton21.Location = new System.Drawing.Point(23, 23);
             this.simonButton21.Name = "simonButton21";
