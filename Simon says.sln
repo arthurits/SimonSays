@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimonButton", "SimonButton\SimonButton.csproj", "{58D6A816-F751-485C-829C-FA6733BE10DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimonBoard", "SimonBoard\SimonBoard.csproj", "{E9715915-0DFD-4B46-8341-3E50A7A77687}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0CF0B059-55D0-4397-B91A-2FD678525808} = {0CF0B059-55D0-4397-B91A-2FD678525808}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimonButton2", "SimonButton2\SimonButton2.csproj", "{0CF0B059-55D0-4397-B91A-2FD678525808}"
 EndProject

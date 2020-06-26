@@ -72,15 +72,20 @@
             this.simonButton21.CenterButton = ((System.Drawing.PointF)(resources.GetObject("simonButton21.CenterButton")));
             this.simonButton21.CenterRotation = ((System.Drawing.PointF)(resources.GetObject("simonButton21.CenterRotation")));
             this.simonButton21.Clicked = false;
-            this.simonButton21.ColorValue = 0;
+            this.simonButton21.ClickOffset = ((System.Drawing.PointF)(resources.GetObject("simonButton21.ClickOffset")));
+            this.simonButton21.Color = System.Drawing.Color.DarkRed;
+            this.simonButton21.Duration = 350;
             this.simonButton21.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.simonButton21.Frequency = 432F;
+            this.simonButton21.InnerRadius = 75F;
             this.simonButton21.Location = new System.Drawing.Point(23, 23);
             this.simonButton21.Name = "simonButton21";
+            this.simonButton21.OutterRadius = 145F;
             this.simonButton21.RegionOffset = 1F;
             this.simonButton21.Size = new System.Drawing.Size(300, 300);
             this.simonButton21.TabIndex = 1;
-            this.simonButton21.Text = "simonButton21";
             this.simonButton21.UseVisualStyleBackColor = false;
+            this.simonButton21.Value = 0;
             // 
             // Form1
             // 

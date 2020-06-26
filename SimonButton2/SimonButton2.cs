@@ -14,38 +14,58 @@ using System.Drawing.Drawing2D;
 
 namespace SimonSays
 {
+    [Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design", typeof(System.ComponentModel.Design.IDesigner))]
     public partial class SimonButton2 : Button
     {
+
         #region Private variables
-        
+        private Color _color;
         private bool _clicked = false;
-        private Int32 _nColor = 0;
+        private Int32 _nValue = 0;
         private Point _clickPoint;
         private PointF _clickOffset;
         private RectangleF _rectDefaultClickPoint;
         private float _fAngleSwept = 90f;
-        private float _fAngleRotation = 90f;
-        private PointF _fCenterButton;
+        private float _fAngleRotation = 0f;
+        private PointF _fCenterButton;          // Center for drawing the button. It's equal to CenterRotation plus an offset
         private float _fRegionOffset = 1f;
-        private PointF _fCenterRotation;
-        private float _fRadiusOutter;
-        private float _fRadiusInner;
+        private PointF _fCenterRotation;        // Center around which the rotation is done. Typically it's the center of the controls
+        private float _fRadiusOutter = 1f;
+        private float _fRadiusInner = 1f;
+        
+        // Sound-related properties
+        private float _nFrequency = 165f;
+        private Int32 _nDuration = 350;
 
         #endregion Private variables
 
         #region Public interface
         /// <summary>
-        /// Numeric value representing the color
+        /// Color used to draw the button
         /// </summary>
-        [Description("Numeric value representing the color"),
+        [Description("Color used to draw the button"),
         Category("Button properties"),
         Browsable(true),
         EditorBrowsable(EditorBrowsableState.Always),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public Int32 ColorValue
+        public Color Color
         {
-            get { return _nColor; }
-            set { _nColor = value > 3 ? 3 : (value < 0 ? 0 : value); }
+            get { return _color; }
+            set { _color = value; Invalidate(); }
+        }
+
+        /// <summary>
+        /// Numeric value representing the button
+        /// </summary>
+        [Description("Numeric value representing the button"),
+        Category("Button properties"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Int32 Value
+        {
+            get { return _nValue; }
+            set { _nValue = value > 3 ? 3 : (value < 0 ? 0 : value); }
         }
 
         /// <summary>
@@ -62,7 +82,7 @@ namespace SimonSays
             set
             {
                 _clicked = value;
-                //if (value == true) DoBeep(_nDuration);
+                if (value == true) DoBeep(_nDuration);
                 Invalidate();
             }
         }
@@ -110,9 +130,9 @@ namespace SimonSays
         }
 
         /// <summary>
-        /// The center (axis) location of all the buttons
+        /// The center for drawing the button
         /// </summary>
-        [Description("The center (axis) location of all the buttons"),
+        [Description("The center for drawing the button"),
         Category("Button properties"),
         Browsable(true),
         EditorBrowsable(EditorBrowsableState.Always),
@@ -125,9 +145,9 @@ namespace SimonSays
         }
 
         /// <summary>
-        /// The location of the rotation axis
+        /// The location of the rotation axis (typically the center of the control)
         /// </summary>
-        [Description("The location of the rotation axis"),
+        [Description("The location of the rotation axis (typically the center of the control)"),
         Category("Button properties"),
         Browsable(true),
         EditorBrowsable(EditorBrowsableState.Always),
@@ -140,9 +160,9 @@ namespace SimonSays
         }
 
         /// <summary>
-        /// The location of the rotation axis
+        /// Offset when the button is clicked
         /// </summary>
-        [Description("The location of the rotation axis"),
+        [Description("Offset when the button is clicked"),
         Category("Button properties"),
         Browsable(true),
         EditorBrowsable(EditorBrowsableState.Always),
@@ -154,7 +174,64 @@ namespace SimonSays
             set { _clickOffset = value; }
         }
 
+        /// <summary>
+        /// The button outter radius in pixels
+        /// </summary>
+        [Description("The button outter radius in pixels"),
+        Category("Button properties"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public float OutterRadius
+        {
+            get { return _fRadiusOutter; }
+            set { _fRadiusOutter = value < 0 ? 0 : value; Invalidate(); }
+        }
+
+        /// <summary>
+        /// The button inner radius in pixels
+        /// </summary>
+        [Description("The button inner radius in pixels"),
+        Category("Button properties"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public float InnerRadius
+        {
+            get { return _fRadiusInner; }
+            set { _fRadiusInner = value < 0 ? 0 : value; Invalidate(); }
+        }
+
+        /// <summary>
+        /// Frequency (Hertz) of the beeping sound
+        /// </summary>
+        [Description("Frequency (Hertz) of the beeping sound"),
+        Category("Button properties"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public float Frequency
+        {
+            get { return _nFrequency; }
+            set { _nFrequency = value < 0 ? Math.Abs(value) : value; }
+        }
+
+        /// <summary>
+        /// Duration (miliseconds) of the beeping sound
+        /// </summary>
+        [Description("Duration (miliseconds) of the beeping sound"),
+        Category("Button properties"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Int32 Duration
+        {
+            get { return _nDuration; }
+            set { _nDuration = value < 0 ? 0 : value; }
+        }
+
         #endregion Public interface
+
 
         public SimonButton2()
         {
@@ -176,7 +253,7 @@ namespace SimonSays
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            //DoBeep(350);
+            DoBeep(_nDuration);
             _clicked = true;
             _clickPoint = e.Location;
             base.OnMouseDown(e);
@@ -205,22 +282,16 @@ namespace SimonSays
             Graphics dc = e.Graphics;
             dc.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-            _fRadiusOutter = this.ClientRectangle.Width/2;
-            _fRadiusInner = 0.65f*_fRadiusOutter;
-            //_fAngleSwept = 36;
-            _fCenterRotation = new PointF(this.ClientRectangle.Width / 2, this.ClientRectangle.Height / 2);
-            //_rectDefaultClickPoint;
-
             float TotalRadiusOutter = _fRadiusOutter - _fRegionOffset / 2;
             float TotalRadiusInner = _fRadiusInner + _fRegionOffset / 2;
             float AngleOffsetOutter = (180 * 0.5f * _fRegionOffset / TotalRadiusOutter) / (float)Math.PI;
             float AngleOffsetInner = (180 * 0.5f * _fRegionOffset / TotalRadiusInner) / (float)Math.PI;
+
+            //RectangleF rectOut = new RectangleF(_fRegionOffset / 2, _fRegionOffset / 2, 2 * TotalRadiusOutter, 2 * TotalRadiusOutter);
+            RectangleF rectCenterButton= new RectangleF(_fCenterButton.X, _fCenterButton.Y, 0, 0);
+            RectangleF rectOut = RectangleF.Inflate(rectCenterButton, TotalRadiusOutter, TotalRadiusOutter);
+            RectangleF rectIn = RectangleF.Inflate(rectCenterButton, TotalRadiusInner, TotalRadiusInner);
             
-            RectangleF rectOut = new RectangleF(_fRegionOffset / 2, _fRegionOffset / 2, 2 * TotalRadiusOutter, 2 * TotalRadiusOutter);
-            //RectangleF rectIn = new RectangleF(_fRegionOffset / 2, _fRegionOffset / 2, 2 * _fRadiusInner + _fRegionOffset, 2 * _fRadiusInner + _fRegionOffset);
-            //RectangleF rectIn = RectangleF.Inflate(rectOut, -(_fRadiusOutter - _fRadiusInner) + _fRegionOffset, -(_fRadiusOutter - _fRadiusInner) + _fRegionOffset);                // Mantains the rectangle's geometric center.
-            RectangleF rectIn = RectangleF.Inflate(rectOut, -(TotalRadiusOutter - TotalRadiusInner), -(TotalRadiusOutter - TotalRadiusInner));                // Mantains the rectangle's geometric center.
-            //RectangleF rectRegion = RectangleF.Inflate(rectOut, 0.5f, 0.5f);
             RectangleF rectRegionOut = RectangleF.Inflate(rectOut, _fRegionOffset / 2, _fRegionOffset / 2);    // Inflates in both + and - directions, hence _fRegionOffset / 2 for a total of _fRegionOffset
             RectangleF rectRegionIn = RectangleF.Inflate(rectIn, -_fRegionOffset / 2, -_fRegionOffset / 2);    // Inflates in both + and - directions, hence _fRegionOffset / 2 for a total of _fRegionOffset
 
@@ -228,62 +299,43 @@ namespace SimonSays
             path.AddArc(rectOut, AngleOffsetOutter, _fAngleSwept - 2 * AngleOffsetOutter);
             path.AddArc(rectIn, _fAngleSwept - AngleOffsetInner, -_fAngleSwept + 2 * AngleOffsetInner);
             path.CloseFigure();
-
-            /*
-            GraphicsPath pathRegion = new GraphicsPath();
-            pathRegion.AddArc(rectRegionOut, 0 - AngleOffsetOutter, _fAngleSwept + 2 * AngleOffsetOutter);
-            pathRegion.AddArc(rectRegionIn, _fAngleSwept + AngleOffsetOutter, -_fAngleSwept - 2 * AngleOffsetOutter);
-            pathRegion.CloseFigure();
-            */
-
+          
             GraphicsPath pathRegion = new GraphicsPath();
             pathRegion.AddArc(rectRegionOut, 0, _fAngleSwept);
             pathRegion.AddArc(rectRegionIn, _fAngleSwept, -_fAngleSwept);
             pathRegion.CloseFigure();
 
-            if (_fAngleRotation > 0 && _fAngleRotation < 360)
-            {
-                Matrix matrix = new Matrix();
-                matrix.RotateAt(_fAngleRotation, _fCenterRotation);
+            Matrix matrix = new Matrix();
+            if (_clicked == true) matrix.Translate(_clickOffset.X, _clickOffset.Y);
+            if (_fAngleRotation > 0 && _fAngleRotation < 360) matrix.RotateAt(_fAngleRotation, _fCenterRotation, MatrixOrder.Append);
 
-                path.Transform(matrix);
-                pathRegion.Transform(matrix);
-            }
-
-            dc.FillPath(new SolidBrush(Color.DarkRed), path);
-            this.Region = new Region(pathRegion);
+            path.Transform(matrix);
+            pathRegion.Transform(matrix);
 
             if (_clicked == true)
             {
-                PathGradientBrush pthGrBrush = new PathGradientBrush(path)
+                using (PathGradientBrush pthGrBrush = new PathGradientBrush(path)
                 {
-                    SurroundColors = new Color[] { Color.DarkRed },
+                    SurroundColors = new Color[] { _color },
                     CenterColor = Color.FromArgb(220, 255, 255, 255),
-                    //pthGrBrush.FocusScales = new PointF(0.4f, 0.4f);
+                    FocusScales = new PointF(0.1f, 0.1f),
                     CenterPoint = _clickPoint
-                };
-
-                dc.FillPath(pthGrBrush, path);
-                //g.FillRectangle(pthGrBrush, new Rectangle(0, 0, nSideLength, nSideLength));
-                pthGrBrush.Dispose();
-            }
-
-                /*
-                if (_showBorder)
+                })
+                    dc.FillPath(pthGrBrush, path);
+                using (Pen pen = new Pen(Color.FromArgb(255, _color), 2))
                 {
-                    path.AddPath(MakeRoundedRect(rectIn, _xRadius - _fBorderWidth, _yRadius - _fBorderWidth), false);
-                    dc.FillPath(new SolidBrush(_cBorderColor), path);
+                    pen.Alignment = PenAlignment.Inset;
+                    dc.DrawPath(pen, path);
                 }
-
-                //this.Region = new Region(MakeRoundedRect(rectRegion, _xRadius + 0.5f, _yRadius + 0.5f));
-                this.Region = new Region(MakeRoundedRect(rectRegion, _xRadius + _fRegionOffset / 2, _yRadius + _fRegionOffset / 2));
-
-                // Draw text
-                if (_showText) DrawText(dc);
-                */
-
-                //base.OnPaint(e);
             }
+            else
+            {
+                dc.FillPath(new SolidBrush(_color), path);
+            }
+
+            this.Region = new Region(pathRegion);
+
+        }
 
         protected virtual void DrawText(Graphics g)
         {
@@ -323,6 +375,21 @@ namespace SimonSays
             //g.DrawRectangle(new Pen(Color.Red, 3), textPoint.X, textPoint.Y, textSize.Width, textSize.Height);
         }
 
+        private void DoBeep(int nDuration)
+        {
+            /*
+            E-note (blue, lower right); 329.6 Hz
+            C♯-note (yellow, lower left); 277.2 Hz
+            A-note (red, upper right); 220 Hz
+            E-note (green, upper left, an octave lower than blue); 164.8 Hz
+             */
+            //http://social.msdn.microsoft.com/Forums/vstudio/en-US/18fe83f0-5658-4bcf-bafc-2e02e187eb80/beep-beep?forum=csharpgeneral          
+            //Task.Run(() => Console.Beep(_nFrequency, nDuration));
+
+            WaveGenerator sound = new WaveGenerator(_nFrequency, nDuration, WaveType.SineWave, 32767, 30);
+            sound.PlaySound();
+
+        }
 
     }
 

@@ -9,16 +9,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ColorButton;
 
 namespace CustomBoard
 {
-    [Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design", typeof(IDesigner))] 
+    [Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design", typeof(IDesigner))]
     public partial class CustomBoard : UserControl
     {
         #region Variable definitions
         private Int32 _nHighest = 0;
         private Int32 _nScore = 0;
-        
+        private Int32 _nButtons = 4;
+
         // Definición de los botones
         private Int32 _nDimension = 0;
         private float _fOuterCircle = 0.9f;
@@ -29,7 +31,7 @@ namespace CustomBoard
         private Color _BackgroundColor = new Color();
         private Color _OuterColor = new Color();
         private Color _InnerColor = new Color();
-        
+
         //public ButtonColor _ButtonColor = new ButtonColor();
         //public ButtonRotation _ButtonRotation = new ButtonRotation();
         //public ButtonFrequency _ButtonFrequency = new ButtonFrequency();
@@ -101,7 +103,7 @@ namespace CustomBoard
             EditorBrowsable(EditorBrowsableState.Always),
             DefaultValue(typeof(Color), "Green")]
             public Color Green { get { return _Green; } set { _Green = value; } }
-            
+
             [Description("Numeric value representing the red color"),
             Browsable(true),
             NotifyParentProperty(true),
@@ -301,6 +303,21 @@ namespace CustomBoard
             get { return _nScore; }
             set { _nScore = value; lblScoreCurrent.Text = String.Concat("Score: ", value); }
         }
+
+        /// <summary>
+        /// Number of buttons shown in the board
+        /// </summary>
+        [Description("Number of buttons shown in the board"),
+        Category("Custom"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Int32 NumberOfButtons
+        {
+            get { return _nButtons; }
+            set { _nButtons = value < 0 ? 0 : value; }
+        }
+
         #endregion
 
         // Constructor de la clase
@@ -318,6 +335,36 @@ namespace CustomBoard
             this.btnRed.Click += new System.EventHandler(this.CustomButton_Click);
             this.btnYellow.Click += new System.EventHandler(this.CustomButton_Click);
             this.btnBlue.Click += new System.EventHandler(this.CustomButton_Click);
+
+            //this.btnGreen.Visible = false;
+            //this.btnRed.Visible = false;
+            //this.btnYellow.Visible = false;
+            //this.btnBlue.Visible = false;
+
+            // Get the minimum dimension of the client area
+            _nDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
+            var rotation = 360f / _nButtons;
+
+            for (int i=0; i<NumberOfButtons; i++)
+            {
+                SimonSays.SimonButton2 btn = new SimonSays.SimonButton2()
+                {
+                    Color = Color.DarkRed,
+                    Location = new Point(0, 0),
+                    Size = new Size(this.Width, this.Height),
+                    CenterRotation = new PointF(this.Width / 2.0f, this.Height / 2.0f),
+                    CenterButton = new PointF(this.Width / 2.0f, this.Height / 2.0f),
+                    ClickOffset = new PointF(2, 2),
+                    InnerRadius = 0.55f * _nDimension / 2f,
+                    OutterRadius = 0.95f * _nDimension / 2f,
+                    AngleRotation = i * rotation,
+                    AngleSwept = 90,
+                    Value = i
+                };
+                btn.Size = new Size(this.Width, this.Height);
+                this.Controls.Add(btn);
+            }
+
             /*
             btnGreen.Clicked = false;
             btnGreen.ColorValue = 0;
@@ -525,7 +572,18 @@ namespace CustomBoard
             lblScoreCurrent.Location = new Point((this.ClientRectangle.Width - lblScoreCurrent.Width) / 2, this.ClientRectangle.Height / 2 - lblScoreCurrent.Height);
             lblScoreTotal.Location = new Point((this.ClientRectangle.Width - lblScoreTotal.Width) / 2, this.ClientRectangle.Height / 2 );
         }
-        
+
+        /// <summary>
+        /// Computes the apothem of a n-sided regular polygon
+        /// </summary>
+        /// <param name="Sides">Number of sides of the regular polygon</param>
+        /// <param name="SideLength">Length (pixels) of each side</param>
+        /// <returns></returns>
+        private float Apothem(int Sides, float SideLength)
+        {
+            return SideLength / (float)(2.0 * Math.Tan(Math.PI / Sides));
+        }
+
     }
 
 
@@ -662,6 +720,5 @@ namespace CustomBoard
                 return base.GetProperties(context, value, attributes);            
         }*/
     }
-
 
 }

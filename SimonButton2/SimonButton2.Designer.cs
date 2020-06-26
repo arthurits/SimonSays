@@ -36,6 +36,7 @@
             this.FlatAppearance.BorderSize = 0;
             this.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Size = new System.Drawing.Size(100, 100);
+            this.Text = string.Empty;
             this.UseVisualStyleBackColor = false;
             this.ResumeLayout(false);
 
