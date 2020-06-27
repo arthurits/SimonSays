@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ColorButton;
 
-namespace CustomBoard
+namespace SimonSays
 {
     [Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design", typeof(IDesigner))]
     public partial class CustomBoard : UserControl
@@ -20,6 +20,8 @@ namespace CustomBoard
         private Int32 _nHighest = 0;
         private Int32 _nScore = 0;
         private Int32 _nButtons = 4;
+
+        private SimonSays.SimonButton2 [] _buttons;
 
         // Definición de los botones
         private Int32 _nDimension = 0;
@@ -31,6 +33,8 @@ namespace CustomBoard
         private Color _BackgroundColor = new Color();
         private Color _OuterColor = new Color();
         private Color _InnerColor = new Color();
+
+        private float _fCenterButton;
 
         //public ButtonColor _ButtonColor = new ButtonColor();
         //public ButtonRotation _ButtonRotation = new ButtonRotation();
@@ -224,7 +228,9 @@ namespace CustomBoard
 
         [Description("Rectangle defining the outer board circle"),
         Category("Custom"),
-        Browsable(true)]
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Rectangle OuterRectangle
         {
             get { return _OuterRect; }
@@ -232,7 +238,9 @@ namespace CustomBoard
 
         [Description("Rectangle defining the inner board circle"),
         Category("Custom"),
-        Browsable(true)]
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Rectangle InnerRectangle
         {
             get { return _InnerRect; }
@@ -240,7 +248,9 @@ namespace CustomBoard
 
         [Description("Rectangle defining the boundaries of the button"),
         Category("Custom"),
-        Browsable(true)]
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Rectangle ButtonRectangle
         {
             get { return _ButtonRect; }
@@ -248,7 +258,9 @@ namespace CustomBoard
 
         [Description("Minimum dimension (height or width) of the control"),
         Category("Custom"),
-        Browsable(true)]
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public int MinimumDimension
         {
             get { return _nDimension; }
@@ -257,7 +269,8 @@ namespace CustomBoard
         [Description("Background color of the control"),
         Category("Custom"),
         Browsable(true),
-        EditorBrowsable(EditorBrowsableState.Always)]
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Color ColorBackground
         {
             get { return _BackgroundColor; }
@@ -267,7 +280,8 @@ namespace CustomBoard
         [Description("Outer circle color"),
         Category("Custom"),
         Browsable(true),
-        EditorBrowsable(EditorBrowsableState.Always)]
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Color ColorOuterCircle
         {
             get { return _OuterColor; }
@@ -277,7 +291,8 @@ namespace CustomBoard
         [Description("Inner circle color"),
         Category("Custom"),
         Browsable(true),
-        EditorBrowsable(EditorBrowsableState.Always)]
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Color ColorInnerCircle
         {
             get { return _InnerColor; }
@@ -287,7 +302,8 @@ namespace CustomBoard
         [Description("Maximum score"),
         Category("Custom"),
         Browsable(true),
-        EditorBrowsable(EditorBrowsableState.Always)]
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Int32 ScoreHighest
         {
             get { return _nHighest; }
@@ -297,7 +313,8 @@ namespace CustomBoard
         [Description("Current score"),
         Category("Custom"),
         Browsable(true),
-        EditorBrowsable(EditorBrowsableState.Always)]
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Int32 ScoreTotal
         {
             get { return _nScore; }
@@ -315,10 +332,35 @@ namespace CustomBoard
         public Int32 NumberOfButtons
         {
             get { return _nButtons; }
-            set { _nButtons = value < 0 ? 0 : value; }
+            set { _nButtons = value < 0 ? 0 : value; CreateButtons(); }
         }
 
+        /// <summary>
+        /// Number of buttons shown in the board
+        /// </summary>
+        [Description("Number of buttons shown in the board"),
+        Category("Custom"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public float CenterButtonRatio
+        {
+            get => _fCenterButton;
+            set
+            {
+                _fCenterButton = value;
+                var apothem = _fCenterButton * _fOuterCircle * Math.Min(this.ClientSize.Width, this.ClientSize.Height);
+                for (int i=0; i<_buttons.Length;i++)
+                {
+                    _buttons[i].CenterButton = new PointF(apothem + _buttons[i].CenterRotation.X, SideLength(_nButtons, apothem) + _buttons[i].CenterRotation.Y);
+                }
+            }
+        }
+        
+
         #endregion
+
+
 
         // Constructor de la clase
         public CustomBoard()
@@ -336,34 +378,15 @@ namespace CustomBoard
             this.btnYellow.Click += new System.EventHandler(this.CustomButton_Click);
             this.btnBlue.Click += new System.EventHandler(this.CustomButton_Click);
 
-            //this.btnGreen.Visible = false;
-            //this.btnRed.Visible = false;
-            //this.btnYellow.Visible = false;
-            //this.btnBlue.Visible = false;
+            this.btnGreen.Visible = false;
+            this.btnRed.Visible = false;
+            this.btnYellow.Visible = false;
+            this.btnBlue.Visible = false;
 
             // Get the minimum dimension of the client area
-            _nDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
-            var rotation = 360f / _nButtons;
-
-            for (int i=0; i<NumberOfButtons; i++)
-            {
-                SimonSays.SimonButton2 btn = new SimonSays.SimonButton2()
-                {
-                    Color = Color.DarkRed,
-                    Location = new Point(0, 0),
-                    Size = new Size(this.Width, this.Height),
-                    CenterRotation = new PointF(this.Width / 2.0f, this.Height / 2.0f),
-                    CenterButton = new PointF(this.Width / 2.0f, this.Height / 2.0f),
-                    ClickOffset = new PointF(2, 2),
-                    InnerRadius = 0.55f * _nDimension / 2f,
-                    OutterRadius = 0.95f * _nDimension / 2f,
-                    AngleRotation = i * rotation,
-                    AngleSwept = 90,
-                    Value = i
-                };
-                btn.Size = new Size(this.Width, this.Height);
-                this.Controls.Add(btn);
-            }
+            // Set the array of buttons to 0 elements
+            _buttons = new SimonSays.SimonButton2 [0];
+            //CreateButtons();
 
             /*
             btnGreen.Clicked = false;
@@ -406,44 +429,65 @@ namespace CustomBoard
             AlignControls();
         }
 
+        private void CreateButtons()
+        {
+            // Delete previous buttons if any
+            this.SuspendLayout();
+            DeleteButtons();
+
+            _buttons = new SimonSays.SimonButton2[_nButtons];
+
+            // Get the minimum dimension of the client area
+            _nDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
+            var rotation = 360f / _nButtons;
+
+            for (int i = 0; i < NumberOfButtons; i++)
+            {
+                _buttons[i] = new SimonSays.SimonButton2()
+                {
+                    Color = Color.DarkRed,
+                    Location = new Point(0, 0),
+                    Size = new Size(this.Width, this.Height),
+                    CenterRotation = new PointF(this.Width / 2.0f, this.Height / 2.0f),
+                    CenterButton = new PointF(this.Width / 2.0f, this.Height / 2.0f),
+                    ClickOffset = new PointF(2, 2),
+                    InnerRadius = 0.55f * _nDimension / 2f,
+                    OutterRadius = 0.95f * _nDimension / 2f,
+                    AngleRotation = i * rotation,
+                    AngleSwept = rotation,
+                    Value = i
+                };
+                _buttons[i].Size = new Size(this.Width, this.Height);
+                this.Controls.Add(_buttons[i]);
+            }
+
+            this.ResumeLayout();
+
+        }
+
+        private void DeleteButtons()
+        {
+            // Delete previous buttons if any
+            // https://stackoverflow.com/questions/4630391/get-all-controls-of-a-specific-type
+
+            int i = 0;
+
+            while (i < _buttons.Length)
+            {
+                //_buttons.ButtonClick -= new EventHandler<RoundButton.ButtonClickEventArgs>(this.ButtonClicked);
+                this.Controls.Remove(_buttons[i]);
+                _buttons[i].Dispose();
+                i++;
+            }
+
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             AlignControls();
             Rectangle rc = e.ClipRectangle; // This only returns the visible rectangle of the client area!
             Graphics dc = e.Graphics;
             dc.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
-            /*
-            // Define and calculate size variables
-            //Int32 nHeight = rc.Bottom - rc.Top - 50;
-            //Int32 nWidth = rc.Width - 50;
-            //_nDimension = Math.Min(rc.Width, rc.Height);
-            //float _fOuterCircle = 0.9f;
-            //float _fInnerCircle = 0.35f;
-            Brush solidBrush = new SolidBrush(Color.FromArgb(100, 100, 240));
-            
-            // Draw back clip rectangle
-            dc.FillRectangle(solidBrush, rc);
-            ComputeParameters();
-            // Draw board elements
-            solidBrush = new SolidBrush(Color.FromArgb(40, 40, 40));
-            dc.FillEllipse(
-                solidBrush,
-                (float)((this.ClientRectangle.Width - _fOuterCircle * _nDimension) / 2),
-                (float)((this.ClientRectangle.Height - _fOuterCircle * _nDimension) / 2),
-                (float)(_fOuterCircle * _nDimension),
-                (float)(_fOuterCircle * _nDimension)
-                );
-
-            solidBrush = new SolidBrush(Color.FromArgb(240, 240, 240));
-            dc.FillEllipse(
-                solidBrush,
-                (float)((rc.Width - _fInnerCircle * _nDimension) / 2),
-                (float)((rc.Height - _fInnerCircle * _nDimension) / 2),
-                (float)(_fInnerCircle * _nDimension),
-                (float)(_fInnerCircle * _nDimension)
-                );*/
-
 
             Brush solidBrush;
 
@@ -470,6 +514,17 @@ namespace CustomBoard
         {
             //Invalidate();
             //AlignControls();
+
+            // Get the minimum dimension of the client area
+            _nDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
+
+            for (int i = 0; i < _buttons.Length; i++)
+            {
+                _buttons[i].Location = new Point((this.Width - _nDimension) / 2, (this.Width - _nDimension) / 2);
+                _buttons[i].CenterRotation = new PointF(this.Width / 2.0f, this.Height / 2.0f);
+            }
+
+
             Invalidate();
             base.OnResize(e);
             /*
@@ -582,6 +637,17 @@ namespace CustomBoard
         private float Apothem(int Sides, float SideLength)
         {
             return SideLength / (float)(2.0 * Math.Tan(Math.PI / Sides));
+        }
+
+        /// <summary>
+        /// Computes the side-length of a n-sided regular polygon
+        /// </summary>
+        /// <param name="Sides">Number of sides of the regular polygon</param>
+        /// <param name="Apothem">Apothem of the n-sided regular polygon</param>
+        /// <returns></returns>
+        private float SideLength(int Sides, float Apothem)
+        {
+            return Apothem * (float)(2.0 * Math.Tan(Math.PI / Sides));
         }
 
     }

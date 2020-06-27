@@ -32,7 +32,7 @@
             this.tspTop = new System.Windows.Forms.ToolStripPanel();
             this.tspBottom = new System.Windows.Forms.ToolStripPanel();
             this.btnYellow = new ColorButton.SimonButton();
-            this.simonBoard = new CustomBoard.CustomBoard();
+            this.simonBoard = new SimonSays.CustomBoard();
             this.toolStripMain = new System.Windows.Forms.ToolStrip();
             this.toolStripMain_Exit = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -130,6 +130,7 @@
             this.simonBoard.GreenButton.WidthPercentage = 0.45F;
             this.simonBoard.Location = new System.Drawing.Point(16, 70);
             this.simonBoard.Name = "simonBoard";
+            this.simonBoard.NumberOfButtons = 4;
             // 
             // 
             // 
@@ -232,6 +233,7 @@
             // 
             // toolStripMain_Sound
             // 
+            this.toolStripMain_Sound.CheckOnClick = true;
             this.toolStripMain_Sound.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_Sound.Image")));
             this.toolStripMain_Sound.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_Sound.Name = "toolStripMain_Sound";
@@ -241,6 +243,7 @@
             // 
             // toolStripMain_Stats
             // 
+            this.toolStripMain_Stats.CheckOnClick = true;
             this.toolStripMain_Stats.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMain_Stats.Image")));
             this.toolStripMain_Stats.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripMain_Stats.Name = "toolStripMain_Stats";
@@ -263,6 +266,7 @@
             this.toolStripMain_Settings.Text = "Settings";
             this.toolStripMain_Settings.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMain_Settings.ToolTipText = "View settings";
+            this.toolStripMain_Settings.Click += new System.EventHandler(this.toolStripMain_Settings_Click);
             // 
             // toolStripSeparator4
             // 
@@ -379,7 +383,7 @@
         private System.Windows.Forms.ToolStripPanel tspTop;
         private System.Windows.Forms.ToolStripPanel tspBottom;
         private ColorButton.SimonButton btnYellow;
-        private CustomBoard.CustomBoard simonBoard;
+        private SimonSays.CustomBoard simonBoard;
         private System.Windows.Forms.ToolStrip toolStripMain;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripButton toolStripMain_Exit;

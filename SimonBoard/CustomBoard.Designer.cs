@@ -1,4 +1,4 @@
-﻿namespace CustomBoard
+﻿namespace SimonSays
 {
     partial class CustomBoard
     {

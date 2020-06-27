@@ -43,7 +43,7 @@ namespace SimonSays
             _Game.Tick += new EventHandler<TickEventArgs>(OnGameTick);
             _Game.GameOver += new EventHandler<OverEventArgs>(OnGameOver);
             _Game.CorrectSequence += new EventHandler<CorrectEventArgs>(OnCorrectSequence);
-            this.simonBoard.ButtonClick += new EventHandler<CustomBoard.ButtonClickEventArgs>(OnButtonClick);
+            this.simonBoard.ButtonClick += new EventHandler<SimonSays.ButtonClickEventArgs>(OnButtonClick);
             this.DoubleBuffered = true;
             //this.customBoard1.Size = new Size(300, 300);
             //this.customBoard1.Invalidate();
@@ -304,7 +304,7 @@ namespace SimonSays
         {
             _Game.OnPress(((ColorButton.SimonButton)sender).ColorValue);
         }
-        private void OnButtonClick(object sender, CustomBoard.ButtonClickEventArgs e)
+        private void OnButtonClick(object sender, SimonSays.ButtonClickEventArgs e)
         {
             _Game.OnPress(e.ButtonValue);
         }
@@ -313,13 +313,19 @@ namespace SimonSays
 
 
         #region toolStripMain
+        
+        private void toolStripMain_Exit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
         private void toolStripMain_Start_Click(object sender, EventArgs e)
         {
             _Game.Start();
         }
-        private void toolStripMain_Exit_Click(object sender, EventArgs e)
+        private void toolStripMain_Settings_Click(object sender, EventArgs e)
         {
-            Close();
+            frmSettings frmSettings = new frmSettings();
+            frmSettings.ShowDialog();
         }
         private void toolStripMain_About_Click(object sender, EventArgs e)
         {
@@ -493,6 +499,7 @@ namespace SimonSays
         }
 
         #endregion Application settings
+
 
     }
 }

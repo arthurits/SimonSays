@@ -311,9 +311,16 @@ namespace SimonSays
 
             path.Transform(matrix);
             pathRegion.Transform(matrix);
+            dc.FillPath(new SolidBrush(_color), path);
 
             if (_clicked == true)
             {
+                Matrix scale = new Matrix();
+                scale.Scale(0.95f, 0.95f);
+
+                GraphicsPath pathClicked = (GraphicsPath)path.Clone();
+                pathClicked.Transform(scale);
+
                 using (PathGradientBrush pthGrBrush = new PathGradientBrush(path)
                 {
                     SurroundColors = new Color[] { _color },
@@ -321,11 +328,13 @@ namespace SimonSays
                     FocusScales = new PointF(0.1f, 0.1f),
                     CenterPoint = _clickPoint
                 })
-                    dc.FillPath(pthGrBrush, path);
+                    dc.FillPath(pthGrBrush, pathClicked);
+                
+                
                 using (Pen pen = new Pen(Color.FromArgb(255, _color), 2))
                 {
                     pen.Alignment = PenAlignment.Inset;
-                    dc.DrawPath(pen, path);
+                    //dc.DrawPath(pen, path);
                 }
             }
             else
