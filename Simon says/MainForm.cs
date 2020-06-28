@@ -263,10 +263,10 @@ namespace SimonSays
         {
             // Force the client area to be painted again
             Invalidate();
-            this.btnGreen.Top = 0;
-            this.btnGreen.Left = 0;
-            this.btnGreen.Height = 400;
-            this.btnGreen.Width = 400;
+            //this.btnGreen.Top = 0;
+            //this.btnGreen.Left = 0;
+            //this.btnGreen.Height = 400;
+            //this.btnGreen.Width = 400;
         }
 
         private void frmSimon_Load(object sender, EventArgs e)

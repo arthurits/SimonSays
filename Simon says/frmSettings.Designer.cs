@@ -32,6 +32,7 @@
             this.tabPlayMode = new System.Windows.Forms.TabPage();
             this.tabGame = new System.Windows.Forms.TabPage();
             this.tabInterface = new System.Windows.Forms.TabPage();
+            this.DemoBoard = new SimonSays.CustomBoard();
             this.trackButtonDistance = new System.Windows.Forms.TrackBar();
             this.trackButtonInner = new System.Windows.Forms.TrackBar();
             this.trackButtonOuttter = new System.Windows.Forms.TrackBar();
@@ -48,7 +49,6 @@
             this.trackButtons = new System.Windows.Forms.TrackBar();
             this.numButtons = new System.Windows.Forms.NumericUpDown();
             this.lblButtons = new System.Windows.Forms.Label();
-            this.DemoBoard = new SimonSays.CustomBoard();
             this.tabBoard = new System.Windows.Forms.TabPage();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -63,6 +63,9 @@
             this.numBoardOut = new System.Windows.Forms.NumericUpDown();
             this.lblBoardMin = new System.Windows.Forms.Label();
             this.lblBoardMax = new System.Windows.Forms.Label();
+            this.btnReset = new System.Windows.Forms.Button();
+            this.btnAccept = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.tabSettings.SuspendLayout();
             this.tabInterface.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonDistance)).BeginInit();
@@ -120,6 +123,7 @@
             // 
             // tabInterface
             // 
+            this.tabInterface.Controls.Add(this.DemoBoard);
             this.tabInterface.Controls.Add(this.trackButtonDistance);
             this.tabInterface.Controls.Add(this.trackButtonInner);
             this.tabInterface.Controls.Add(this.trackButtonOuttter);
@@ -133,7 +137,6 @@
             this.tabInterface.Controls.Add(this.trackButtons);
             this.tabInterface.Controls.Add(this.numButtons);
             this.tabInterface.Controls.Add(this.lblButtons);
-            this.tabInterface.Controls.Add(this.DemoBoard);
             this.tabInterface.Location = new System.Drawing.Point(4, 25);
             this.tabInterface.Margin = new System.Windows.Forms.Padding(4);
             this.tabInterface.Name = "tabInterface";
@@ -142,6 +145,76 @@
             this.tabInterface.TabIndex = 1;
             this.tabInterface.Text = "Interface";
             this.tabInterface.UseVisualStyleBackColor = true;
+            // 
+            // DemoBoard
+            // 
+            // 
+            // 
+            // 
+            this.DemoBoard.BlueButton.Clicked = false;
+            this.DemoBoard.BlueButton.ColorValue = 2;
+            this.DemoBoard.BlueButton.Duration = 400;
+            this.DemoBoard.BlueButton.ForeColor = System.Drawing.Color.Blue;
+            this.DemoBoard.BlueButton.Frequency = 196;
+            this.DemoBoard.BlueButton.Location = new System.Drawing.Point(81, 81);
+            this.DemoBoard.BlueButton.Name = "btnBlue";
+            this.DemoBoard.BlueButton.OuterAngleSpan = 0F;
+            this.DemoBoard.BlueButton.Rotation = 0;
+            this.DemoBoard.BlueButton.Size = new System.Drawing.Size(127, 127);
+            this.DemoBoard.BlueButton.TabIndex = 0;
+            this.DemoBoard.BlueButton.WidthPercentage = 1F;
+            this.DemoBoard.CenterButtonRatio = 0F;
+            // 
+            // 
+            // 
+            this.DemoBoard.GreenButton.Clicked = false;
+            this.DemoBoard.GreenButton.ColorValue = 0;
+            this.DemoBoard.GreenButton.Duration = 400;
+            this.DemoBoard.GreenButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.DemoBoard.GreenButton.Frequency = 392;
+            this.DemoBoard.GreenButton.Location = new System.Drawing.Point(-8, -8);
+            this.DemoBoard.GreenButton.Name = "btnGreen";
+            this.DemoBoard.GreenButton.OuterAngleSpan = 0F;
+            this.DemoBoard.GreenButton.Rotation = 0;
+            this.DemoBoard.GreenButton.Size = new System.Drawing.Size(127, 127);
+            this.DemoBoard.GreenButton.TabIndex = 2;
+            this.DemoBoard.GreenButton.WidthPercentage = 1F;
+            this.DemoBoard.InnerButtonRatio = 0.55F;
+            this.DemoBoard.Location = new System.Drawing.Point(403, 150);
+            this.DemoBoard.Name = "DemoBoard";
+            this.DemoBoard.OuterButtonRatio = 0.95F;
+            // 
+            // 
+            // 
+            this.DemoBoard.RedButton.Clicked = false;
+            this.DemoBoard.RedButton.ColorValue = 1;
+            this.DemoBoard.RedButton.Duration = 400;
+            this.DemoBoard.RedButton.ForeColor = System.Drawing.Color.Red;
+            this.DemoBoard.RedButton.Frequency = 330;
+            this.DemoBoard.RedButton.Location = new System.Drawing.Point(81, -8);
+            this.DemoBoard.RedButton.Name = "btnRed";
+            this.DemoBoard.RedButton.OuterAngleSpan = 0F;
+            this.DemoBoard.RedButton.Rotation = 0;
+            this.DemoBoard.RedButton.Size = new System.Drawing.Size(127, 127);
+            this.DemoBoard.RedButton.TabIndex = 3;
+            this.DemoBoard.RedButton.WidthPercentage = 1F;
+            this.DemoBoard.Size = new System.Drawing.Size(200, 200);
+            this.DemoBoard.TabIndex = 18;
+            // 
+            // 
+            // 
+            this.DemoBoard.YellowButton.Clicked = false;
+            this.DemoBoard.YellowButton.ColorValue = 3;
+            this.DemoBoard.YellowButton.Duration = 400;
+            this.DemoBoard.YellowButton.ForeColor = System.Drawing.Color.Yellow;
+            this.DemoBoard.YellowButton.Frequency = 262;
+            this.DemoBoard.YellowButton.Location = new System.Drawing.Point(-8, 81);
+            this.DemoBoard.YellowButton.Name = "btnYellow";
+            this.DemoBoard.YellowButton.OuterAngleSpan = 0F;
+            this.DemoBoard.YellowButton.Rotation = 0;
+            this.DemoBoard.YellowButton.Size = new System.Drawing.Size(127, 127);
+            this.DemoBoard.YellowButton.TabIndex = 1;
+            this.DemoBoard.YellowButton.WidthPercentage = 1F;
             // 
             // trackButtonDistance
             // 
@@ -326,92 +399,6 @@
             this.lblButtons.TabIndex = 1;
             this.lblButtons.Text = "Buttons";
             // 
-            // DemoBoard
-            // 
-            // 
-            // 
-            // 
-            this.DemoBoard.BlueButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.DemoBoard.BlueButton.BackColor = System.Drawing.Color.Transparent;
-            this.DemoBoard.BlueButton.Clicked = false;
-            this.DemoBoard.BlueButton.ColorValue = 2;
-            this.DemoBoard.BlueButton.Duration = 400;
-            this.DemoBoard.BlueButton.ForeColor = System.Drawing.Color.Blue;
-            this.DemoBoard.BlueButton.Frequency = 165;
-            this.DemoBoard.BlueButton.Location = new System.Drawing.Point(81, 81);
-            this.DemoBoard.BlueButton.Margin = new System.Windows.Forms.Padding(4);
-            this.DemoBoard.BlueButton.Name = "btnBlue";
-            this.DemoBoard.BlueButton.OuterAngleSpan = 0F;
-            this.DemoBoard.BlueButton.Rotation = 0;
-            this.DemoBoard.BlueButton.Size = new System.Drawing.Size(127, 127);
-            this.DemoBoard.BlueButton.TabIndex = 0;
-            this.DemoBoard.BlueButton.UseVisualStyleBackColor = false;
-            this.DemoBoard.BlueButton.WidthPercentage = 1F;
-            this.DemoBoard.CenterButtonRatio = 0F;
-            // 
-            // 
-            // 
-            this.DemoBoard.GreenButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.DemoBoard.GreenButton.BackColor = System.Drawing.Color.Transparent;
-            this.DemoBoard.GreenButton.Clicked = false;
-            this.DemoBoard.GreenButton.ColorValue = 0;
-            this.DemoBoard.GreenButton.Duration = 400;
-            this.DemoBoard.GreenButton.ForeColor = System.Drawing.Color.Green;
-            this.DemoBoard.GreenButton.Frequency = 165;
-            this.DemoBoard.GreenButton.Location = new System.Drawing.Point(-8, -8);
-            this.DemoBoard.GreenButton.Margin = new System.Windows.Forms.Padding(4);
-            this.DemoBoard.GreenButton.Name = "btnGreen";
-            this.DemoBoard.GreenButton.OuterAngleSpan = 0F;
-            this.DemoBoard.GreenButton.Rotation = 0;
-            this.DemoBoard.GreenButton.Size = new System.Drawing.Size(127, 127);
-            this.DemoBoard.GreenButton.TabIndex = 2;
-            this.DemoBoard.GreenButton.UseVisualStyleBackColor = false;
-            this.DemoBoard.GreenButton.WidthPercentage = 1F;
-            this.DemoBoard.Location = new System.Drawing.Point(402, 149);
-            this.DemoBoard.Margin = new System.Windows.Forms.Padding(4);
-            this.DemoBoard.Name = "DemoBoard";
-            this.DemoBoard.NumberOfButtons = 4;
-            // 
-            // 
-            // 
-            this.DemoBoard.RedButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.DemoBoard.RedButton.BackColor = System.Drawing.Color.Transparent;
-            this.DemoBoard.RedButton.Clicked = false;
-            this.DemoBoard.RedButton.ColorValue = 1;
-            this.DemoBoard.RedButton.Duration = 400;
-            this.DemoBoard.RedButton.ForeColor = System.Drawing.Color.Red;
-            this.DemoBoard.RedButton.Frequency = 165;
-            this.DemoBoard.RedButton.Location = new System.Drawing.Point(81, -8);
-            this.DemoBoard.RedButton.Margin = new System.Windows.Forms.Padding(4);
-            this.DemoBoard.RedButton.Name = "btnRed";
-            this.DemoBoard.RedButton.OuterAngleSpan = 0F;
-            this.DemoBoard.RedButton.Rotation = 0;
-            this.DemoBoard.RedButton.Size = new System.Drawing.Size(127, 127);
-            this.DemoBoard.RedButton.TabIndex = 3;
-            this.DemoBoard.RedButton.UseVisualStyleBackColor = false;
-            this.DemoBoard.RedButton.WidthPercentage = 1F;
-            this.DemoBoard.Size = new System.Drawing.Size(200, 200);
-            this.DemoBoard.TabIndex = 0;
-            // 
-            // 
-            // 
-            this.DemoBoard.YellowButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.DemoBoard.YellowButton.BackColor = System.Drawing.Color.Transparent;
-            this.DemoBoard.YellowButton.Clicked = false;
-            this.DemoBoard.YellowButton.ColorValue = 3;
-            this.DemoBoard.YellowButton.Duration = 400;
-            this.DemoBoard.YellowButton.ForeColor = System.Drawing.Color.Yellow;
-            this.DemoBoard.YellowButton.Frequency = 165;
-            this.DemoBoard.YellowButton.Location = new System.Drawing.Point(-8, 81);
-            this.DemoBoard.YellowButton.Margin = new System.Windows.Forms.Padding(4);
-            this.DemoBoard.YellowButton.Name = "btnYellow";
-            this.DemoBoard.YellowButton.OuterAngleSpan = 0F;
-            this.DemoBoard.YellowButton.Rotation = 0;
-            this.DemoBoard.YellowButton.Size = new System.Drawing.Size(127, 127);
-            this.DemoBoard.YellowButton.TabIndex = 1;
-            this.DemoBoard.YellowButton.UseVisualStyleBackColor = false;
-            this.DemoBoard.YellowButton.WidthPercentage = 1F;
-            // 
             // tabBoard
             // 
             this.tabBoard.Controls.Add(this.pictureBox3);
@@ -565,16 +552,49 @@
             this.lblBoardMax.TabIndex = 12;
             this.lblBoardMax.Text = "Board out radius";
             // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(13, 406);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(110, 30);
+            this.btnReset.TabIndex = 1;
+            this.btnReset.Text = "&Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            // 
+            // btnAccept
+            // 
+            this.btnAccept.Location = new System.Drawing.Point(401, 406);
+            this.btnAccept.Name = "btnAccept";
+            this.btnAccept.Size = new System.Drawing.Size(110, 30);
+            this.btnAccept.TabIndex = 2;
+            this.btnAccept.Text = "&Accept";
+            this.btnAccept.UseVisualStyleBackColor = true;
+            this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(517, 406);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(110, 30);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "&Cancel";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 412);
+            this.ClientSize = new System.Drawing.Size(644, 448);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnAccept);
+            this.Controls.Add(this.btnReset);
             this.Controls.Add(this.tabSettings);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "frmSettings";
             this.ShowInTaskbar = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmSettings";
             this.tabSettings.ResumeLayout(false);
@@ -607,7 +627,6 @@
         private System.Windows.Forms.TabControl tabSettings;
         private System.Windows.Forms.TabPage tabPlayMode;
         private System.Windows.Forms.TabPage tabInterface;
-        private SimonSays.CustomBoard DemoBoard;
         private System.Windows.Forms.TrackBar trackButtons;
         private System.Windows.Forms.NumericUpDown numButtons;
         private System.Windows.Forms.Label lblButtons;
@@ -639,5 +658,9 @@
         private System.Windows.Forms.Label lblFontFamily;
         private System.Windows.Forms.Label lblInColor;
         private System.Windows.Forms.Label lblOutColor;
+        private SimonSays.CustomBoard DemoBoard;
+        private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Button btnAccept;
+        private System.Windows.Forms.Button button1;
     }
 }

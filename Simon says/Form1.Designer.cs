@@ -80,7 +80,7 @@
             this.simonButton21.InnerRadius = 75F;
             this.simonButton21.Location = new System.Drawing.Point(23, 23);
             this.simonButton21.Name = "simonButton21";
-            this.simonButton21.OutterRadius = 145F;
+            this.simonButton21.OuterRadius = 145F;
             this.simonButton21.RegionOffset = 1F;
             this.simonButton21.Size = new System.Drawing.Size(300, 300);
             this.simonButton21.TabIndex = 1;

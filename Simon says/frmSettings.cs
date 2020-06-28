@@ -78,5 +78,10 @@ namespace SimonSays
         {
             DemoBoard.CenterButtonRatio = (float)numButtonDistance.Value;
         }
+
+        private void btnAccept_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

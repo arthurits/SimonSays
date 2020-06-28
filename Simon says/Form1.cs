@@ -33,7 +33,7 @@ namespace SimonSays
                     CenterButton = new PointF(_nDimension / 2.0f, _nDimension / 2.0f),
                     ClickOffset = new PointF(2, 2),
                     InnerRadius = 0.55f * _nDimension/2.0f,
-                    OutterRadius = 0.99f * _nDimension/2.0f,
+                    OuterRadius = 0.99f * _nDimension/2.0f,
                     AngleRotation = 45+i * rotation,
                     AngleSwept = 90,
                     Value = i

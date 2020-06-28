@@ -31,8 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSimon));
             this.tspTop = new System.Windows.Forms.ToolStripPanel();
             this.tspBottom = new System.Windows.Forms.ToolStripPanel();
-            this.btnYellow = new ColorButton.SimonButton();
-            this.simonBoard = new SimonSays.CustomBoard();
             this.toolStripMain = new System.Windows.Forms.ToolStrip();
             this.toolStripMain_Exit = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -46,9 +44,7 @@
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMain_About = new System.Windows.Forms.ToolStripButton();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.btnRed = new ColorButton.SimonButton();
-            this.btnBlue = new ColorButton.SimonButton();
-            this.btnGreen = new ColorButton.SimonButton();
+            this.simonBoard = new SimonSays.CustomBoard();
             this.toolStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,103 +65,6 @@
             this.tspBottom.Orientation = System.Windows.Forms.Orientation.Horizontal;
             this.tspBottom.RowMargin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.tspBottom.Size = new System.Drawing.Size(570, 0);
-            // 
-            // btnYellow
-            // 
-            this.btnYellow.BackColor = System.Drawing.Color.Transparent;
-            this.btnYellow.Clicked = false;
-            this.btnYellow.ColorValue = 3;
-            this.btnYellow.Duration = 400;
-            this.btnYellow.ForeColor = System.Drawing.Color.Yellow;
-            this.btnYellow.Frequency = 262;
-            this.btnYellow.Location = new System.Drawing.Point(16, 330);
-            this.btnYellow.Name = "btnYellow";
-            this.btnYellow.OuterAngleSpan = 5F;
-            this.btnYellow.Rotation = 270;
-            this.btnYellow.Size = new System.Drawing.Size(334, 307);
-            this.btnYellow.TabIndex = 2;
-            this.btnYellow.UseVisualStyleBackColor = false;
-            this.btnYellow.Visible = false;
-            this.btnYellow.WidthPercentage = 1F;
-            this.btnYellow.Click += new System.EventHandler(this.btnSimon_Click);
-            // 
-            // simonBoard
-            // 
-            this.simonBoard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.simonBoard.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            // 
-            // 
-            // 
-            this.simonBoard.BlueButton.Clicked = false;
-            this.simonBoard.BlueButton.ColorValue = 2;
-            this.simonBoard.BlueButton.Duration = 400;
-            this.simonBoard.BlueButton.ForeColor = System.Drawing.Color.Blue;
-            this.simonBoard.BlueButton.Frequency = 196;
-            this.simonBoard.BlueButton.Location = new System.Drawing.Point(222, 208);
-            this.simonBoard.BlueButton.Name = "btnBlue";
-            this.simonBoard.BlueButton.OuterAngleSpan = 5F;
-            this.simonBoard.BlueButton.Rotation = 180;
-            this.simonBoard.BlueButton.Size = new System.Drawing.Size(327, 327);
-            this.simonBoard.BlueButton.TabIndex = 0;
-            this.simonBoard.BlueButton.WidthPercentage = 0.45F;
-            this.simonBoard.ColorBackground = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(240)))));
-            this.simonBoard.ColorInnerCircle = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.simonBoard.ColorOuterCircle = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-            // 
-            // 
-            // 
-            this.simonBoard.GreenButton.Clicked = false;
-            this.simonBoard.GreenButton.ColorValue = 0;
-            this.simonBoard.GreenButton.Duration = 400;
-            this.simonBoard.GreenButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.simonBoard.GreenButton.Frequency = 392;
-            this.simonBoard.GreenButton.Location = new System.Drawing.Point(-9, -23);
-            this.simonBoard.GreenButton.Name = "btnGreen";
-            this.simonBoard.GreenButton.OuterAngleSpan = 5F;
-            this.simonBoard.GreenButton.Rotation = 0;
-            this.simonBoard.GreenButton.Size = new System.Drawing.Size(327, 327);
-            this.simonBoard.GreenButton.TabIndex = 2;
-            this.simonBoard.GreenButton.WidthPercentage = 0.45F;
-            this.simonBoard.Location = new System.Drawing.Point(16, 70);
-            this.simonBoard.Name = "simonBoard";
-            this.simonBoard.NumberOfButtons = 4;
-            // 
-            // 
-            // 
-            this.simonBoard.RedButton.Clicked = false;
-            this.simonBoard.RedButton.ColorValue = 1;
-            this.simonBoard.RedButton.Duration = 400;
-            this.simonBoard.RedButton.ForeColor = System.Drawing.Color.Red;
-            this.simonBoard.RedButton.Frequency = 330;
-            this.simonBoard.RedButton.Location = new System.Drawing.Point(222, -23);
-            this.simonBoard.RedButton.Name = "btnRed";
-            this.simonBoard.RedButton.OuterAngleSpan = 5F;
-            this.simonBoard.RedButton.Rotation = 90;
-            this.simonBoard.RedButton.Size = new System.Drawing.Size(327, 327);
-            this.simonBoard.RedButton.TabIndex = 3;
-            this.simonBoard.RedButton.WidthPercentage = 0.45F;
-            this.simonBoard.ScoreHighest = 0;
-            this.simonBoard.ScoreTotal = 0;
-            this.simonBoard.Size = new System.Drawing.Size(542, 514);
-            this.simonBoard.TabIndex = 5;
-            this.simonBoard.TabStop = false;
-            // 
-            // 
-            // 
-            this.simonBoard.YellowButton.Clicked = false;
-            this.simonBoard.YellowButton.ColorValue = 3;
-            this.simonBoard.YellowButton.Duration = 400;
-            this.simonBoard.YellowButton.ForeColor = System.Drawing.Color.Yellow;
-            this.simonBoard.YellowButton.Frequency = 262;
-            this.simonBoard.YellowButton.Location = new System.Drawing.Point(-9, 208);
-            this.simonBoard.YellowButton.Name = "btnYellow";
-            this.simonBoard.YellowButton.OuterAngleSpan = 5F;
-            this.simonBoard.YellowButton.Rotation = 270;
-            this.simonBoard.YellowButton.Size = new System.Drawing.Size(327, 327);
-            this.simonBoard.YellowButton.TabIndex = 1;
-            this.simonBoard.YellowButton.WidthPercentage = 0.45F;
             // 
             // toolStripMain
             // 
@@ -293,77 +192,89 @@
             this.statusStrip.TabIndex = 7;
             this.statusStrip.Text = "statusStrip1";
             // 
-            // btnRed
+            // simonBoard
             // 
-            this.btnRed.BackColor = System.Drawing.Color.Transparent;
-            this.btnRed.Clicked = false;
-            this.btnRed.ColorValue = 1;
-            this.btnRed.Duration = 400;
-            this.btnRed.ForeColor = System.Drawing.Color.Red;
-            this.btnRed.Frequency = 330;
-            this.btnRed.Location = new System.Drawing.Point(358, 15);
-            this.btnRed.Name = "btnRed";
-            this.btnRed.OuterAngleSpan = 5F;
-            this.btnRed.Rotation = 90;
-            this.btnRed.Size = new System.Drawing.Size(334, 307);
-            this.btnRed.TabIndex = 0;
-            this.btnRed.UseVisualStyleBackColor = false;
-            this.btnRed.Visible = false;
-            this.btnRed.WidthPercentage = 1F;
-            this.btnRed.Click += new System.EventHandler(this.btnSimon_Click);
+            this.simonBoard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             // 
-            // btnBlue
             // 
-            this.btnBlue.BackColor = System.Drawing.Color.Transparent;
-            this.btnBlue.Clicked = false;
-            this.btnBlue.ColorValue = 2;
-            this.btnBlue.Duration = 400;
-            this.btnBlue.ForeColor = System.Drawing.Color.Blue;
-            this.btnBlue.Frequency = 196;
-            this.btnBlue.Location = new System.Drawing.Point(358, 330);
-            this.btnBlue.Name = "btnBlue";
-            this.btnBlue.OuterAngleSpan = 0F;
-            this.btnBlue.Rotation = 180;
-            this.btnBlue.Size = new System.Drawing.Size(334, 307);
-            this.btnBlue.TabIndex = 3;
-            this.btnBlue.UseVisualStyleBackColor = false;
-            this.btnBlue.Visible = false;
-            this.btnBlue.WidthPercentage = 1F;
-            this.btnBlue.Click += new System.EventHandler(this.btnSimon_Click);
             // 
-            // btnGreen
+            this.simonBoard.BlueButton.Clicked = false;
+            this.simonBoard.BlueButton.ColorValue = 2;
+            this.simonBoard.BlueButton.Duration = 400;
+            this.simonBoard.BlueButton.ForeColor = System.Drawing.Color.Blue;
+            this.simonBoard.BlueButton.Frequency = 196;
+            this.simonBoard.BlueButton.Location = new System.Drawing.Point(222, 208);
+            this.simonBoard.BlueButton.Name = "btnBlue";
+            this.simonBoard.BlueButton.OuterAngleSpan = 0F;
+            this.simonBoard.BlueButton.Rotation = 0;
+            this.simonBoard.BlueButton.Size = new System.Drawing.Size(327, 327);
+            this.simonBoard.BlueButton.TabIndex = 0;
+            this.simonBoard.BlueButton.WidthPercentage = 1F;
+            this.simonBoard.CenterButtonRatio = 0F;
             // 
-            this.btnGreen.BackColor = System.Drawing.Color.Transparent;
-            this.btnGreen.Clicked = false;
-            this.btnGreen.ColorValue = 0;
-            this.btnGreen.Duration = 400;
-            this.btnGreen.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.btnGreen.Frequency = 392;
-            this.btnGreen.Location = new System.Drawing.Point(16, 15);
-            this.btnGreen.Name = "btnGreen";
-            this.btnGreen.OuterAngleSpan = 0F;
-            this.btnGreen.Rotation = 0;
-            this.btnGreen.Size = new System.Drawing.Size(334, 307);
-            this.btnGreen.TabIndex = 1;
-            this.btnGreen.UseVisualStyleBackColor = false;
-            this.btnGreen.Visible = false;
-            this.btnGreen.WidthPercentage = 0.1F;
-            this.btnGreen.Click += new System.EventHandler(this.btnSimon_Click);
+            // 
+            // 
+            this.simonBoard.GreenButton.Clicked = false;
+            this.simonBoard.GreenButton.ColorValue = 0;
+            this.simonBoard.GreenButton.Duration = 400;
+            this.simonBoard.GreenButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.simonBoard.GreenButton.Frequency = 392;
+            this.simonBoard.GreenButton.Location = new System.Drawing.Point(-9, -23);
+            this.simonBoard.GreenButton.Name = "btnGreen";
+            this.simonBoard.GreenButton.OuterAngleSpan = 0F;
+            this.simonBoard.GreenButton.Rotation = 0;
+            this.simonBoard.GreenButton.Size = new System.Drawing.Size(327, 327);
+            this.simonBoard.GreenButton.TabIndex = 2;
+            this.simonBoard.GreenButton.WidthPercentage = 1F;
+            this.simonBoard.InnerButtonRatio = 0.55F;
+            this.simonBoard.Location = new System.Drawing.Point(16, 70);
+            this.simonBoard.Name = "simonBoard";
+            this.simonBoard.OuterButtonRatio = 0.95F;
+            // 
+            // 
+            // 
+            this.simonBoard.RedButton.Clicked = false;
+            this.simonBoard.RedButton.ColorValue = 1;
+            this.simonBoard.RedButton.Duration = 400;
+            this.simonBoard.RedButton.ForeColor = System.Drawing.Color.Red;
+            this.simonBoard.RedButton.Frequency = 330;
+            this.simonBoard.RedButton.Location = new System.Drawing.Point(222, -23);
+            this.simonBoard.RedButton.Name = "btnRed";
+            this.simonBoard.RedButton.OuterAngleSpan = 0F;
+            this.simonBoard.RedButton.Rotation = 0;
+            this.simonBoard.RedButton.Size = new System.Drawing.Size(327, 327);
+            this.simonBoard.RedButton.TabIndex = 3;
+            this.simonBoard.RedButton.WidthPercentage = 1F;
+            this.simonBoard.Size = new System.Drawing.Size(542, 514);
+            this.simonBoard.TabIndex = 10;
+            // 
+            // 
+            // 
+            this.simonBoard.YellowButton.Clicked = false;
+            this.simonBoard.YellowButton.ColorValue = 3;
+            this.simonBoard.YellowButton.Duration = 400;
+            this.simonBoard.YellowButton.ForeColor = System.Drawing.Color.Yellow;
+            this.simonBoard.YellowButton.Frequency = 262;
+            this.simonBoard.YellowButton.Location = new System.Drawing.Point(-9, 208);
+            this.simonBoard.YellowButton.Name = "btnYellow";
+            this.simonBoard.YellowButton.OuterAngleSpan = 0F;
+            this.simonBoard.YellowButton.Rotation = 0;
+            this.simonBoard.YellowButton.Size = new System.Drawing.Size(327, 327);
+            this.simonBoard.YellowButton.TabIndex = 1;
+            this.simonBoard.YellowButton.WidthPercentage = 1F;
             // 
             // frmSimon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(570, 606);
+            this.Controls.Add(this.simonBoard);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStripMain);
             this.Controls.Add(this.tspBottom);
             this.Controls.Add(this.tspTop);
-            this.Controls.Add(this.simonBoard);
-            this.Controls.Add(this.btnBlue);
-            this.Controls.Add(this.btnYellow);
-            this.Controls.Add(this.btnGreen);
-            this.Controls.Add(this.btnRed);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "frmSimon";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -382,8 +293,6 @@
 
         private System.Windows.Forms.ToolStripPanel tspTop;
         private System.Windows.Forms.ToolStripPanel tspBottom;
-        private ColorButton.SimonButton btnYellow;
-        private SimonSays.CustomBoard simonBoard;
         private System.Windows.Forms.ToolStrip toolStripMain;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripButton toolStripMain_Exit;
@@ -393,13 +302,11 @@
         private System.Windows.Forms.ToolStripButton toolStripMain_Stats;
         private System.Windows.Forms.ToolStripButton toolStripMain_Settings;
         private System.Windows.Forms.ToolStripButton toolStripMain_About;
-        private ColorButton.SimonButton btnRed;
-        private ColorButton.SimonButton btnBlue;
-        private ColorButton.SimonButton btnGreen;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private SimonSays.CustomBoard simonBoard;
     }
 }
 

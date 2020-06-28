@@ -30,7 +30,7 @@ namespace SimonSays
         private PointF _fCenterButton;          // Center for drawing the button. It's equal to CenterRotation plus an offset
         private float _fRegionOffset = 1f;
         private PointF _fCenterRotation;        // Center around which the rotation is done. Typically it's the center of the controls
-        private float _fRadiusOutter = 1f;
+        private float _fRadiusOuter = 1f;
         private float _fRadiusInner = 1f;
         
         // Sound-related properties
@@ -182,10 +182,10 @@ namespace SimonSays
         Browsable(true),
         EditorBrowsable(EditorBrowsableState.Always),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public float OutterRadius
+        public float OuterRadius
         {
-            get { return _fRadiusOutter; }
-            set { _fRadiusOutter = value < 0 ? 0 : value; Invalidate(); }
+            get { return _fRadiusOuter; }
+            set { _fRadiusOuter = value < 0 ? 0 : value; Invalidate(); }
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace SimonSays
             Graphics dc = e.Graphics;
             dc.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-            float TotalRadiusOutter = _fRadiusOutter - _fRegionOffset / 2;
+            float TotalRadiusOutter = _fRadiusOuter - _fRegionOffset / 2;
             float TotalRadiusInner = _fRadiusInner + _fRegionOffset / 2;
             float AngleOffsetOutter = (180 * 0.5f * _fRegionOffset / TotalRadiusOutter) / (float)Math.PI;
             float AngleOffsetInner = (180 * 0.5f * _fRegionOffset / TotalRadiusInner) / (float)Math.PI;
@@ -316,7 +316,7 @@ namespace SimonSays
             if (_clicked == true)
             {
                 Matrix scale = new Matrix();
-                scale.Scale(0.95f, 0.95f);
+                scale.Scale(0.99f, 0.99f);
 
                 GraphicsPath pathClicked = (GraphicsPath)path.Clone();
                 pathClicked.Transform(scale);

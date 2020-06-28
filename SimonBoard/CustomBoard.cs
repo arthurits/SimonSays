@@ -24,7 +24,8 @@ namespace SimonSays
         private SimonSays.SimonButton2 [] _buttons;
 
         // Definición de los botones
-        private Int32 _nDimension = 0;
+        private Int32 _nMinDimension = 0;
+        private float _fApothem = 0f;
         private float _fOuterCircle = 0.9f;
         private float _fInnerCircle = 0.35f;
         private Rectangle _OuterRect = new Rectangle();
@@ -34,7 +35,10 @@ namespace SimonSays
         private Color _OuterColor = new Color();
         private Color _InnerColor = new Color();
 
-        private float _fCenterButton;
+        // Ratios
+        private float _fCenterButton = 0f;
+        private float _fOuterButton = 0.95f;
+        private float _fInnerButton = 0.55f;
 
         //public ButtonColor _ButtonColor = new ButtonColor();
         //public ButtonRotation _ButtonRotation = new ButtonRotation();
@@ -263,7 +267,7 @@ namespace SimonSays
         DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public int MinimumDimension
         {
-            get { return _nDimension; }
+            get { return _nMinDimension; }
         }
 
         [Description("Background color of the control"),
@@ -327,6 +331,7 @@ namespace SimonSays
         [Description("Number of buttons shown in the board"),
         Category("Custom"),
         Browsable(true),
+        DefaultValue(4),
         EditorBrowsable(EditorBrowsableState.Always),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public Int32 NumberOfButtons
@@ -336,11 +341,12 @@ namespace SimonSays
         }
 
         /// <summary>
-        /// Number of buttons shown in the board
+        /// Ratio (range 0 to 1) with respect the outer circle radius of the board
         /// </summary>
-        [Description("Number of buttons shown in the board"),
+        [Description("Ratio (range 0 to 1) with respect the outer circle radius of the board"),
         Category("Custom"),
         Browsable(true),
+        DefaultValue(0),
         EditorBrowsable(EditorBrowsableState.Always),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public float CenterButtonRatio
@@ -349,18 +355,56 @@ namespace SimonSays
             set
             {
                 _fCenterButton = value;
-                var apothem = _fCenterButton * _fOuterCircle * Math.Min(this.ClientSize.Width, this.ClientSize.Height);
-                for (int i=0; i<_buttons.Length;i++)
-                {
-                    _buttons[i].CenterButton = new PointF(apothem + _buttons[i].CenterRotation.X, SideLength(_nButtons, apothem) + _buttons[i].CenterRotation.Y);
-                }
+                _fApothem = _fCenterButton * _fOuterCircle * _nMinDimension;
+                ResizeButtons();
             }
         }
-        
+
+        /// <summary>
+        /// Ratio (range 0 to 1) of the outer button with respect of outer circle radius of the board
+        /// </summary>
+        [Description("Ratio (range 0 to 1) of the outer button with respect of outer circle radius of the board"),
+        Category("Custom"),
+        Browsable(true),
+        DefaultValue(0.95),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public float OuterButtonRatio
+        {
+            get => _fOuterButton;
+            set
+            {
+                _fOuterButton = value;
+                ResizeButtons();
+            }
+        }
+        /// <summary>
+        /// Ratio (range 0 to 1) of the inner button with respect of outer circle radius of the board
+        /// </summary>
+        [Description("Ratio (range 0 to 1) of the outer button with respect of outer circle radius of the board"),
+        Category("Custom"),
+        Browsable(true),
+        DefaultValue(0.55),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public float InnerButtonRatio
+        {
+            get => _fInnerButton;
+            set
+            {
+                _fInnerButton = value;
+                ResizeButtons();
+            }
+        }
 
         #endregion
 
-
+        /*
+            Blue 	2	400	196
+            Green	0	400	392
+            Red 	1	400	330
+            Yellow	3	400	262
+         */
 
         // Constructor de la clase
         public CustomBoard()
@@ -438,7 +482,7 @@ namespace SimonSays
             _buttons = new SimonSays.SimonButton2[_nButtons];
 
             // Get the minimum dimension of the client area
-            _nDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
+            _nMinDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
             var rotation = 360f / _nButtons;
 
             for (int i = 0; i < NumberOfButtons; i++)
@@ -447,17 +491,18 @@ namespace SimonSays
                 {
                     Color = Color.DarkRed,
                     Location = new Point(0, 0),
-                    Size = new Size(this.Width, this.Height),
+                    Size = new Size(_nMinDimension, _nMinDimension),
                     CenterRotation = new PointF(this.Width / 2.0f, this.Height / 2.0f),
                     CenterButton = new PointF(this.Width / 2.0f, this.Height / 2.0f),
                     ClickOffset = new PointF(2, 2),
-                    InnerRadius = 0.55f * _nDimension / 2f,
-                    OutterRadius = 0.95f * _nDimension / 2f,
+                    InnerRadius = _fInnerButton * _nMinDimension / 2f,
+                    OuterRadius = _fOuterButton * _nMinDimension / 2f,
                     AngleRotation = i * rotation,
                     AngleSwept = rotation,
                     Value = i
                 };
-                _buttons[i].Size = new Size(this.Width, this.Height);
+                //_buttons[i].Size = new Size(this.Width, this.Height);
+                _buttons[i].Click += new System.EventHandler(this.CustomButton_Click);
                 this.Controls.Add(_buttons[i]);
             }
 
@@ -474,7 +519,7 @@ namespace SimonSays
 
             while (i < _buttons.Length)
             {
-                //_buttons.ButtonClick -= new EventHandler<RoundButton.ButtonClickEventArgs>(this.ButtonClicked);
+                _buttons[i].Click -= new System.EventHandler(this.CustomButton_Click);
                 this.Controls.Remove(_buttons[i]);
                 _buttons[i].Dispose();
                 i++;
@@ -516,49 +561,38 @@ namespace SimonSays
             //AlignControls();
 
             // Get the minimum dimension of the client area
-            _nDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
+            _nMinDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
+            _fApothem = _fCenterButton * _fOuterCircle * _nMinDimension / 2;
 
-            for (int i = 0; i < _buttons.Length; i++)
-            {
-                _buttons[i].Location = new Point((this.Width - _nDimension) / 2, (this.Width - _nDimension) / 2);
-                _buttons[i].CenterRotation = new PointF(this.Width / 2.0f, this.Height / 2.0f);
-            }
-
+            ResizeButtons();
 
             Invalidate();
             base.OnResize(e);
-            /*
-            Int32 _nSize;
-            
-            _nDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
-            _nSize = (Int32)Math.Round(Math.Sqrt(2.0) * (_fOuterCircle - 0) * _nDimension / 2);
-            
-            btnGreen.Location = new Point(0, 0);
-            btnRed.Location = new Point(this.ClientRectangle.Width - _nDimension / 2, 0);
-            btnBlue.Location = new Point(this.ClientRectangle.Width - _nDimension / 2, this.ClientRectangle.Height - _nDimension / 2);
-            btnYellow.Location = new Point(0, this.ClientRectangle.Height - _nDimension / 2);
+        }
 
-            btnGreen.Height = _nSize;
-            btnGreen.Width = _nSize;
-            btnRed.Height = _nSize;
-            btnRed.Width = _nSize;
-            btnYellow.Height = _nSize;
-            btnYellow.Width = _nSize;
-            btnBlue.Height = _nSize;
-            btnBlue.Width = _nSize;
+        private void ResizeButtons()
+        {
+            var location = new Point((this.Width - _nMinDimension) / 2, (this.Height - _nMinDimension) / 2);        // The top-left coordinate of the buttons
+            //var centerRot = new PointF(location.X + _nMinDimension / 2.0f, location.Y + _nMinDimension / 2.0f);
+            var centerRot = new PointF(_nMinDimension / 2.0f, _nMinDimension / 2.0f);
+            var centerBut = new PointF(_fApothem + centerRot.X, SideLength(_nButtons, _fApothem) / 2f + centerRot.Y);
 
-            btnGreen.Location = new Point((Int32)(this.ClientRectangle.Width - _fOuterCircle * _nDimension) / 2 - btnGreen.OffSetX, (Int32)(this.ClientRectangle.Height - _fOuterCircle * _nDimension) / 2 - btnGreen.OffSetY);
-            btnRed.Location = new Point((Int32)(this.ClientRectangle.Width - (this.ClientRectangle.Width - _fOuterCircle * _nDimension) / 2 + btnRed.OffSetX - btnRed.Width), (Int32)(this.ClientRectangle.Height - _fOuterCircle * _nDimension) / 2 - btnGreen.OffSetY);
-            btnYellow.Location = new Point((Int32)(this.ClientRectangle.Width - _fOuterCircle * _nDimension) / 2 - btnGreen.OffSetX, (Int32)(this.ClientSize.Height - ((this.ClientRectangle.Height - _fOuterCircle * _nDimension) / 2) + btnYellow.OffSetY - btnYellow.Height));
-            btnBlue.Location = new Point((Int32)(this.ClientRectangle.Width - (this.ClientRectangle.Width - _fOuterCircle * _nDimension) / 2 + btnBlue.OffSetX - btnBlue.Width), (Int32)(this.ClientSize.Height - ((this.ClientRectangle.Height - _fOuterCircle * _nDimension) / 2) + btnBlue.OffSetY - btnBlue.Height));
-            */
+            //System.Diagnostics.Debug.WriteLine(this.Size.ToString());
+            //System.Diagnostics.Debug.WriteLine(_nMinDimension);
+            //System.Diagnostics.Debug.WriteLine(location.ToString());
+            //System.Diagnostics.Debug.WriteLine(centerRot.ToString());
+            //System.Diagnostics.Debug.WriteLine(centerBut.ToString());
 
-            /*
-            btnGreen.Size = new Size(_nDimension / 2, _nDimension / 2);
-            btnRed.Size = new Size(_nDimension / 2, _nDimension / 2);
-            btnYellow.Size = new Size(_nDimension / 2, _nDimension / 2);
-            btnBlue.Size = new Size(_nDimension / 2, _nDimension / 2);
-            */
+            for (int i = 0; i < _buttons.Length; i++)
+            {
+                _buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
+                _buttons[i].Location = location;
+                _buttons[i].CenterRotation = centerRot;
+                _buttons[i].CenterButton = centerBut;
+                _buttons[i].OuterRadius = _fOuterButton * _fOuterCircle * _nMinDimension / 2f;
+                _buttons[i].InnerRadius = _fInnerButton * _fOuterCircle * _nMinDimension / 2f;
+            }
+
         }
 
         private void CustomButton_Click(object sender, EventArgs e)
@@ -566,7 +600,7 @@ namespace SimonSays
             //_Game.OnPress(((ColorButton.customButton)sender).ColorValue);
             //MessageBox.Show("Botón pulsado");
             // Call the function to generate the event
-            OnButtonClick(new ButtonClickEventArgs(((ColorButton.SimonButton)sender).ColorValue));
+            OnButtonClick(new ButtonClickEventArgs(((SimonSays.SimonButton2)sender).Value));
             
         }
 
@@ -581,24 +615,24 @@ namespace SimonSays
         public void ComputeParameters()
         {
             // Get the minimum dimension of the client area
-            _nDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
+            _nMinDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
 
             // Find out the dimensions of the outer and the inner circle rectangle
-            _OuterRect.X = (int)((this.ClientRectangle.Width - _fOuterCircle * _nDimension) / 2);
-            _OuterRect.Y = (int)((this.ClientRectangle.Height - _fOuterCircle * _nDimension) / 2);
-            _OuterRect.Width = (int)(_fOuterCircle * _nDimension);
-            _OuterRect.Height = (int)(_fOuterCircle * _nDimension);
+            _OuterRect.X = (int)((this.ClientRectangle.Width - _fOuterCircle * _nMinDimension) / 2);
+            _OuterRect.Y = (int)((this.ClientRectangle.Height - _fOuterCircle * _nMinDimension) / 2);
+            _OuterRect.Width = (int)(_fOuterCircle * _nMinDimension);
+            _OuterRect.Height = (int)(_fOuterCircle * _nMinDimension);
             
-            _InnerRect.X = (int)((this.ClientRectangle.Width - _fInnerCircle * _nDimension) / 2);
-            _InnerRect.Y = (int)((this.ClientRectangle.Height - _fInnerCircle * _nDimension) / 2);
-            _InnerRect.Width = (int)(_fInnerCircle * _nDimension);
-            _InnerRect.Height = (int)(_fInnerCircle * _nDimension);
+            _InnerRect.X = (int)((this.ClientRectangle.Width - _fInnerCircle * _nMinDimension) / 2);
+            _InnerRect.Y = (int)((this.ClientRectangle.Height - _fInnerCircle * _nMinDimension) / 2);
+            _InnerRect.Width = (int)(_fInnerCircle * _nMinDimension);
+            _InnerRect.Height = (int)(_fInnerCircle * _nMinDimension);
 
             // Find out the dimensions of the button rectangle
             _ButtonRect.X = _OuterRect.X - this.btnGreen.OffSetX;
             _ButtonRect.Y = _OuterRect.Y - this.btnGreen.OffSetY;
-            _ButtonRect.Width = (int)Math.Round(Math.Sqrt(2.0) * _fOuterCircle * _nDimension / 2);
-            _ButtonRect.Height = (int)Math.Round(Math.Sqrt(2.0) * _fOuterCircle * _nDimension / 2);
+            _ButtonRect.Width = (int)Math.Round(Math.Sqrt(2.0) * _fOuterCircle * _nMinDimension / 2);
+            _ButtonRect.Height = (int)Math.Round(Math.Sqrt(2.0) * _fOuterCircle * _nMinDimension / 2);
 
         }
 
