@@ -1,4 +1,6 @@
-﻿namespace SimonSays
+﻿using System.Drawing;
+
+namespace SimonSays
 {
     partial class frmSettings
     {
@@ -39,9 +41,9 @@
             this.numButtonDistance = new System.Windows.Forms.NumericUpDown();
             this.lblButtonDistance = new System.Windows.Forms.Label();
             this.gridButtons = new System.Windows.Forms.DataGridView();
-            this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Frequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Color = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numButtonMin = new System.Windows.Forms.NumericUpDown();
             this.numButtonMax = new System.Windows.Forms.NumericUpDown();
             this.lblButtonMin = new System.Windows.Forms.Label();
@@ -65,7 +67,7 @@
             this.lblBoardMax = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnAccept = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.tabSettings.SuspendLayout();
             this.tabInterface.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonDistance)).BeginInit();
@@ -148,73 +150,12 @@
             // 
             // DemoBoard
             // 
-            // 
-            // 
-            // 
-            this.DemoBoard.BlueButton.Clicked = false;
-            this.DemoBoard.BlueButton.ColorValue = 2;
-            this.DemoBoard.BlueButton.Duration = 400;
-            this.DemoBoard.BlueButton.ForeColor = System.Drawing.Color.Blue;
-            this.DemoBoard.BlueButton.Frequency = 196;
-            this.DemoBoard.BlueButton.Location = new System.Drawing.Point(81, 81);
-            this.DemoBoard.BlueButton.Name = "btnBlue";
-            this.DemoBoard.BlueButton.OuterAngleSpan = 0F;
-            this.DemoBoard.BlueButton.Rotation = 0;
-            this.DemoBoard.BlueButton.Size = new System.Drawing.Size(127, 127);
-            this.DemoBoard.BlueButton.TabIndex = 0;
-            this.DemoBoard.BlueButton.WidthPercentage = 1F;
-            this.DemoBoard.CenterButtonRatio = 0F;
-            // 
-            // 
-            // 
-            this.DemoBoard.GreenButton.Clicked = false;
-            this.DemoBoard.GreenButton.ColorValue = 0;
-            this.DemoBoard.GreenButton.Duration = 400;
-            this.DemoBoard.GreenButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-            this.DemoBoard.GreenButton.Frequency = 392;
-            this.DemoBoard.GreenButton.Location = new System.Drawing.Point(-8, -8);
-            this.DemoBoard.GreenButton.Name = "btnGreen";
-            this.DemoBoard.GreenButton.OuterAngleSpan = 0F;
-            this.DemoBoard.GreenButton.Rotation = 0;
-            this.DemoBoard.GreenButton.Size = new System.Drawing.Size(127, 127);
-            this.DemoBoard.GreenButton.TabIndex = 2;
-            this.DemoBoard.GreenButton.WidthPercentage = 1F;
-            this.DemoBoard.InnerButtonRatio = 0.55F;
             this.DemoBoard.Location = new System.Drawing.Point(403, 150);
             this.DemoBoard.Name = "DemoBoard";
-            this.DemoBoard.OuterButtonRatio = 0.95F;
-            // 
-            // 
-            // 
-            this.DemoBoard.RedButton.Clicked = false;
-            this.DemoBoard.RedButton.ColorValue = 1;
-            this.DemoBoard.RedButton.Duration = 400;
-            this.DemoBoard.RedButton.ForeColor = System.Drawing.Color.Red;
-            this.DemoBoard.RedButton.Frequency = 330;
-            this.DemoBoard.RedButton.Location = new System.Drawing.Point(81, -8);
-            this.DemoBoard.RedButton.Name = "btnRed";
-            this.DemoBoard.RedButton.OuterAngleSpan = 0F;
-            this.DemoBoard.RedButton.Rotation = 0;
-            this.DemoBoard.RedButton.Size = new System.Drawing.Size(127, 127);
-            this.DemoBoard.RedButton.TabIndex = 3;
-            this.DemoBoard.RedButton.WidthPercentage = 1F;
+            this.DemoBoard.NumberOfButtons = 5;
+            this.DemoBoard.OuterButtonRatio = 0.9F;
             this.DemoBoard.Size = new System.Drawing.Size(200, 200);
             this.DemoBoard.TabIndex = 18;
-            // 
-            // 
-            // 
-            this.DemoBoard.YellowButton.Clicked = false;
-            this.DemoBoard.YellowButton.ColorValue = 3;
-            this.DemoBoard.YellowButton.Duration = 400;
-            this.DemoBoard.YellowButton.ForeColor = System.Drawing.Color.Yellow;
-            this.DemoBoard.YellowButton.Frequency = 262;
-            this.DemoBoard.YellowButton.Location = new System.Drawing.Point(-8, 81);
-            this.DemoBoard.YellowButton.Name = "btnYellow";
-            this.DemoBoard.YellowButton.OuterAngleSpan = 0F;
-            this.DemoBoard.YellowButton.Rotation = 0;
-            this.DemoBoard.YellowButton.Size = new System.Drawing.Size(127, 127);
-            this.DemoBoard.YellowButton.TabIndex = 1;
-            this.DemoBoard.YellowButton.WidthPercentage = 1F;
             // 
             // trackButtonDistance
             // 
@@ -272,34 +213,34 @@
             // 
             this.gridButtons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridButtons.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Value,
-            this.Frequency,
-            this.Color});
+            this.ColValue,
+            this.ColFrequency,
+            this.ColColor});
             this.gridButtons.Location = new System.Drawing.Point(23, 203);
             this.gridButtons.Name = "gridButtons";
             this.gridButtons.Size = new System.Drawing.Size(287, 134);
             this.gridButtons.TabIndex = 12;
             // 
-            // Value
+            // ColValue
             // 
-            this.Value.DataPropertyName = "Value";
-            this.Value.HeaderText = "Value";
-            this.Value.Name = "Value";
-            this.Value.ReadOnly = true;
-            this.Value.Width = 50;
+            this.ColValue.DataPropertyName = "Value";
+            this.ColValue.HeaderText = "Value";
+            this.ColValue.Name = "ColValue";
+            this.ColValue.ReadOnly = true;
+            this.ColValue.Width = 50;
             // 
-            // Frequency
+            // ColFrequency
             // 
-            this.Frequency.DataPropertyName = "Frequency";
-            this.Frequency.HeaderText = "Frequency";
-            this.Frequency.Name = "Frequency";
-            this.Frequency.Width = 80;
+            this.ColFrequency.DataPropertyName = "Frequency";
+            this.ColFrequency.HeaderText = "Frequency";
+            this.ColFrequency.Name = "ColFrequency";
+            this.ColFrequency.Width = 80;
             // 
-            // Color
+            // ColColor
             // 
-            this.Color.DataPropertyName = "Color";
-            this.Color.HeaderText = "Color";
-            this.Color.Name = "Color";
+            this.ColColor.DataPropertyName = "Color";
+            this.ColColor.HeaderText = "Color";
+            this.ColColor.Name = "ColColor";
             // 
             // numButtonMin
             // 
@@ -560,6 +501,7 @@
             this.btnReset.TabIndex = 1;
             this.btnReset.Text = "&Reset";
             this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // btnAccept
             // 
@@ -571,21 +513,22 @@
             this.btnAccept.UseVisualStyleBackColor = true;
             this.btnAccept.Click += new System.EventHandler(this.btnAccept_Click);
             // 
-            // button1
+            // btnCancel
             // 
-            this.button1.Location = new System.Drawing.Point(517, 406);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(110, 30);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "&Cancel";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnCancel.Location = new System.Drawing.Point(517, 406);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(110, 30);
+            this.btnCancel.TabIndex = 3;
+            this.btnCancel.Text = "&Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(644, 448);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.tabSettings);
@@ -638,9 +581,9 @@
         private System.Windows.Forms.DataGridView gridButtons;
         private System.Windows.Forms.NumericUpDown numButtonDistance;
         private System.Windows.Forms.Label lblButtonDistance;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Value;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Frequency;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Color;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnFrequency;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnColor;
         private System.Windows.Forms.TabPage tabBoard;
         private System.Windows.Forms.Label lblBoardBackground;
         private System.Windows.Forms.TrackBar trackBoardIn;
@@ -661,6 +604,9 @@
         private SimonSays.CustomBoard DemoBoard;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button btnAccept;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColFrequency;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColColor;
     }
 }

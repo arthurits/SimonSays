@@ -83,5 +83,15 @@ namespace SimonSays
         {
 
         }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

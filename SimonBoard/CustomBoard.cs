@@ -50,6 +50,7 @@ namespace SimonSays
 
         #region Public interface
 
+        /*
         // Interfaz pública de las propiedades del control
         // https://msdn.microsoft.com/en-us/library/system.componentmodel.notifyparentpropertyattribute.aspx
         [Description("Green button properties"),
@@ -95,7 +96,7 @@ namespace SimonSays
             get { return this.btnBlue; }
             set { this.btnBlue = value; }
         }
-
+        
 
         [TypeConverter(typeof(ButtonColorConverter))]
         public class ButtonColor
@@ -207,6 +208,8 @@ namespace SimonSays
             DefaultValue(typeof(Int32), "")]
             public Int32 Blue { get { return _Blue; } set { _Blue = value; } }
         }
+        */
+
 
         [Description("Percentage of the board outer ratio"),
         Category("Custom"),
@@ -346,7 +349,7 @@ namespace SimonSays
         [Description("Ratio (range 0 to 1) with respect the outer circle radius of the board"),
         Category("Custom"),
         Browsable(true),
-        DefaultValue(0),
+        DefaultValue(0.0f),
         EditorBrowsable(EditorBrowsableState.Always),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public float CenterButtonRatio
@@ -366,7 +369,7 @@ namespace SimonSays
         [Description("Ratio (range 0 to 1) of the outer button with respect of outer circle radius of the board"),
         Category("Custom"),
         Browsable(true),
-        DefaultValue(0.95),
+        DefaultValue(0.95f),
         EditorBrowsable(EditorBrowsableState.Always),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public float OuterButtonRatio
@@ -384,7 +387,7 @@ namespace SimonSays
         [Description("Ratio (range 0 to 1) of the outer button with respect of outer circle radius of the board"),
         Category("Custom"),
         Browsable(true),
-        DefaultValue(0.55),
+        DefaultValue(0.55f),
         EditorBrowsable(EditorBrowsableState.Always),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public float InnerButtonRatio
@@ -417,15 +420,15 @@ namespace SimonSays
             // https://msdn.microsoft.com/en-us/library/b818z6z6(v=vs.110).aspx
             SetStyle(ControlStyles.ResizeRedraw, true);
 
-            this.btnGreen.Click += new System.EventHandler(this.CustomButton_Click);
-            this.btnRed.Click += new System.EventHandler(this.CustomButton_Click);
-            this.btnYellow.Click += new System.EventHandler(this.CustomButton_Click);
-            this.btnBlue.Click += new System.EventHandler(this.CustomButton_Click);
+            //this.btnGreen.Click += new System.EventHandler(this.CustomButton_Click);
+            //this.btnRed.Click += new System.EventHandler(this.CustomButton_Click);
+            //this.btnYellow.Click += new System.EventHandler(this.CustomButton_Click);
+            //this.btnBlue.Click += new System.EventHandler(this.CustomButton_Click);
 
-            this.btnGreen.Visible = false;
-            this.btnRed.Visible = false;
-            this.btnYellow.Visible = false;
-            this.btnBlue.Visible = false;
+            //this.btnGreen.Visible = false;
+            //this.btnRed.Visible = false;
+            //this.btnYellow.Visible = false;
+            //this.btnBlue.Visible = false;
 
             // Get the minimum dimension of the client area
             // Set the array of buttons to 0 elements
@@ -577,6 +580,8 @@ namespace SimonSays
             var centerRot = new PointF(_nMinDimension / 2.0f, _nMinDimension / 2.0f);
             var centerBut = new PointF(_fApothem + centerRot.X, SideLength(_nButtons, _fApothem) / 2f + centerRot.Y);
 
+            var radiusAdj = (float)Math.Sqrt(centerRot.X * centerRot.X + centerRot.Y * centerRot.Y);
+
             //System.Diagnostics.Debug.WriteLine(this.Size.ToString());
             //System.Diagnostics.Debug.WriteLine(_nMinDimension);
             //System.Diagnostics.Debug.WriteLine(location.ToString());
@@ -589,8 +594,8 @@ namespace SimonSays
                 _buttons[i].Location = location;
                 _buttons[i].CenterRotation = centerRot;
                 _buttons[i].CenterButton = centerBut;
-                _buttons[i].OuterRadius = _fOuterButton * _fOuterCircle * _nMinDimension / 2f;
-                _buttons[i].InnerRadius = _fInnerButton * _fOuterCircle * _nMinDimension / 2f;
+                _buttons[i].OuterRadius = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (radiusAdj);
+                _buttons[i].InnerRadius = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (radiusAdj);
             }
 
         }
@@ -629,8 +634,8 @@ namespace SimonSays
             _InnerRect.Height = (int)(_fInnerCircle * _nMinDimension);
 
             // Find out the dimensions of the button rectangle
-            _ButtonRect.X = _OuterRect.X - this.btnGreen.OffSetX;
-            _ButtonRect.Y = _OuterRect.Y - this.btnGreen.OffSetY;
+            //_ButtonRect.X = _OuterRect.X - this.btnGreen.OffSetX;
+            //_ButtonRect.Y = _OuterRect.Y - this.btnGreen.OffSetY;
             _ButtonRect.Width = (int)Math.Round(Math.Sqrt(2.0) * _fOuterCircle * _nMinDimension / 2);
             _ButtonRect.Height = (int)Math.Round(Math.Sqrt(2.0) * _fOuterCircle * _nMinDimension / 2);
 
@@ -645,17 +650,17 @@ namespace SimonSays
             ComputeParameters();
 
             // Reposition and resize the buttons
-            btnGreen.Location = new Point(_ButtonRect.X, _ButtonRect.Y);
-            btnGreen.Size = new Size(_ButtonRect.Width, _ButtonRect.Height);
+            //btnGreen.Location = new Point(_ButtonRect.X, _ButtonRect.Y);
+            //btnGreen.Size = new Size(_ButtonRect.Width, _ButtonRect.Height);
 
-            btnRed.Location = new Point(_ButtonRect.X + (int)(_OuterRect.Width / 2), _ButtonRect.Y);
-            btnRed.Size = new Size(_ButtonRect.Width, _ButtonRect.Height);
+            //btnRed.Location = new Point(_ButtonRect.X + (int)(_OuterRect.Width / 2), _ButtonRect.Y);
+            //btnRed.Size = new Size(_ButtonRect.Width, _ButtonRect.Height);
 
-            btnYellow.Location = new Point(_ButtonRect.X, _ButtonRect.Y + (int)(_OuterRect.Height / 2));
-            btnYellow.Size = new Size(_ButtonRect.Width, _ButtonRect.Height);
+            //btnYellow.Location = new Point(_ButtonRect.X, _ButtonRect.Y + (int)(_OuterRect.Height / 2));
+            //btnYellow.Size = new Size(_ButtonRect.Width, _ButtonRect.Height);
 
-            btnBlue.Location = new Point(_ButtonRect.X + (int)(_OuterRect.Width / 2), _ButtonRect.Y + (int)(_OuterRect.Height / 2));
-            btnBlue.Size = new Size(_ButtonRect.Width, _ButtonRect.Height);
+            //btnBlue.Location = new Point(_ButtonRect.X + (int)(_OuterRect.Width / 2), _ButtonRect.Y + (int)(_OuterRect.Height / 2));
+            //btnBlue.Size = new Size(_ButtonRect.Width, _ButtonRect.Height);
 
             // Score text boxes
             lblScoreCurrent.Location = new Point((this.ClientRectangle.Width - lblScoreCurrent.Width) / 2, this.ClientRectangle.Height / 2 - lblScoreCurrent.Height);
@@ -784,6 +789,8 @@ namespace SimonSays
 
 
 
+
+    /*
     public class ButtonColorConverter : ExpandableObjectConverter
     {
         // This override prevents the PropertyGrid from displaying the full type name in the value cell.
@@ -807,7 +814,7 @@ namespace SimonSays
         {
             return true;
         }
-        /*public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext context, object value, Attribute[] attributes)
+        public override PropertyDescriptorCollection GetProperties(ITypeDescriptorContext context, object value, Attribute[] attributes)
         {
             MessageBox.Show("Propiedad cambiada");
             if (value.GetType() == typeof(CustomBoard.ButtonColor))
@@ -818,7 +825,9 @@ namespace SimonSays
                 return TypeDescriptor.GetProperties(typeof(CustomBoard.ButtonFrequency));
             else
                 return base.GetProperties(context, value, attributes);            
-        }*/
+        }
     }
+
+    */
 
 }

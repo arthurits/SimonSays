@@ -29,29 +29,9 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.simonButton1 = new ColorButton.SimonButton();
             this.button1 = new System.Windows.Forms.Button();
-            this.simonButton21 = new SimonSays.SimonButton2();
+            this.simonButton2 = new SimonSays.SimonButton2();
             this.SuspendLayout();
-            // 
-            // simonButton1
-            // 
-            this.simonButton1.BackColor = System.Drawing.Color.Red;
-            this.simonButton1.Clicked = false;
-            this.simonButton1.ColorValue = 1;
-            this.simonButton1.Duration = 420;
-            this.simonButton1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.simonButton1.ForeColor = System.Drawing.Color.Aqua;
-            this.simonButton1.Frequency = 165;
-            this.simonButton1.Location = new System.Drawing.Point(355, 93);
-            this.simonButton1.Name = "simonButton1";
-            this.simonButton1.OuterAngleSpan = 88F;
-            this.simonButton1.Rotation = 0;
-            this.simonButton1.Size = new System.Drawing.Size(320, 320);
-            this.simonButton1.TabIndex = 0;
-            this.simonButton1.Text = "simonButton1";
-            this.simonButton1.UseVisualStyleBackColor = false;
-            this.simonButton1.WidthPercentage = 50F;
             // 
             // button1
             // 
@@ -63,38 +43,38 @@
             this.button1.TabIndex = 2;
             this.button1.Text = "button1";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // simonButton21
+            // simonButton2
             // 
-            this.simonButton21.AngleRotation = 0F;
-            this.simonButton21.AngleSwept = 90F;
-            this.simonButton21.BackColor = System.Drawing.Color.Transparent;
-            this.simonButton21.CenterButton = ((System.Drawing.PointF)(resources.GetObject("simonButton21.CenterButton")));
-            this.simonButton21.CenterRotation = ((System.Drawing.PointF)(resources.GetObject("simonButton21.CenterRotation")));
-            this.simonButton21.Clicked = false;
-            this.simonButton21.ClickOffset = ((System.Drawing.PointF)(resources.GetObject("simonButton21.ClickOffset")));
-            this.simonButton21.Color = System.Drawing.Color.DarkRed;
-            this.simonButton21.Duration = 350;
-            this.simonButton21.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.simonButton21.Frequency = 432F;
-            this.simonButton21.InnerRadius = 75F;
-            this.simonButton21.Location = new System.Drawing.Point(23, 23);
-            this.simonButton21.Name = "simonButton21";
-            this.simonButton21.OuterRadius = 145F;
-            this.simonButton21.RegionOffset = 1F;
-            this.simonButton21.Size = new System.Drawing.Size(300, 300);
-            this.simonButton21.TabIndex = 1;
-            this.simonButton21.UseVisualStyleBackColor = false;
-            this.simonButton21.Value = 0;
+            this.simonButton2.AngleRotation = 0F;
+            this.simonButton2.AngleSwept = 90F;
+            this.simonButton2.BackColor = System.Drawing.Color.Transparent;
+            this.simonButton2.CenterButton = ((System.Drawing.PointF)(resources.GetObject("simonButton2.CenterButton")));
+            this.simonButton2.CenterRotation = ((System.Drawing.PointF)(resources.GetObject("simonButton2.CenterRotation")));
+            this.simonButton2.Clicked = false;
+            this.simonButton2.ClickOffset = ((System.Drawing.PointF)(resources.GetObject("simonButton2.ClickOffset")));
+            this.simonButton2.Color = System.Drawing.Color.DarkRed;
+            this.simonButton2.Duration = 350;
+            this.simonButton2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.simonButton2.Frequency = 432F;
+            this.simonButton2.InnerRadius = 75F;
+            this.simonButton2.Location = new System.Drawing.Point(23, 23);
+            this.simonButton2.Name = "simonButton2";
+            this.simonButton2.OuterRadius = 145F;
+            this.simonButton2.RegionOffset = 1F;
+            this.simonButton2.Size = new System.Drawing.Size(300, 300);
+            this.simonButton2.TabIndex = 1;
+            this.simonButton2.UseVisualStyleBackColor = false;
+            this.simonButton2.Value = 0;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(844, 507);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.simonButton21);
-            this.Controls.Add(this.simonButton1);
+            this.Controls.Add(this.simonButton2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -102,9 +82,7 @@
         }
 
         #endregion
-
-        private ColorButton.SimonButton simonButton1;
-        private SimonButton2 simonButton21;
+        private SimonButton2 simonButton2;
         private System.Windows.Forms.Button button1;
     }
 }

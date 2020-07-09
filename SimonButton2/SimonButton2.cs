@@ -11,6 +11,7 @@ using System.Drawing.Drawing2D;
 
 // https://stackoverflow.com/questions/58803957/creating-an-arc-between-two-points-with-arc-radius-and-rotation
 // http://csharphelper.com/blog/2019/10/connect-two-line-segments-with-a-circular-arc-in-c/
+// https://stackoverflow.com/questions/32418695/windows-forms-splash-screen-show-a-form-while-loading-main-form
 
 namespace SimonSays
 {
