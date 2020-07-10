@@ -202,6 +202,7 @@ namespace SimonSays
             | System.Windows.Forms.AnchorStyles.Right)));
             this.simonBoard.Location = new System.Drawing.Point(16, 70);
             this.simonBoard.Name = "simonBoard";
+            this.simonBoard.NumberOfButtons = 5;
             this.simonBoard.Size = new System.Drawing.Size(542, 514);
             this.simonBoard.TabIndex = 13;
             // 

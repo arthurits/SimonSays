@@ -150,6 +150,8 @@ namespace SimonSays
             // 
             // DemoBoard
             // 
+            this.DemoBoard.CenterButtonRatio = 0F;
+            this.DemoBoard.InnerButtonRatio = 0.55F;
             this.DemoBoard.Location = new System.Drawing.Point(403, 150);
             this.DemoBoard.Name = "DemoBoard";
             this.DemoBoard.NumberOfButtons = 5;

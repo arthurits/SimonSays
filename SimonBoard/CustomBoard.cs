@@ -26,6 +26,8 @@ namespace SimonSays
         // Definición de los botones
         private Int32 _nMinDimension = 0;
         private float _fApothem = 0f;
+        private float _fPolySide = 0f;
+        private float _fRadiusOffset = 0f;
         private float _fOuterCircle = 0.9f;
         private float _fInnerCircle = 0.35f;
         private Rectangle _OuterRect = new Rectangle();
@@ -359,6 +361,7 @@ namespace SimonSays
             {
                 _fCenterButton = value;
                 _fApothem = _fCenterButton * _fOuterCircle * _nMinDimension;
+                ButtonsOffsetParameters();
                 ResizeButtons();
             }
         }
@@ -486,6 +489,8 @@ namespace SimonSays
 
             // Get the minimum dimension of the client area
             _nMinDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
+            ButtonsOffsetParameters();
+
             var rotation = 360f / _nButtons;
 
             for (int i = 0; i < NumberOfButtons; i++)
@@ -498,11 +503,11 @@ namespace SimonSays
                     CenterRotation = new PointF(this.Width / 2.0f, this.Height / 2.0f),
                     CenterButton = new PointF(this.Width / 2.0f, this.Height / 2.0f),
                     ClickOffset = new PointF(2, 2),
-                    InnerRadius = _fInnerButton * _nMinDimension / 2f,
-                    OuterRadius = _fOuterButton * _nMinDimension / 2f,
+                    InnerRadius = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset),
+                    OuterRadius = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset),
                     AngleRotation = i * rotation,
                     AngleSwept = rotation,
-                    Value = i
+                    Value = i + 10
                 };
                 //_buttons[i].Size = new Size(this.Width, this.Height);
                 _buttons[i].Click += new System.EventHandler(this.CustomButton_Click);
@@ -527,7 +532,7 @@ namespace SimonSays
                 _buttons[i].Dispose();
                 i++;
             }
-
+            Array.Clear(_buttons, 0, _buttons.Length);
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -565,14 +570,27 @@ namespace SimonSays
 
             // Get the minimum dimension of the client area
             _nMinDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
-            _fApothem = _fCenterButton * _fOuterCircle * _nMinDimension / 2;
 
+            ButtonsOffsetParameters();
             ResizeButtons();
 
             Invalidate();
             base.OnResize(e);
         }
 
+        /// <summary>
+        /// Computes the offset parameters for the buttons
+        /// </summary>
+        private void ButtonsOffsetParameters()
+        {
+            _fApothem = _fCenterButton * _fOuterCircle * _nMinDimension / 2;
+            _fPolySide = SideLength(_nButtons, _fApothem);
+            _fRadiusOffset = (float)Math.Sqrt(Math.Pow(_fApothem, 2) + Math.Pow(_fPolySide / 2, 2));
+        }
+
+        /// <summary>
+        /// Resizes and repositions the buttons
+        /// </summary>
         private void ResizeButtons()
         {
             var location = new Point((this.Width - _nMinDimension) / 2, (this.Height - _nMinDimension) / 2);        // The top-left coordinate of the buttons
@@ -580,7 +598,8 @@ namespace SimonSays
             var centerRot = new PointF(_nMinDimension / 2.0f, _nMinDimension / 2.0f);
             var centerBut = new PointF(_fApothem + centerRot.X, SideLength(_nButtons, _fApothem) / 2f + centerRot.Y);
 
-            var radiusAdj = (float)Math.Sqrt(centerRot.X * centerRot.X + centerRot.Y * centerRot.Y);
+            //var radiusAdj = (float)Math.Sqrt(centerRot.X * centerRot.X + centerRot.Y * centerRot.Y);
+            //radiusAdj = (float)Math.Sqrt(Math.Pow(_fApothem, 2) + Math.Pow(_fPolySide / 2.0, 2));
 
             //System.Diagnostics.Debug.WriteLine(this.Size.ToString());
             //System.Diagnostics.Debug.WriteLine(_nMinDimension);
@@ -594,8 +613,8 @@ namespace SimonSays
                 _buttons[i].Location = location;
                 _buttons[i].CenterRotation = centerRot;
                 _buttons[i].CenterButton = centerBut;
-                _buttons[i].OuterRadius = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (radiusAdj);
-                _buttons[i].InnerRadius = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (radiusAdj);
+                _buttons[i].OuterRadius = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
+                _buttons[i].InnerRadius = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
             }
 
         }
