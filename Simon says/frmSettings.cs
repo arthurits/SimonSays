@@ -16,6 +16,12 @@ namespace SimonSays
         public frmSettings()
         {
             InitializeComponent();
+
+            // Default buttons
+            this.AcceptButton = this.btnAccept;
+            this.CancelButton = this.btnCancel;
+
+            // Populate the GridView
             List<(int Value, float Frequency, string Color)> lista = new List<(int Value, float Frequency, string Color)>();
             lista.Add((0, 460, "0000FF"));
             lista.Add((1, 460, "FF00FF"));
@@ -68,6 +74,61 @@ namespace SimonSays
             gridButtons.DataSource = table;
         }
 
+        private void btnAccept_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            // Ask for overriding confirmation
+            DialogResult result;
+            using (new CenterWinDialog(this))
+            {
+                result = MessageBox.Show(this, "You are about to override the actual settings\n" +
+                                                "with the default values.\n\n" +
+                                                "Are you sure you want to continue?",
+                                                "Override settings",
+                                                MessageBoxButtons.YesNo,
+                                                MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
+            }
+
+            // If "Yes", then reset values to default
+            if (result == DialogResult.Yes)
+            {
+                //ApplySettings(_defaultSettings);
+                //_settings["SplitterDistance"] = "0.5";
+            }
+        }
+
+        private void btnFontFamily_Click(object sender, EventArgs e)
+        {
+            FontDialog frmFont = new FontDialog()
+            {
+                FontMustExist = true,
+                Font = this.DemoBoard.Font,
+                ShowApply = false,
+                ShowColor = false,
+                ShowEffects = false,
+                ShowHelp = false
+            };
+
+            using (new CenterWinDialog(this))
+            {
+                if (frmFont.ShowDialog() == DialogResult.OK)
+                {
+                    this.DemoBoard.Font = new Font(frmFont.Font.FontFamily, this.DemoBoard.Font.SizeInPoints);
+                    this.lblFontFamily.Text = "Font: " + frmFont.Font.FontFamily.Name;
+                }
+            }
+            // https://stackoverflow.com/questions/2207709/convert-font-to-string-and-back-again
+        }
+
         private void numButtons_ValueChanged(object sender, EventArgs e)
         {
             DemoBoard.NumberOfButtons = (Int32)numButtons.Value;
@@ -79,19 +140,6 @@ namespace SimonSays
             DemoBoard.CenterButtonRatio = (float)numButtonDistance.Value;
         }
 
-        private void btnAccept_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

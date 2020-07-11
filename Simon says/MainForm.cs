@@ -262,7 +262,7 @@ namespace SimonSays
         private void frmSimon_Resize(object sender, EventArgs e)
         {
             // Force the client area to be painted again
-            Invalidate();
+            //Invalidate();
             //this.btnGreen.Top = 0;
             //this.btnGreen.Left = 0;
             //this.btnGreen.Height = 400;
@@ -439,6 +439,19 @@ namespace SimonSays
                     //this.splitStats.SplitterDistance = Convert.ToInt32(programSettings.ContainsKey("SplitterDistance") ? programSettings["SplitterDistance"] : defaultSettings["SplitterDistance"]);
                 }
             }
+
+            this.simonBoard.NumberOfButtons = Convert.ToInt32(programSettings.ContainsKey("NumberOfButtons") ? programSettings["NumberOfButtons"] : defaultSettings["NumberOfButtons"]);
+            this.simonBoard.InnerButtonRatio = Convert.ToSingle(programSettings.ContainsKey("InnerButtonRatio") ? programSettings["InnerButtonRatio"] : defaultSettings["InnerButtonRatio"]);
+            this.simonBoard.OuterButtonRatio = Convert.ToSingle(programSettings.ContainsKey("OuterButtonRatio") ? programSettings["OuterButtonRatio"] : defaultSettings["OuterButtonRatio"]);
+            this.simonBoard.CenterButtonRatio = Convert.ToSingle(programSettings.ContainsKey("CenterButtonRatio") ? programSettings["CenterButtonRatio"] : defaultSettings["CenterButtonRatio"]);
+
+            this.simonBoard.PercentInnerRatio = Convert.ToSingle(programSettings.ContainsKey("InnerBoardRatio") ? programSettings["InnerBoardRatio"] : defaultSettings["InnerBoardRatio"]);
+            this.simonBoard.PercentOuterRatio = Convert.ToSingle(programSettings.ContainsKey("OuterBoardRatio") ? programSettings["OuterBoardRatio"] : defaultSettings["OuterBoardRatio"]);
+            this.simonBoard.ColorBackground = Color.FromArgb(Convert.ToInt32(programSettings.ContainsKey("ColorBackground") ? programSettings["ColorBackground"] : defaultSettings["ColorBackground"]));
+            this.simonBoard.ColorInnerCircle = Color.FromArgb(Convert.ToInt32(programSettings.ContainsKey("ColorInnerCircle") ? programSettings["ColorInnerCircle"] : defaultSettings["ColorInnerCircle"]));
+            this.simonBoard.ColorOuterCircle = Color.FromArgb(Convert.ToInt32(programSettings.ContainsKey("ColorOuterCircle") ? programSettings["ColorOuterCircle"] : defaultSettings["ColorOuterCircle"]));
+            this.simonBoard.Font = new Font(programSettings.ContainsKey("FontFamilyName") ? programSettings["FontFamilyName"] : defaultSettings["FontFamilyName"], simonBoard.Font.SizeInPoints);
+
             /*
             this._game.MinimumLength = Convert.ToInt32(programSettings.ContainsKey("MinimumLength") ? programSettings["MinimumLength"] : defaultSettings["MinimumLength"]);
             this._game.MaximumAttempts = Convert.ToInt32(programSettings.ContainsKey("MaximumAttempts") ? programSettings["MaximumAttempts"] : defaultSettings["MaximumAttempts"]);
@@ -474,20 +487,18 @@ namespace SimonSays
             settings["WindowWidth"] = this.ClientSize.Width.ToString();    // Get current form size
             settings["WindowHeight"] = this.ClientSize.Height.ToString();
 
-            settings["Time"] = "700";
-            settings["TimeIncrement"] = "0";
-            settings["MaximumDigit"] = "9";
-            settings["MinimumDigit"] = "0";
-            settings["MaximumAttempts"] = "10";
-            settings["MinimumLength"] = "2";
+            settings["NumberOfButtons"] = "4";
+            settings["InnerButtonRatio"] = "0.55";
+            settings["OuterButtonRatio"] = "0.90";
+            settings["CenterButtonRatio"] = "0";
 
-            settings["CountDownRatio"] = "0.37";
-            settings["NumbersRatio"] = "0.25";
-            settings["BorderRatio"] = "0.12";
-            settings["FontRatio"] = "0.55";
-            settings["ResultsRatio"] = "0.56";
+            settings["InnerBoardRatio"] = "0.35";
+            settings["OuterBoardRatio"] = "0.90";
+            settings["ColorBackground"] = Color.White.ToArgb().ToString();
+            settings["ColorInnerCircle"] = Color.White.ToArgb().ToString();
+            settings["ColorOuterCircle"] = Color.Black.ToArgb().ToString();
             settings["FontFamilyName"] = "Microsoft Sans Serif";
-            settings["BackColor"] = Color.White.ToArgb().ToString();
+
             settings["WindowPosition"] = "0";   // Remember windows position
 
             settings["PlayMode"] = "9";     //Fixed time (1) & random sequence (8)

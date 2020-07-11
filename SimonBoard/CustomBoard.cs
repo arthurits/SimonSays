@@ -360,7 +360,7 @@ namespace SimonSays
             set
             {
                 _fCenterButton = value;
-                _fApothem = _fCenterButton * _fOuterCircle * _nMinDimension;
+                //_fApothem = _fCenterButton * _fOuterCircle * _nMinDimension;
                 ButtonsOffsetParameters();
                 ResizeButtons();
             }
@@ -492,16 +492,22 @@ namespace SimonSays
             ButtonsOffsetParameters();
 
             var rotation = 360f / _nButtons;
+            var location = new Point((this.Width - _nMinDimension) / 2, (this.Height - _nMinDimension) / 2);        // The top-left coordinate of the buttons
+            //var centerRot = new PointF(location.X + _nMinDimension / 2.0f, location.Y + _nMinDimension / 2.0f);
+            var centerRot = new PointF(_nMinDimension / 2.0f, _nMinDimension / 2.0f);
+            var centerBut = new PointF(_fApothem + centerRot.X, SideLength(_nButtons, _fApothem) / 2f + centerRot.Y);
 
             for (int i = 0; i < NumberOfButtons; i++)
             {
                 _buttons[i] = new SimonSays.SimonButton2()
                 {
                     Color = Color.DarkRed,
-                    Location = new Point(0, 0),
+                    Location = location,
                     Size = new Size(_nMinDimension, _nMinDimension),
-                    CenterRotation = new PointF(this.Width / 2.0f, this.Height / 2.0f),
-                    CenterButton = new PointF(this.Width / 2.0f, this.Height / 2.0f),
+                    //CenterRotation = new PointF(this.Width / 2.0f, this.Height / 2.0f),
+                    CenterRotation = centerRot,
+                    //CenterButton = new PointF(this.Width / 2.0f, this.Height / 2.0f),
+                    CenterButton = centerBut,
                     ClickOffset = new PointF(2, 2),
                     InnerRadius = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset),
                     OuterRadius = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset),
@@ -532,7 +538,9 @@ namespace SimonSays
                 _buttons[i].Dispose();
                 i++;
             }
-            Array.Clear(_buttons, 0, _buttons.Length);
+
+            //Array.Clear(_buttons, 0, _buttons.Length);
+            //_buttons = new SimonSays.SimonButton2[0];
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -574,8 +582,8 @@ namespace SimonSays
             ButtonsOffsetParameters();
             ResizeButtons();
 
-            Invalidate();
-            base.OnResize(e);
+            //Invalidate();
+            //base.OnResize(e);
         }
 
         /// <summary>

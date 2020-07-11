@@ -68,6 +68,7 @@ namespace SimonSays
             this.btnReset = new System.Windows.Forms.Button();
             this.btnAccept = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.btnFontFamily = new System.Windows.Forms.Button();
             this.tabSettings.SuspendLayout();
             this.tabInterface.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonDistance)).BeginInit();
@@ -344,6 +345,7 @@ namespace SimonSays
             // 
             // tabBoard
             // 
+            this.tabBoard.Controls.Add(this.btnFontFamily);
             this.tabBoard.Controls.Add(this.pictureBox3);
             this.tabBoard.Controls.Add(this.pictureBox2);
             this.tabBoard.Controls.Add(this.pictureBox1);
@@ -394,9 +396,9 @@ namespace SimonSays
             this.lblFontFamily.AutoSize = true;
             this.lblFontFamily.Location = new System.Drawing.Point(52, 278);
             this.lblFontFamily.Name = "lblFontFamily";
-            this.lblFontFamily.Size = new System.Drawing.Size(85, 16);
+            this.lblFontFamily.Size = new System.Drawing.Size(78, 16);
             this.lblFontFamily.TabIndex = 21;
-            this.lblFontFamily.Text = "Font famnily: ";
+            this.lblFontFamily.Text = "Font family: ";
             // 
             // lblInColor
             // 
@@ -525,6 +527,16 @@ namespace SimonSays
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // btnFontFamily
+            // 
+            this.btnFontFamily.Location = new System.Drawing.Point(314, 256);
+            this.btnFontFamily.Name = "btnFontFamily";
+            this.btnFontFamily.Size = new System.Drawing.Size(152, 37);
+            this.btnFontFamily.TabIndex = 25;
+            this.btnFontFamily.Text = "button1";
+            this.btnFontFamily.UseVisualStyleBackColor = true;
+            this.btnFontFamily.Click += new System.EventHandler(this.btnFontFamily_Click);
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -610,5 +622,6 @@ namespace SimonSays
         private System.Windows.Forms.DataGridViewTextBoxColumn ColValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColFrequency;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColColor;
+        private System.Windows.Forms.Button btnFontFamily;
     }
 }
