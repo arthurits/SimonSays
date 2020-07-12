@@ -56,10 +56,6 @@
       <Project>{0cf0b059-55d0-4397-b91a-2fd678525808}</Project>
       <Name>SimonButton2</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimonButton\SimonButton.csproj">
-      <Project>{58d6a816-f751-485c-829c-fa6733be10df}</Project>
-      <Name>SimonButton</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CustomBoard.resx">

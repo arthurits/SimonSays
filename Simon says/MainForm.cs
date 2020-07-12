@@ -43,7 +43,7 @@ namespace SimonSays
             _Game.Tick += new EventHandler<TickEventArgs>(OnGameTick);
             _Game.GameOver += new EventHandler<OverEventArgs>(OnGameOver);
             _Game.CorrectSequence += new EventHandler<CorrectEventArgs>(OnCorrectSequence);
-            this.simonBoard.ButtonClick += new EventHandler<SimonSays.ButtonClickEventArgs>(OnButtonClick);
+            this.simonBoard.ButtonClick += new EventHandler<CustomBoard.ButtonClickEventArgs>(OnButtonClick);
             this.DoubleBuffered = true;
             //this.customBoard1.Size = new Size(300, 300);
             //this.customBoard1.Invalidate();
@@ -304,7 +304,7 @@ namespace SimonSays
         {
             _Game.OnPress(((ColorButton.SimonButton)sender).ColorValue);
         }
-        private void OnButtonClick(object sender, SimonSays.ButtonClickEventArgs e)
+        private void OnButtonClick(object sender, CustomBoard.ButtonClickEventArgs e)
         {
             _Game.OnPress(e.ButtonValue);
         }
@@ -324,8 +324,13 @@ namespace SimonSays
         }
         private void toolStripMain_Settings_Click(object sender, EventArgs e)
         {
-            frmSettings frmSettings = new frmSettings();
-            frmSettings.ShowDialog();
+            frmSettings frmSettings = new frmSettings(_programSettings, _defaultSettings);
+            frmSettings.ShowDialog(this);
+            if (frmSettings.DialogResult == DialogResult.OK)
+            {
+                _programSettings = frmSettings.GetSettings;
+                ApplySettings(_programSettings, _defaultSettings, false);
+            }
         }
         private void toolStripMain_About_Click(object sender, EventArgs e)
         {
@@ -358,7 +363,7 @@ namespace SimonSays
                     using (new CenterWinDialog(this))
                     {
                         MessageBox.Show(this,
-                                        "Unexpected error while\nloading settings data.",
+                                        "Unexpected error while\nloading settings data.\n\n" + ex.GetType().ToString() + "\n" + ex.Message,
                                         "Error",
                                         MessageBoxButtons.OK,
                                         MessageBoxIcon.Error);
@@ -406,10 +411,10 @@ namespace SimonSays
                 using (new CenterWinDialog(this))
                 {
                     MessageBox.Show(this,
-                                    "Unexpected error while\nsaving settings data",
+                                    "Unexpected error while\nsaving settings data.\n\n" + ex.GetType().ToString() + "\n" + ex.Message,
                                     "Error",
                                     MessageBoxButtons.OK,
-                                    MessageBoxIcon.Error);
+                                    MessageBoxIcon.Error); ;
                 }
             }
             finally
@@ -425,33 +430,44 @@ namespace SimonSays
         /// <param name="WindowSettings">True if the window position and size should be applied. False if omitted</param>
         private void ApplySettings(ProgramSettings<string, string> programSettings, ProgramSettings<string, string> defaultSettings, bool WindowSettings = false)
         {
-            if (WindowSettings)
+            try
             {
-                if (Convert.ToInt32(programSettings.ContainsKey("WindowPosition") ? programSettings["WindowPosition"] : defaultSettings["WindowPosition"]) == 1)
+                if (WindowSettings)
                 {
-                    //var startPos = this.StartPosition;
-                    this.StartPosition = FormStartPosition.Manual;
-                    this.DesktopLocation = new Point(Convert.ToInt32(programSettings.ContainsKey("WindowLeft") ? programSettings["WindowLeft"] : defaultSettings["WindowLeft"]),
-                                        Convert.ToInt32(programSettings.ContainsKey("WindowTop") ? programSettings["WindowTop"] : defaultSettings["WindowTop"]));
-                    this.ClientSize = new Size(Convert.ToInt32(programSettings.ContainsKey("WindowWidth") ? programSettings["WindowWidth"] : defaultSettings["WindowWidth"]),
-                                        Convert.ToInt32(programSettings.ContainsKey("WindowHeight") ? programSettings["WindowHeight"] : defaultSettings["WindowHeight"]));
-                    //this.StartPosition = startPos;
-                    //this.splitStats.SplitterDistance = Convert.ToInt32(programSettings.ContainsKey("SplitterDistance") ? programSettings["SplitterDistance"] : defaultSettings["SplitterDistance"]);
+                    if (Convert.ToInt32(programSettings.GetOrDefault("WindowPosition", defaultSettings["WindowPosition"])) == 1)
+                    {
+                        //var startPos = this.StartPosition;
+                        this.StartPosition = FormStartPosition.Manual;
+                        this.DesktopLocation = new Point(Convert.ToInt32(programSettings.GetOrDefault("WindowLeft", defaultSettings["WindowLeft"])),
+                                            Convert.ToInt32(programSettings.GetOrDefault("WindowTop", defaultSettings["WindowTop"])));
+                        this.ClientSize = new Size(Convert.ToInt32(programSettings.GetOrDefault("WindowWidth", defaultSettings["WindowWidth"])),
+                                            Convert.ToInt32(programSettings.GetOrDefault("WindowHeight", defaultSettings["WindowHeight"])));
+                        //this.StartPosition = startPos;
+                        //this.splitStats.SplitterDistance = Convert.ToInt32(programSettings.ContainsKey("SplitterDistance") ? programSettings["SplitterDistance"] : defaultSettings["SplitterDistance"]);
+                    }
                 }
+
+                this.simonBoard.NumberOfButtons = Convert.ToInt32(programSettings.GetOrDefault("NumberOfButtons", defaultSettings["NumberOfButtons"]));
+                this.simonBoard.InnerButtonRatio = Convert.ToSingle(programSettings.GetOrDefault("InnerButtonRatio", defaultSettings["InnerButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                this.simonBoard.OuterButtonRatio = Convert.ToSingle(programSettings.GetOrDefault("OuterButtonRatio", defaultSettings["OuterButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                this.simonBoard.CenterButtonRatio = Convert.ToSingle(programSettings.GetOrDefault("CenterButtonRatio", defaultSettings["CenterButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+
+                this.simonBoard.PercentInnerRatio = Convert.ToSingle(programSettings.GetOrDefault("InnerBoardRatio", defaultSettings["InnerBoardRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                this.simonBoard.PercentOuterRatio = Convert.ToSingle(programSettings.GetOrDefault("OuterBoardRatio", defaultSettings["OuterBoardRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                this.simonBoard.ColorBackground = Color.FromArgb(Convert.ToInt32(programSettings.GetOrDefault("ColorBackground", defaultSettings["ColorBackground"])));
+                this.simonBoard.ColorInnerCircle = Color.FromArgb(Convert.ToInt32(programSettings.GetOrDefault("ColorInnerCircle", defaultSettings["ColorInnerCircle"])));
+                this.simonBoard.ColorOuterCircle = Color.FromArgb(Convert.ToInt32(programSettings.GetOrDefault("ColorOuterCircle", defaultSettings["ColorOuterCircle"])));
+                this.simonBoard.Font = new Font(programSettings.GetOrDefault("FontFamilyName", defaultSettings["FontFamilyName"]), simonBoard.Font.SizeInPoints);
             }
-
-            this.simonBoard.NumberOfButtons = Convert.ToInt32(programSettings.ContainsKey("NumberOfButtons") ? programSettings["NumberOfButtons"] : defaultSettings["NumberOfButtons"]);
-            this.simonBoard.InnerButtonRatio = Convert.ToSingle(programSettings.ContainsKey("InnerButtonRatio") ? programSettings["InnerButtonRatio"] : defaultSettings["InnerButtonRatio"]);
-            this.simonBoard.OuterButtonRatio = Convert.ToSingle(programSettings.ContainsKey("OuterButtonRatio") ? programSettings["OuterButtonRatio"] : defaultSettings["OuterButtonRatio"]);
-            this.simonBoard.CenterButtonRatio = Convert.ToSingle(programSettings.ContainsKey("CenterButtonRatio") ? programSettings["CenterButtonRatio"] : defaultSettings["CenterButtonRatio"]);
-
-            this.simonBoard.PercentInnerRatio = Convert.ToSingle(programSettings.ContainsKey("InnerBoardRatio") ? programSettings["InnerBoardRatio"] : defaultSettings["InnerBoardRatio"]);
-            this.simonBoard.PercentOuterRatio = Convert.ToSingle(programSettings.ContainsKey("OuterBoardRatio") ? programSettings["OuterBoardRatio"] : defaultSettings["OuterBoardRatio"]);
-            this.simonBoard.ColorBackground = Color.FromArgb(Convert.ToInt32(programSettings.ContainsKey("ColorBackground") ? programSettings["ColorBackground"] : defaultSettings["ColorBackground"]));
-            this.simonBoard.ColorInnerCircle = Color.FromArgb(Convert.ToInt32(programSettings.ContainsKey("ColorInnerCircle") ? programSettings["ColorInnerCircle"] : defaultSettings["ColorInnerCircle"]));
-            this.simonBoard.ColorOuterCircle = Color.FromArgb(Convert.ToInt32(programSettings.ContainsKey("ColorOuterCircle") ? programSettings["ColorOuterCircle"] : defaultSettings["ColorOuterCircle"]));
-            this.simonBoard.Font = new Font(programSettings.ContainsKey("FontFamilyName") ? programSettings["FontFamilyName"] : defaultSettings["FontFamilyName"], simonBoard.Font.SizeInPoints);
-
+            catch(Exception ex)
+            {
+                // ex.GetType().Equals(typeof(KeyNotFoundException))
+                if (ex.GetType() != typeof(KeyNotFoundException))
+                    MessageBox.Show(this, "Error applying settings.\n" + ex.GetType().ToString() + "\n" + ex.Message,
+                        "Unexpected error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+            }
             /*
             this._game.MinimumLength = Convert.ToInt32(programSettings.ContainsKey("MinimumLength") ? programSettings["MinimumLength"] : defaultSettings["MinimumLength"]);
             this._game.MaximumAttempts = Convert.ToInt32(programSettings.ContainsKey("MaximumAttempts") ? programSettings["MaximumAttempts"] : defaultSettings["MaximumAttempts"]);
@@ -495,7 +511,7 @@ namespace SimonSays
             settings["InnerBoardRatio"] = "0.35";
             settings["OuterBoardRatio"] = "0.90";
             settings["ColorBackground"] = Color.White.ToArgb().ToString();
-            settings["ColorInnerCircle"] = Color.White.ToArgb().ToString();
+            settings["ColorInnerCircle"] = Color.LightSalmon.ToArgb().ToString();
             settings["ColorOuterCircle"] = Color.Black.ToArgb().ToString();
             settings["FontFamilyName"] = "Microsoft Sans Serif";
 

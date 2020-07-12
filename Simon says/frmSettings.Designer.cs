@@ -37,7 +37,7 @@ namespace SimonSays
             this.DemoBoard = new SimonSays.CustomBoard();
             this.trackButtonDistance = new System.Windows.Forms.TrackBar();
             this.trackButtonInner = new System.Windows.Forms.TrackBar();
-            this.trackButtonOuttter = new System.Windows.Forms.TrackBar();
+            this.trackButtonOuter = new System.Windows.Forms.TrackBar();
             this.numButtonDistance = new System.Windows.Forms.NumericUpDown();
             this.lblButtonDistance = new System.Windows.Forms.Label();
             this.gridButtons = new System.Windows.Forms.DataGridView();
@@ -52,9 +52,11 @@ namespace SimonSays
             this.numButtons = new System.Windows.Forms.NumericUpDown();
             this.lblButtons = new System.Windows.Forms.Label();
             this.tabBoard = new System.Windows.Forms.TabPage();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.chkStartUp = new System.Windows.Forms.CheckBox();
+            this.btnFontFamily = new System.Windows.Forms.Button();
+            this.pctIn = new System.Windows.Forms.PictureBox();
+            this.pctOut = new System.Windows.Forms.PictureBox();
+            this.pctBack = new System.Windows.Forms.PictureBox();
             this.lblFontFamily = new System.Windows.Forms.Label();
             this.lblInColor = new System.Windows.Forms.Label();
             this.lblOutColor = new System.Windows.Forms.Label();
@@ -68,12 +70,14 @@ namespace SimonSays
             this.btnReset = new System.Windows.Forms.Button();
             this.btnAccept = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.btnFontFamily = new System.Windows.Forms.Button();
+            this.lblBoardRotation = new System.Windows.Forms.Label();
+            this.numBoardRotation = new System.Windows.Forms.NumericUpDown();
+            this.trackBoardRotation = new System.Windows.Forms.TrackBar();
             this.tabSettings.SuspendLayout();
             this.tabInterface.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonDistance)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonInner)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackButtonOuttter)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackButtonOuter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numButtonDistance)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridButtons)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numButtonMin)).BeginInit();
@@ -81,13 +85,15 @@ namespace SimonSays
             ((System.ComponentModel.ISupportInitialize)(this.trackButtons)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numButtons)).BeginInit();
             this.tabBoard.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctIn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctOut)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBack)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBoardIn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBoardOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardIn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardOut)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBoardRotation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBoardRotation)).BeginInit();
             this.SuspendLayout();
             // 
             // tabSettings
@@ -129,7 +135,7 @@ namespace SimonSays
             this.tabInterface.Controls.Add(this.DemoBoard);
             this.tabInterface.Controls.Add(this.trackButtonDistance);
             this.tabInterface.Controls.Add(this.trackButtonInner);
-            this.tabInterface.Controls.Add(this.trackButtonOuttter);
+            this.tabInterface.Controls.Add(this.trackButtonOuter);
             this.tabInterface.Controls.Add(this.numButtonDistance);
             this.tabInterface.Controls.Add(this.lblButtonDistance);
             this.tabInterface.Controls.Add(this.gridButtons);
@@ -151,12 +157,8 @@ namespace SimonSays
             // 
             // DemoBoard
             // 
-            this.DemoBoard.CenterButtonRatio = 0F;
-            this.DemoBoard.InnerButtonRatio = 0.55F;
             this.DemoBoard.Location = new System.Drawing.Point(403, 150);
             this.DemoBoard.Name = "DemoBoard";
-            this.DemoBoard.NumberOfButtons = 5;
-            this.DemoBoard.OuterButtonRatio = 0.9F;
             this.DemoBoard.Size = new System.Drawing.Size(200, 200);
             this.DemoBoard.TabIndex = 18;
             // 
@@ -164,25 +166,34 @@ namespace SimonSays
             // 
             this.trackButtonDistance.BackColor = System.Drawing.Color.White;
             this.trackButtonDistance.Location = new System.Drawing.Point(229, 160);
+            this.trackButtonDistance.Maximum = 100;
             this.trackButtonDistance.Name = "trackButtonDistance";
             this.trackButtonDistance.Size = new System.Drawing.Size(174, 45);
             this.trackButtonDistance.TabIndex = 17;
+            this.trackButtonDistance.TickFrequency = 10;
+            this.trackButtonDistance.ValueChanged += new System.EventHandler(this.trackButtonDistance_ValueChanged);
             // 
             // trackButtonInner
             // 
             this.trackButtonInner.BackColor = System.Drawing.Color.White;
             this.trackButtonInner.Location = new System.Drawing.Point(229, 119);
+            this.trackButtonInner.Maximum = 100;
             this.trackButtonInner.Name = "trackButtonInner";
             this.trackButtonInner.Size = new System.Drawing.Size(200, 45);
             this.trackButtonInner.TabIndex = 16;
+            this.trackButtonInner.TickFrequency = 10;
+            this.trackButtonInner.ValueChanged += new System.EventHandler(this.trackButtonInner_ValueChanged);
             // 
-            // trackButtonOuttter
+            // trackButtonOuter
             // 
-            this.trackButtonOuttter.BackColor = System.Drawing.Color.White;
-            this.trackButtonOuttter.Location = new System.Drawing.Point(229, 71);
-            this.trackButtonOuttter.Name = "trackButtonOuttter";
-            this.trackButtonOuttter.Size = new System.Drawing.Size(242, 45);
-            this.trackButtonOuttter.TabIndex = 15;
+            this.trackButtonOuter.BackColor = System.Drawing.Color.White;
+            this.trackButtonOuter.Location = new System.Drawing.Point(229, 71);
+            this.trackButtonOuter.Maximum = 100;
+            this.trackButtonOuter.Name = "trackButtonOuter";
+            this.trackButtonOuter.Size = new System.Drawing.Size(242, 45);
+            this.trackButtonOuter.TabIndex = 15;
+            this.trackButtonOuter.TickFrequency = 10;
+            this.trackButtonOuter.ValueChanged += new System.EventHandler(this.trackButtonOuter_ValueChanged);
             // 
             // numButtonDistance
             // 
@@ -262,6 +273,7 @@ namespace SimonSays
             this.numButtonMin.Name = "numButtonMin";
             this.numButtonMin.Size = new System.Drawing.Size(47, 22);
             this.numButtonMin.TabIndex = 9;
+            this.numButtonMin.ValueChanged += new System.EventHandler(this.numButtonMin_ValueChanged);
             // 
             // numButtonMax
             // 
@@ -280,6 +292,7 @@ namespace SimonSays
             this.numButtonMax.Name = "numButtonMax";
             this.numButtonMax.Size = new System.Drawing.Size(47, 22);
             this.numButtonMax.TabIndex = 8;
+            this.numButtonMax.ValueChanged += new System.EventHandler(this.numButtonMax_ValueChanged);
             // 
             // lblButtonMin
             // 
@@ -308,6 +321,7 @@ namespace SimonSays
             this.trackButtons.Size = new System.Drawing.Size(285, 45);
             this.trackButtons.TabIndex = 3;
             this.trackButtons.Value = 2;
+            this.trackButtons.ValueChanged += new System.EventHandler(this.trackButtons_ValueChanged);
             // 
             // numButtons
             // 
@@ -345,10 +359,14 @@ namespace SimonSays
             // 
             // tabBoard
             // 
+            this.tabBoard.Controls.Add(this.trackBoardRotation);
+            this.tabBoard.Controls.Add(this.numBoardRotation);
+            this.tabBoard.Controls.Add(this.lblBoardRotation);
+            this.tabBoard.Controls.Add(this.chkStartUp);
             this.tabBoard.Controls.Add(this.btnFontFamily);
-            this.tabBoard.Controls.Add(this.pictureBox3);
-            this.tabBoard.Controls.Add(this.pictureBox2);
-            this.tabBoard.Controls.Add(this.pictureBox1);
+            this.tabBoard.Controls.Add(this.pctIn);
+            this.tabBoard.Controls.Add(this.pctOut);
+            this.tabBoard.Controls.Add(this.pctBack);
             this.tabBoard.Controls.Add(this.lblFontFamily);
             this.tabBoard.Controls.Add(this.lblInColor);
             this.tabBoard.Controls.Add(this.lblOutColor);
@@ -367,34 +385,63 @@ namespace SimonSays
             this.tabBoard.Text = "Board UI";
             this.tabBoard.UseVisualStyleBackColor = true;
             // 
-            // pictureBox3
+            // chkStartUp
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(181, 237);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(46, 30);
-            this.pictureBox3.TabIndex = 24;
-            this.pictureBox3.TabStop = false;
+            this.chkStartUp.AutoSize = true;
+            this.chkStartUp.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.chkStartUp.Location = new System.Drawing.Point(52, 309);
+            this.chkStartUp.Name = "chkStartUp";
+            this.chkStartUp.Size = new System.Drawing.Size(242, 20);
+            this.chkStartUp.TabIndex = 26;
+            this.chkStartUp.Text = "Remeber window position on startup";
+            this.chkStartUp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.chkStartUp.UseVisualStyleBackColor = true;
             // 
-            // pictureBox2
+            // btnFontFamily
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(188, 190);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(40, 30);
-            this.pictureBox2.TabIndex = 23;
-            this.pictureBox2.TabStop = false;
+            this.btnFontFamily.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFontFamily.Location = new System.Drawing.Point(225, 268);
+            this.btnFontFamily.Name = "btnFontFamily";
+            this.btnFontFamily.Size = new System.Drawing.Size(76, 21);
+            this.btnFontFamily.TabIndex = 25;
+            this.btnFontFamily.Text = "Select font...";
+            this.btnFontFamily.UseVisualStyleBackColor = true;
+            this.btnFontFamily.Click += new System.EventHandler(this.btnFontFamily_Click);
             // 
-            // pictureBox1
+            // pctIn
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(199, 144);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(30, 31);
-            this.pictureBox1.TabIndex = 22;
-            this.pictureBox1.TabStop = false;
+            this.pctIn.Location = new System.Drawing.Point(407, 219);
+            this.pctIn.Name = "pctIn";
+            this.pctIn.Size = new System.Drawing.Size(50, 25);
+            this.pctIn.TabIndex = 24;
+            this.pctIn.TabStop = false;
+            this.pctIn.BackColorChanged += new System.EventHandler(this.pctIn_BackColorChanged);
+            this.pctIn.Click += new System.EventHandler(this.pctIn_Click);
+            // 
+            // pctOut
+            // 
+            this.pctOut.Location = new System.Drawing.Point(265, 219);
+            this.pctOut.Name = "pctOut";
+            this.pctOut.Size = new System.Drawing.Size(50, 25);
+            this.pctOut.TabIndex = 23;
+            this.pctOut.TabStop = false;
+            this.pctOut.BackColorChanged += new System.EventHandler(this.pctOut_BackColorChanged);
+            this.pctOut.Click += new System.EventHandler(this.pctOut_Click);
+            // 
+            // pctBack
+            // 
+            this.pctBack.Location = new System.Drawing.Point(84, 219);
+            this.pctBack.Name = "pctBack";
+            this.pctBack.Size = new System.Drawing.Size(50, 25);
+            this.pctBack.TabIndex = 22;
+            this.pctBack.TabStop = false;
+            this.pctBack.BackColorChanged += new System.EventHandler(this.pctBack_BackColorChanged);
+            this.pctBack.Click += new System.EventHandler(this.pctBack_Click);
             // 
             // lblFontFamily
             // 
             this.lblFontFamily.AutoSize = true;
-            this.lblFontFamily.Location = new System.Drawing.Point(52, 278);
+            this.lblFontFamily.Location = new System.Drawing.Point(52, 271);
             this.lblFontFamily.Name = "lblFontFamily";
             this.lblFontFamily.Size = new System.Drawing.Size(78, 16);
             this.lblFontFamily.TabIndex = 21;
@@ -403,7 +450,7 @@ namespace SimonSays
             // lblInColor
             // 
             this.lblInColor.AutoSize = true;
-            this.lblInColor.Location = new System.Drawing.Point(52, 240);
+            this.lblInColor.Location = new System.Drawing.Point(397, 195);
             this.lblInColor.Name = "lblInColor";
             this.lblInColor.Size = new System.Drawing.Size(70, 16);
             this.lblInColor.TabIndex = 20;
@@ -412,7 +459,7 @@ namespace SimonSays
             // lblOutColor
             // 
             this.lblOutColor.AutoSize = true;
-            this.lblOutColor.Location = new System.Drawing.Point(52, 195);
+            this.lblOutColor.Location = new System.Drawing.Point(252, 195);
             this.lblOutColor.Name = "lblOutColor";
             this.lblOutColor.Size = new System.Drawing.Size(76, 16);
             this.lblOutColor.TabIndex = 19;
@@ -421,7 +468,7 @@ namespace SimonSays
             // lblBoardBackground
             // 
             this.lblBoardBackground.AutoSize = true;
-            this.lblBoardBackground.Location = new System.Drawing.Point(52, 148);
+            this.lblBoardBackground.Location = new System.Drawing.Point(52, 195);
             this.lblBoardBackground.Name = "lblBoardBackground";
             this.lblBoardBackground.Size = new System.Drawing.Size(114, 16);
             this.lblBoardBackground.TabIndex = 18;
@@ -431,17 +478,23 @@ namespace SimonSays
             // 
             this.trackBoardIn.BackColor = System.Drawing.Color.White;
             this.trackBoardIn.Location = new System.Drawing.Point(248, 96);
+            this.trackBoardIn.Maximum = 100;
             this.trackBoardIn.Name = "trackBoardIn";
             this.trackBoardIn.Size = new System.Drawing.Size(282, 45);
             this.trackBoardIn.TabIndex = 17;
+            this.trackBoardIn.TickFrequency = 10;
+            this.trackBoardIn.ValueChanged += new System.EventHandler(this.trackBoardIn_ValueChanged);
             // 
             // trackBoardOut
             // 
             this.trackBoardOut.BackColor = System.Drawing.Color.White;
             this.trackBoardOut.Location = new System.Drawing.Point(248, 51);
+            this.trackBoardOut.Maximum = 100;
             this.trackBoardOut.Name = "trackBoardOut";
             this.trackBoardOut.Size = new System.Drawing.Size(283, 45);
             this.trackBoardOut.TabIndex = 16;
+            this.trackBoardOut.TickFrequency = 10;
+            this.trackBoardOut.ValueChanged += new System.EventHandler(this.trackBoardOut_ValueChanged);
             // 
             // numBoardIn
             // 
@@ -460,6 +513,7 @@ namespace SimonSays
             this.numBoardIn.Name = "numBoardIn";
             this.numBoardIn.Size = new System.Drawing.Size(47, 22);
             this.numBoardIn.TabIndex = 15;
+            this.numBoardIn.ValueChanged += new System.EventHandler(this.numBoardIn_ValueChanged);
             // 
             // numBoardOut
             // 
@@ -478,11 +532,12 @@ namespace SimonSays
             this.numBoardOut.Name = "numBoardOut";
             this.numBoardOut.Size = new System.Drawing.Size(47, 22);
             this.numBoardOut.TabIndex = 14;
+            this.numBoardOut.ValueChanged += new System.EventHandler(this.numBoardOut_ValueChanged);
             // 
             // lblBoardMin
             // 
             this.lblBoardMin.AutoSize = true;
-            this.lblBoardMin.Location = new System.Drawing.Point(52, 101);
+            this.lblBoardMin.Location = new System.Drawing.Point(52, 99);
             this.lblBoardMin.Name = "lblBoardMin";
             this.lblBoardMin.Size = new System.Drawing.Size(98, 16);
             this.lblBoardMin.TabIndex = 13;
@@ -527,15 +582,38 @@ namespace SimonSays
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // btnFontFamily
+            // lblBoardRotation
             // 
-            this.btnFontFamily.Location = new System.Drawing.Point(314, 256);
-            this.btnFontFamily.Name = "btnFontFamily";
-            this.btnFontFamily.Size = new System.Drawing.Size(152, 37);
-            this.btnFontFamily.TabIndex = 25;
-            this.btnFontFamily.Text = "button1";
-            this.btnFontFamily.UseVisualStyleBackColor = true;
-            this.btnFontFamily.Click += new System.EventHandler(this.btnFontFamily_Click);
+            this.lblBoardRotation.AutoSize = true;
+            this.lblBoardRotation.Location = new System.Drawing.Point(52, 144);
+            this.lblBoardRotation.Name = "lblBoardRotation";
+            this.lblBoardRotation.Size = new System.Drawing.Size(107, 16);
+            this.lblBoardRotation.TabIndex = 27;
+            this.lblBoardRotation.Text = "Board rotation (°)";
+            // 
+            // numBoardRotation
+            // 
+            this.numBoardRotation.Location = new System.Drawing.Point(183, 141);
+            this.numBoardRotation.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.numBoardRotation.Name = "numBoardRotation";
+            this.numBoardRotation.Size = new System.Drawing.Size(47, 22);
+            this.numBoardRotation.TabIndex = 28;
+            this.numBoardRotation.ValueChanged += new System.EventHandler(this.numBoardRotation_ValueChanged);
+            // 
+            // trackBoardRotation
+            // 
+            this.trackBoardRotation.BackColor = System.Drawing.Color.White;
+            this.trackBoardRotation.Location = new System.Drawing.Point(248, 141);
+            this.trackBoardRotation.Maximum = 360;
+            this.trackBoardRotation.Name = "trackBoardRotation";
+            this.trackBoardRotation.Size = new System.Drawing.Size(282, 45);
+            this.trackBoardRotation.TabIndex = 29;
+            this.trackBoardRotation.TickFrequency = 30;
+            this.trackBoardRotation.ValueChanged += new System.EventHandler(this.trackBoardRotation_ValueChanged);
             // 
             // frmSettings
             // 
@@ -559,7 +637,7 @@ namespace SimonSays
             this.tabInterface.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonDistance)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonInner)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackButtonOuttter)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackButtonOuter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numButtonDistance)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridButtons)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numButtonMin)).EndInit();
@@ -568,13 +646,15 @@ namespace SimonSays
             ((System.ComponentModel.ISupportInitialize)(this.numButtons)).EndInit();
             this.tabBoard.ResumeLayout(false);
             this.tabBoard.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctIn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctOut)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBack)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBoardIn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBoardOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardIn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardOut)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBoardRotation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBoardRotation)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -608,10 +688,10 @@ namespace SimonSays
         private System.Windows.Forms.Label lblBoardMax;
         private System.Windows.Forms.TrackBar trackButtonDistance;
         private System.Windows.Forms.TrackBar trackButtonInner;
-        private System.Windows.Forms.TrackBar trackButtonOuttter;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TrackBar trackButtonOuter;
+        private System.Windows.Forms.PictureBox pctIn;
+        private System.Windows.Forms.PictureBox pctOut;
+        private System.Windows.Forms.PictureBox pctBack;
         private System.Windows.Forms.Label lblFontFamily;
         private System.Windows.Forms.Label lblInColor;
         private System.Windows.Forms.Label lblOutColor;
@@ -623,5 +703,9 @@ namespace SimonSays
         private System.Windows.Forms.DataGridViewTextBoxColumn ColFrequency;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColColor;
         private System.Windows.Forms.Button btnFontFamily;
+        private System.Windows.Forms.CheckBox chkStartUp;
+        private System.Windows.Forms.TrackBar trackBoardRotation;
+        private System.Windows.Forms.NumericUpDown numBoardRotation;
+        private System.Windows.Forms.Label lblBoardRotation;
     }
 }

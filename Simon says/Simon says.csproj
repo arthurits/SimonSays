@@ -72,6 +72,7 @@
   <ItemGroup>
     <Compile Include="clsApplicationSettings.cs" />
     <Compile Include="clsDerivedControls.cs" />
+    <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -79,7 +80,9 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form2.cs" />
+    <Compile Include="Form2.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form2.designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>

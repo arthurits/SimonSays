@@ -200,9 +200,17 @@ namespace SimonSays
             this.simonBoard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.simonBoard.CenterButtonRatio = 0F;
+            this.simonBoard.ColorBackground = System.Drawing.Color.Transparent;
+            this.simonBoard.ColorInnerCircle = System.Drawing.Color.White;
+            this.simonBoard.ColorOuterCircle = System.Drawing.Color.Black;
+            this.simonBoard.InnerButtonRatio = 0.55F;
             this.simonBoard.Location = new System.Drawing.Point(16, 70);
             this.simonBoard.Name = "simonBoard";
-            this.simonBoard.NumberOfButtons = 5;
+            this.simonBoard.NumberOfButtons = 4;
+            this.simonBoard.OuterButtonRatio = 0.95F;
+            this.simonBoard.PercentInnerRatio = 0.35F;
+            this.simonBoard.PercentOuterRatio = 0.9F;
             this.simonBoard.Size = new System.Drawing.Size(542, 514);
             this.simonBoard.TabIndex = 13;
             // 
