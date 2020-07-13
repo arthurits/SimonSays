@@ -200,7 +200,7 @@ namespace SimonSays
             this.simonBoard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.simonBoard.CenterButtonRatio = 0F;
+            this.simonBoard.CenterButtonRatio = 0.05F;
             this.simonBoard.ColorBackground = System.Drawing.Color.Transparent;
             this.simonBoard.ColorInnerCircle = System.Drawing.Color.White;
             this.simonBoard.ColorOuterCircle = System.Drawing.Color.Black;

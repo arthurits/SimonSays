@@ -52,6 +52,9 @@ namespace SimonSays
             this.numButtons = new System.Windows.Forms.NumericUpDown();
             this.lblButtons = new System.Windows.Forms.Label();
             this.tabBoard = new System.Windows.Forms.TabPage();
+            this.trackBoardRotation = new System.Windows.Forms.TrackBar();
+            this.numBoardRotation = new System.Windows.Forms.NumericUpDown();
+            this.lblBoardRotation = new System.Windows.Forms.Label();
             this.chkStartUp = new System.Windows.Forms.CheckBox();
             this.btnFontFamily = new System.Windows.Forms.Button();
             this.pctIn = new System.Windows.Forms.PictureBox();
@@ -70,9 +73,6 @@ namespace SimonSays
             this.btnReset = new System.Windows.Forms.Button();
             this.btnAccept = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.lblBoardRotation = new System.Windows.Forms.Label();
-            this.numBoardRotation = new System.Windows.Forms.NumericUpDown();
-            this.trackBoardRotation = new System.Windows.Forms.TrackBar();
             this.tabSettings.SuspendLayout();
             this.tabInterface.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonDistance)).BeginInit();
@@ -85,6 +85,8 @@ namespace SimonSays
             ((System.ComponentModel.ISupportInitialize)(this.trackButtons)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numButtons)).BeginInit();
             this.tabBoard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBoardRotation)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBoardRotation)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctIn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctBack)).BeginInit();
@@ -92,8 +94,6 @@ namespace SimonSays
             ((System.ComponentModel.ISupportInitialize)(this.trackBoardOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardIn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardOut)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBoardRotation)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBoardRotation)).BeginInit();
             this.SuspendLayout();
             // 
             // tabSettings
@@ -157,8 +157,17 @@ namespace SimonSays
             // 
             // DemoBoard
             // 
+            this.DemoBoard.CenterButtonRatio = 0F;
+            this.DemoBoard.ColorBackground = System.Drawing.Color.Transparent;
+            this.DemoBoard.ColorInnerCircle = System.Drawing.Color.Gainsboro;
+            this.DemoBoard.ColorOuterCircle = System.Drawing.Color.LightGray;
+            this.DemoBoard.InnerButtonRatio = 0.55F;
             this.DemoBoard.Location = new System.Drawing.Point(403, 150);
             this.DemoBoard.Name = "DemoBoard";
+            this.DemoBoard.NumberOfButtons = 4;
+            this.DemoBoard.OuterButtonRatio = 0.95F;
+            this.DemoBoard.PercentInnerRatio = 0.35F;
+            this.DemoBoard.PercentOuterRatio = 0.9F;
             this.DemoBoard.Size = new System.Drawing.Size(200, 200);
             this.DemoBoard.TabIndex = 18;
             // 
@@ -385,6 +394,40 @@ namespace SimonSays
             this.tabBoard.Text = "Board UI";
             this.tabBoard.UseVisualStyleBackColor = true;
             // 
+            // trackBoardRotation
+            // 
+            this.trackBoardRotation.BackColor = System.Drawing.Color.White;
+            this.trackBoardRotation.Location = new System.Drawing.Point(248, 141);
+            this.trackBoardRotation.Maximum = 360;
+            this.trackBoardRotation.Name = "trackBoardRotation";
+            this.trackBoardRotation.Size = new System.Drawing.Size(282, 45);
+            this.trackBoardRotation.TabIndex = 29;
+            this.trackBoardRotation.TickFrequency = 30;
+            this.trackBoardRotation.ValueChanged += new System.EventHandler(this.trackBoardRotation_ValueChanged);
+            // 
+            // numBoardRotation
+            // 
+            this.numBoardRotation.DecimalPlaces = 2;
+            this.numBoardRotation.Location = new System.Drawing.Point(183, 141);
+            this.numBoardRotation.Maximum = new decimal(new int[] {
+            360,
+            0,
+            0,
+            0});
+            this.numBoardRotation.Name = "numBoardRotation";
+            this.numBoardRotation.Size = new System.Drawing.Size(47, 22);
+            this.numBoardRotation.TabIndex = 28;
+            this.numBoardRotation.ValueChanged += new System.EventHandler(this.numBoardRotation_ValueChanged);
+            // 
+            // lblBoardRotation
+            // 
+            this.lblBoardRotation.AutoSize = true;
+            this.lblBoardRotation.Location = new System.Drawing.Point(52, 144);
+            this.lblBoardRotation.Name = "lblBoardRotation";
+            this.lblBoardRotation.Size = new System.Drawing.Size(107, 16);
+            this.lblBoardRotation.TabIndex = 27;
+            this.lblBoardRotation.Text = "Board rotation (°)";
+            // 
             // chkStartUp
             // 
             this.chkStartUp.AutoSize = true;
@@ -410,6 +453,7 @@ namespace SimonSays
             // 
             // pctIn
             // 
+            this.pctIn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pctIn.Location = new System.Drawing.Point(407, 219);
             this.pctIn.Name = "pctIn";
             this.pctIn.Size = new System.Drawing.Size(50, 25);
@@ -420,6 +464,7 @@ namespace SimonSays
             // 
             // pctOut
             // 
+            this.pctOut.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pctOut.Location = new System.Drawing.Point(265, 219);
             this.pctOut.Name = "pctOut";
             this.pctOut.Size = new System.Drawing.Size(50, 25);
@@ -430,6 +475,7 @@ namespace SimonSays
             // 
             // pctBack
             // 
+            this.pctBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pctBack.Location = new System.Drawing.Point(84, 219);
             this.pctBack.Name = "pctBack";
             this.pctBack.Size = new System.Drawing.Size(50, 25);
@@ -582,39 +628,6 @@ namespace SimonSays
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // lblBoardRotation
-            // 
-            this.lblBoardRotation.AutoSize = true;
-            this.lblBoardRotation.Location = new System.Drawing.Point(52, 144);
-            this.lblBoardRotation.Name = "lblBoardRotation";
-            this.lblBoardRotation.Size = new System.Drawing.Size(107, 16);
-            this.lblBoardRotation.TabIndex = 27;
-            this.lblBoardRotation.Text = "Board rotation (°)";
-            // 
-            // numBoardRotation
-            // 
-            this.numBoardRotation.Location = new System.Drawing.Point(183, 141);
-            this.numBoardRotation.Maximum = new decimal(new int[] {
-            360,
-            0,
-            0,
-            0});
-            this.numBoardRotation.Name = "numBoardRotation";
-            this.numBoardRotation.Size = new System.Drawing.Size(47, 22);
-            this.numBoardRotation.TabIndex = 28;
-            this.numBoardRotation.ValueChanged += new System.EventHandler(this.numBoardRotation_ValueChanged);
-            // 
-            // trackBoardRotation
-            // 
-            this.trackBoardRotation.BackColor = System.Drawing.Color.White;
-            this.trackBoardRotation.Location = new System.Drawing.Point(248, 141);
-            this.trackBoardRotation.Maximum = 360;
-            this.trackBoardRotation.Name = "trackBoardRotation";
-            this.trackBoardRotation.Size = new System.Drawing.Size(282, 45);
-            this.trackBoardRotation.TabIndex = 29;
-            this.trackBoardRotation.TickFrequency = 30;
-            this.trackBoardRotation.ValueChanged += new System.EventHandler(this.trackBoardRotation_ValueChanged);
-            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -646,6 +659,8 @@ namespace SimonSays
             ((System.ComponentModel.ISupportInitialize)(this.numButtons)).EndInit();
             this.tabBoard.ResumeLayout(false);
             this.tabBoard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBoardRotation)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numBoardRotation)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctIn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctBack)).EndInit();
@@ -653,8 +668,6 @@ namespace SimonSays
             ((System.ComponentModel.ISupportInitialize)(this.trackBoardOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardIn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardOut)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numBoardRotation)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBoardRotation)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -101,7 +101,7 @@ namespace SimonSays
 
                 this.numBoardIn.Value = Convert.ToDecimal(settings.GetOrDefault("InnerBoardRatio", defSets["InnerBoardRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numBoardOut.Value = Convert.ToDecimal(settings.GetOrDefault("OuterBoardRatio", defSets["OuterBoardRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-
+                this.numBoardRotation.Value = Convert.ToDecimal(settings.GetOrDefault("BoardRotation", defSets["BoardRotation"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.pctBack.BackColor = Color.FromArgb(Convert.ToInt32(settings.GetOrDefault("ColorBackground", defSets["ColorBackground"])));
                 this.pctOut.BackColor = Color.FromArgb(Convert.ToInt32(settings.GetOrDefault("ColorOuterCircle", defSets["ColorOuterCircle"])));
                 this.pctIn.BackColor = Color.FromArgb(Convert.ToInt32(settings.GetOrDefault("ColorInnerCircle", defSets["ColorInnerCircle"])));
@@ -154,6 +154,7 @@ namespace SimonSays
 
             _settings["InnerBoardRatio"] = this.numBoardIn.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
             _settings["OuterBoardRatio"] = this.numBoardOut.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+            _settings["BoardRotation"] = this.numBoardRotation.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
             _settings["ColorBackground"] = this.pctBack.BackColor.ToArgb().ToString();
             _settings["ColorOuterCircle"] = this.pctOut.BackColor.ToArgb().ToString();
             _settings["ColorInnerCircle"] = this.pctIn.BackColor.ToArgb().ToString();
@@ -194,7 +195,7 @@ namespace SimonSays
 
                 this.numBoardIn.Value = Convert.ToDecimal(_settings.GetOrDefault("InnerBoardRatio"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numBoardOut.Value = Convert.ToDecimal(_settings.GetOrDefault("OuterBoardRatio"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-
+                this.numBoardRotation.Value = Convert.ToDecimal(_settings.GetOrDefault("BoardRotation"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.pctBack.BackColor = Color.FromArgb(Convert.ToInt32(_settings.GetOrDefault("ColorBackground")));
                 this.pctOut.BackColor = Color.FromArgb(Convert.ToInt32(_settings.GetOrDefault("ColorOuterCircle")));
                 this.pctIn.BackColor = Color.FromArgb(Convert.ToInt32(_settings.GetOrDefault("ColorInnerCircle")));

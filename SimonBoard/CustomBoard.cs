@@ -25,11 +25,12 @@ namespace SimonSays
 
         // Definición de los botones
         private Int32 _nMinDimension = 0;
-        private float _fApothem = 0.0f;
-        private float _fPolySide = 0.0f;
-        private float _fRadiusOffset = 0.0f;
+        private float _fApothem = 0f;
+        private float _fPolySide = 0f;
+        private float _fRadiusOffset = 0f;
         private float _fOuterCircle = 0.9f;
         private float _fInnerCircle = 0.35f;
+        private float _fRotation = 0f;
         private Rectangle _OuterRect;
         private Rectangle _InnerRect;
         private Rectangle _ButtonRect;
@@ -84,7 +85,7 @@ namespace SimonSays
             get => _fOuterCircle;
             set
             {
-                _fOuterCircle = value;
+                _fOuterCircle = value < 0 ? 0 : (value > 1 ? 1 : value);
                 ComputeBoardRectangles();
                 Invalidate();
             }
@@ -103,7 +104,7 @@ namespace SimonSays
             get => _fInnerCircle;
             set
             {
-                _fInnerCircle = value;
+                _fInnerCircle = value < 0 ? 0 : (value > 1 ? 1 : value);
                 ComputeBoardRectangles();
                 Invalidate();
             }
@@ -234,7 +235,7 @@ namespace SimonSays
             get => _fCenterButton;
             set
             {
-                _fCenterButton = value;
+                _fCenterButton = value < 0 ? 0 : (value > 1 ? 1 : value);
                 //_fApothem = _fCenterButton * _fOuterCircle * _nMinDimension;
                 ButtonsOffsetParameters();
                 ResizeButtons();
@@ -254,7 +255,7 @@ namespace SimonSays
             get => _fOuterButton;
             set
             {
-                _fOuterButton = value;
+                _fOuterButton = value < 0 ? 0 : (value > 1 ? 1 : value);
                 ResizeButtons();
             }
         }
@@ -271,8 +272,26 @@ namespace SimonSays
             get => _fInnerButton;
             set
             {
-                _fInnerButton = value;
+                _fInnerButton = value < 0 ? 0 : (value > 1 ? 1 : value);
                 ResizeButtons();
+            }
+        }
+
+        /// <summary>
+        /// Rotation (in sexagesimal degrees) of the board
+        /// </summary>
+        [Description("Rotation (in sexagesimal degrees) of the board"),
+        Category("Custom"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public float BoardRotation
+        {
+            get => _fRotation;
+            set
+            {
+                _fRotation = value < 0 ? 0 : (value >= 360 ? 0 : value);
+                Invalidate();
             }
         }
 

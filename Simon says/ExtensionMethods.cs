@@ -10,7 +10,7 @@ namespace System
     {
 
         /// <summary>
-        /// Tries to get the key value from the dictionary
+        /// Tries to get the key value from the dictionary. If unsuccessful, then returns the default value
         /// </summary>
         /// <typeparam name="TKey"></typeparam>
         /// <typeparam name="TValue"></typeparam>

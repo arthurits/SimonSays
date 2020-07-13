@@ -454,6 +454,7 @@ namespace SimonSays
 
                 this.simonBoard.PercentInnerRatio = Convert.ToSingle(programSettings.GetOrDefault("InnerBoardRatio", defaultSettings["InnerBoardRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.simonBoard.PercentOuterRatio = Convert.ToSingle(programSettings.GetOrDefault("OuterBoardRatio", defaultSettings["OuterBoardRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                this.simonBoard.BoardRotation = Convert.ToSingle(programSettings.GetOrDefault("BoardRotation", defaultSettings["BoardRotation"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.simonBoard.ColorBackground = Color.FromArgb(Convert.ToInt32(programSettings.GetOrDefault("ColorBackground", defaultSettings["ColorBackground"])));
                 this.simonBoard.ColorInnerCircle = Color.FromArgb(Convert.ToInt32(programSettings.GetOrDefault("ColorInnerCircle", defaultSettings["ColorInnerCircle"])));
                 this.simonBoard.ColorOuterCircle = Color.FromArgb(Convert.ToInt32(programSettings.GetOrDefault("ColorOuterCircle", defaultSettings["ColorOuterCircle"])));
@@ -510,6 +511,7 @@ namespace SimonSays
 
             settings["InnerBoardRatio"] = "0.35";
             settings["OuterBoardRatio"] = "0.90";
+            settings["BoardRotation"] = "0";
             settings["ColorBackground"] = Color.White.ToArgb().ToString();
             settings["ColorInnerCircle"] = Color.LightSalmon.ToArgb().ToString();
             settings["ColorOuterCircle"] = Color.Black.ToArgb().ToString();
