@@ -34,5 +34,18 @@ namespace System
             return defaultValue;
             */
         }
+
+        public static Drawing.Color HexToColor(this uint argb)
+        {
+            return Drawing.Color.FromArgb((byte)(argb & (argb & 0xff000000) >> 0x18),
+                                  (byte)((argb & 0xff0000) >> 0x10),
+                                  (byte)((argb & 0xff00) >> 0x08),
+                                  (byte)(argb & 0xff));
+        }
+
+        public static String ColorToHex(this Drawing.Color argb)
+        {
+            return argb.A.ToString("X2") + argb.R.ToString("X2") + argb.G.ToString("X2") + argb.B.ToString("X2");
+        }
     }
 }

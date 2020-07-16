@@ -390,6 +390,9 @@ namespace SimonSays
             //settings["Sound"] = this.toolStripMain_Sound.Checked == true ? "0" : "1";
             //settings["Stats"] = this.toolStripMain_Stats.Checked == true ? "1" : "0";
 
+            settings["ButtonColors"] = String.Join("-", this.simonBoard.ButtonColors.Select(x => x.ToArgb().ToString("X")));
+            settings["ButtonFrequency"] = String.Join("-", this.simonBoard.ButtonFrequencies);
+
             /*
             if (settings["SplitterDistance"] == "0.5")
                 settings["SplitterDistance"] = ((int)(this.splitStats.Size.Width / 2)).ToString();
@@ -448,6 +451,12 @@ namespace SimonSays
                 }
 
                 this.simonBoard.NumberOfButtons = Convert.ToInt32(programSettings.GetOrDefault("NumberOfButtons", defaultSettings["NumberOfButtons"]));
+                //var str = programSettings.GetOrDefault("ButtonColors", defaultSettings["ButtonColors"]).Split('-');
+                //var algo = str.Select(x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber))).ToArray();
+                //var algo2 = Array.ConvertAll(str, x => int.Parse(x, System.Globalization.NumberStyles.HexNumber));
+                this.simonBoard.ButtonColors = Array.ConvertAll(programSettings.GetOrDefault("ButtonColors", defaultSettings["ButtonColors"]).Split('-'), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
+                //this.simonBoard.ButtonColors = (Color[])programSettings.GetOrDefault("ButtonColors", defaultSettings["ButtonColors"]).Split('-').Select(x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
+                this.simonBoard.ButtonFrequencies = Array.ConvertAll(programSettings.GetOrDefault("ButtonFrequencies", defaultSettings["ButtonFrequencies"]).Split('-'), float.Parse);
                 this.simonBoard.InnerButtonRatio = Convert.ToSingle(programSettings.GetOrDefault("InnerButtonRatio", defaultSettings["InnerButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.simonBoard.OuterButtonRatio = Convert.ToSingle(programSettings.GetOrDefault("OuterButtonRatio", defaultSettings["OuterButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.simonBoard.CenterButtonRatio = Convert.ToSingle(programSettings.GetOrDefault("CenterButtonRatio", defaultSettings["CenterButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
@@ -505,6 +514,8 @@ namespace SimonSays
             settings["WindowHeight"] = this.ClientSize.Height.ToString();
 
             settings["NumberOfButtons"] = "4";
+            settings["ButtonColors"] = "FF0000FF-FFFFFF00-FF00FF00-FFFF0000";
+            settings["ButtonFrequencies"] = "196-262-392-330";
             settings["InnerButtonRatio"] = "0.55";
             settings["OuterButtonRatio"] = "0.90";
             settings["CenterButtonRatio"] = "0";

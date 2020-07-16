@@ -11,11 +11,14 @@ using System.Windows.Forms;
 
 namespace SimonSays
 {
+
     public partial class frmSettings : Form
     {
         // Internal variables
         private ProgramSettings<string, string> _settings;
         private ProgramSettings<string, string> _defaultSettings;
+
+        private DataTable _table;
 
         // Public interface
         public ProgramSettings<string, string> GetSettings => _settings;
@@ -27,58 +30,30 @@ namespace SimonSays
             // Default buttons
             this.AcceptButton = this.btnAccept;
             this.CancelButton = this.btnCancel;
-
-            // Populate the GridView
-            List<(int Value, float Frequency, string Color)> lista = new List<(int Value, float Frequency, string Color)>();
-            lista.Add((0, 460, "0000FF"));
-            lista.Add((1, 460, "FF00FF"));
-            lista.Add((2, 460, "00FF00"));
-            lista.Add((3, 460, "FF0000"));
             
-            List<string> lista2 = new List<string>();
-            lista2.Add("algo");
-            lista2.Add("para");
-            lista2.Add("probar");
+            // Bind data to the GridView control
+            _table = new DataTable();
+            _table.Columns.Add("Value", typeof(Int32));
+            _table.Columns.Add("Frequency", typeof(float));
+            _table.Columns.Add("Color", typeof(string));
+            _table.ColumnChanged += new DataColumnChangeEventHandler(OnColumnChanged);
 
-            /*
-            gridButtons.DataSource = lista.Select(i => new
-            {
-                i.Value,
-                i.Frequency,
-                i.Color
-            });
-            */
-            var bindingList = new BindingList<(int Value, float Frequency, string Color)>(lista);
-            var source = new BindingSource(bindingList, null);
-            gridButtons.DataSource = source;
-            //gridButtons.DataSource = lista2;
+            //gridButtons.Columns.Add(new DataGridViewTextBoxColumn());
+            //gridButtons.Columns.Add(new DataGridViewTextBoxColumn());
+            //gridButtons.Columns.Add(new ColorPickerColumn());
+            gridButtons.DataSource = _table;
+            gridButtons.Columns[0].ReadOnly = true;
+            gridButtons.Columns[2].CellTemplate = new ColorPickerCell();
+            //gridButtons.Columns.Add();
+            //gridButtons.Columns.Add(new ColorPickerColumn());
+            //gridButtons.Columns.Add(new ColorPickerColumn());
+        }
 
-            //var item = new Tuple<string, string>($"Row : {i}, Col: One", $"Row: {i}, Col: Two");
-
-            DataTable table= new DataTable();
-            table.Columns.Add("Value", typeof(Int32));
-            table.Columns.Add("Frequency", typeof(float));
-            table.Columns.Add("Color", typeof(string));
-
-            var algo = lista.Select(i => new object[]
-            {
-                i.Value,
-                i.Frequency,
-                i.Color
-            });
-
-            foreach ((int Value, float Frequency, string Color) row in lista)
-            {
-                table.Rows.Add(new object[]{row.Value, row.Frequency, row.Color});
-            }
-            /*
-            table.Rows.Add(lista.Select(i => new
-            {
-                i.Value,
-                i.Frequency,
-                i.Color
-            }));*/
-            gridButtons.DataSource = table;
+        private void OnColumnChanged(object sender, DataColumnChangeEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Event ColumnChanged");
+            this.DemoBoard.ButtonFrequencies = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[1].ToString()).ToArray(), float.Parse);
+            this.DemoBoard.ButtonColors = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[1].ToString()).ToArray(), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
         }
 
         public frmSettings(ProgramSettings<string, string> settings, ProgramSettings<string, string> defSets)
@@ -111,6 +86,9 @@ namespace SimonSays
 
                 this.chkStartUp.Checked = Convert.ToInt32(settings.GetOrDefault("WindowPosition", defSets["WindowPosition"])) == 1 ? true : false;
 
+                this.DemoBoard.ButtonColors = Array.ConvertAll(settings.GetOrDefault("ButtonColors", defSets["ButtonColors"]).Split('-'), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
+                this.DemoBoard.ButtonFrequencies = Array.ConvertAll(settings.GetOrDefault("ButtonFrequencies", defSets["ButtonFrequencies"]).Split('-'), float.Parse);
+
                 /*
                 int value = Convert.ToInt32(settings.ContainsKey("MaximumDigit") ? settings["MaximumDigit"] : defSets["MaximumDigit"]);
                 this.numMaxDigit.Value = value > numMaxDigit.Maximum ? numMaxDigit.Maximum : (value < numMaxDigit.Minimum ? numMaxDigit.Minimum : value);
@@ -127,7 +105,7 @@ namespace SimonSays
                 this.numFontRatio.Value = Convert.ToDecimal(settings.ContainsKey("FontRatio") ? settings["FontRatio"] : defSets["FontRatio"], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numResultsRatio.Value = Convert.ToDecimal(settings.ContainsKey("ResultsRatio") ? settings["ResultsRatio"] : defSets["ResultsRatio"], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 */
-                
+
             }
             catch (KeyNotFoundException ex)
             {
@@ -251,6 +229,25 @@ namespace SimonSays
 
         private void numButtons_ValueChanged(object sender, EventArgs e)
         {
+            int nButtons = (Int32)numButtons.Value;
+            int nRows = _table.Rows.Count;
+            int nDiff = nButtons - nRows;
+
+            if (nDiff > 0)
+            {
+                var list = this.DemoBoard.DefaultButtonList;
+                for (int i = 0; i < nDiff; i++)
+                    this._table.Rows.Add(new object[] { list[nRows + i].Value, list[nRows + i].Frequency, list[nRows + i].Color });
+            }
+            else if (nDiff < 0)
+            {
+                for (int i = 0; i<-nDiff; i++)
+                {
+                    this._table.Rows.RemoveAt(nRows - 1 - i);
+                }
+            }
+            _table.AcceptChanges();
+
             DemoBoard.NumberOfButtons = (Int32)numButtons.Value;
             if (trackButtons.Value != (Int32)numButtons.Value) trackButtons.Value = Convert.ToInt32(numButtons.Value);
         }
@@ -327,7 +324,7 @@ namespace SimonSays
 
         private void numBoardRotation_ValueChanged(object sender, EventArgs e)
         {
-            //DemoBoard.PercentInnerRatio = (float)numBoardIn.Value;
+            DemoBoard.BoardRotation = (float)numBoardRotation.Value;
             int value = Convert.ToInt32(numBoardRotation.Value);
             if (trackBoardRotation.Value != value) trackBoardRotation.Value = value;
         }

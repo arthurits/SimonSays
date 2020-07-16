@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-//using LaMarvin.Windows.Forms;
+using LaMarvin.Windows.Forms;
 using System.Windows.Forms;
 using System.Drawing;
 using System.Threading;
 
-namespace System.Windows.Forms
+namespace ColorPickerCombo
 {
-    // https://docs.microsoft.com/en-us/dotnet/framework/winforms/controls/how-to-host-controls-in-windows-forms-datagridview-cells
-    // https://social.msdn.microsoft.com/Forums/windows/en-US/f501e688-e8ef-42e5-aaa4-71ec2b6a1176/datagridview-color-picker?forum=winformsdatacontrols
     public class ColorPickerColumn : DataGridViewColumn
     {
         public ColorPickerColumn():base(new ColorPickerCell())
@@ -57,7 +55,7 @@ namespace System.Windows.Forms
             
             if (this.Value !=null && (this.Value.GetType() == typeof(Color)))
             {
-                ctl.BackColor = (Color)this.Value;
+                ctl.Color = (Color)this.Value;
             }
         }
 
@@ -106,9 +104,6 @@ namespace System.Windows.Forms
             RectangleF TextBoxRect = new RectangleF();
             GetDisplayLayout(cellBounds, ref ColorBoxRect, ref TextBoxRect);
 
-            if (value.GetType() == typeof(string))
-                value = Color.FromArgb(int.Parse(value.ToString(), Globalization.NumberStyles.HexNumber));
-
             //// Draw the cell background, if specified.
             if ((paintParts & DataGridViewPaintParts.Background) ==
                 DataGridViewPaintParts.Background)
@@ -135,11 +130,10 @@ namespace System.Windows.Forms
         public override object ParseFormattedValue(object formattedValue, DataGridViewCellStyle cellStyle, System.ComponentModel.TypeConverter formattedValueTypeConverter, System.ComponentModel.TypeConverter valueTypeConverter)
         {
             int result;
-            //string number = "0x" + formattedValue.ToString();
+            string number = "0x" + formattedValue.ToString();
             if (int.TryParse(formattedValue.ToString(), System.Globalization.NumberStyles.HexNumber, null, out result))
                 //Hex number
-                //return base.ParseFormattedValue("0x" + formattedValue.ToString(), cellStyle, formattedValueTypeConverter, valueTypeConverter);
-                return base.ParseFormattedValue(formattedValue.ToString().ToUpper(), cellStyle, formattedValueTypeConverter, valueTypeConverter);
+                return base.ParseFormattedValue("0x" + formattedValue.ToString(), cellStyle, formattedValueTypeConverter, valueTypeConverter);
             else
                 return base.ParseFormattedValue(formattedValue, cellStyle, formattedValueTypeConverter, valueTypeConverter);
         }
@@ -157,47 +151,28 @@ namespace System.Windows.Forms
         }
     }
 
-    class ColorPickerControl : Button , IDataGridViewEditingControl
+    class ColorPickerControl : ColorPicker , IDataGridViewEditingControl
     {
         DataGridView dataGridView;
         private bool valueChanged = false;
         int rowIndex;
-        public Color _color;
-
+       
         public ColorPickerControl()
         {
-            this.Click += new EventHandler(ColorEditingControl_Click);
-        }
-
-        public void ColorEditingControl_Click(object sender, EventArgs e)
-        {
-            ColorDialog ColorDlg = new ColorDialog();
-            ColorDlg.AllowFullOpen = true;
-            ColorDlg.AnyColor = true;
-            ColorDlg.FullOpen = true;
-            ColorDlg.SolidColorOnly = false;
-            ColorDlg.ShowHelp = true;
-
-            if (ColorDlg.ShowDialog() == DialogResult.OK)
-            {
-                if (this._color != ColorDlg.Color)
-                {
-                    this._color = ColorDlg.Color;
-                    valueChanged = true;
-                    this.EditingControlDataGridView.NotifyCurrentCellDirty(true);
-                }
-            }
+            
         }
 
         // Implements the IDataGridViewEditingControl.EditingControlFormattedValue 
         // property.
         public object EditingControlFormattedValue
         {
-            get => this._color.ToArgb().ToString("X");
+            get
+            {
+                return this;
+            }
             set
             {
-                if (value != null)
-                    this._color = Color.FromArgb(int.Parse(value.ToString(), System.Globalization.NumberStyles.HexNumber));
+                this.Color = Color.Pink;
             }
         }
 
@@ -205,7 +180,7 @@ namespace System.Windows.Forms
         // IDataGridViewEditingControl.GetEditingControlFormattedValue method.
         public object GetEditingControlFormattedValue(DataGridViewDataErrorContexts context)
         {
-            return EditingControlFormattedValue;
+            return Color.Name;
         }
 
         // Implements the 
@@ -220,8 +195,14 @@ namespace System.Windows.Forms
         // property.
         public int EditingControlRowIndex
         {
-            get => rowIndex;
-            set => rowIndex = value;
+            get
+            {
+                return rowIndex;
+            }
+            set
+            {
+                rowIndex = value;
+            }
         }
 
         // Implements the IDataGridViewEditingControl.EditingControlWantsInputKey 
@@ -257,29 +238,47 @@ namespace System.Windows.Forms
         // .RepositionEditingControlOnValueChange property.
         public bool RepositionEditingControlOnValueChange
         {
-            get => false;
+            get
+            {
+                return false;
+            }
         }
 
         // Implements the IDataGridViewEditingControl
         // .EditingControlDataGridView property.
         public DataGridView EditingControlDataGridView
         {
-            get => dataGridView;
-            set => dataGridView = value;
+            get
+            {
+                return dataGridView;
+            }
+            set
+            {
+                dataGridView = value;
+            }
         }
 
         // Implements the IDataGridViewEditingControl
         // .EditingControlValueChanged property.
         public bool EditingControlValueChanged
         {
-            get=> valueChanged;
-            set=> valueChanged = value;
+            get
+            {
+                return valueChanged;
+            }
+            set
+            {
+                valueChanged = value;
+            }
         }
 
         // Implements the IDataGridViewEditingControl
         public Cursor EditingPanelCursor
         {
-            get => base.Cursor;
+            get
+            {
+                return base.Cursor;
+            }
         }
 
         protected virtual void NotifyDataGridViewOfValueChange()
@@ -298,6 +297,6 @@ namespace System.Windows.Forms
             base.OnLeave(eventargs);
             NotifyDataGridViewOfValueChange();
         }
-        
+
     }
 }

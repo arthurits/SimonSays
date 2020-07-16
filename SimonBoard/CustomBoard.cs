@@ -22,6 +22,8 @@ namespace SimonSays
         private Int32 _nButtons = 4;
 
         private SimonSays.SimonButton2[] _buttons;
+        private Color[] _colors;
+        private float[] _frequencies;
 
         // Definición de los botones
         private Int32 _nMinDimension = 0;
@@ -44,6 +46,9 @@ namespace SimonSays
         private float _fCenterButton = 0.0f;
         private float _fOuterButton = 0.95f;
         private float _fInnerButton = 0.55f;
+
+        // Default buttons list
+        private List<(int Value, float Frequency, string Color)> _defButtons;
 
         //public ButtonColor _ButtonColor = new ButtonColor();
         //public ButtonRotation _ButtonRotation = new ButtonRotation();
@@ -291,8 +296,63 @@ namespace SimonSays
             set
             {
                 _fRotation = value < 0 ? 0 : (value >= 360 ? 0 : value);
-                Invalidate();
+                for (int i = 0; i < _nButtons; i++)
+                    _buttons[i].AngleRotation = _buttons[i].Value * _buttons[i].AngleSwept + _fRotation;
+                //ResizeButtons();
+                //Invalidate();
             }
+        }
+
+        /// <summary>
+        /// Colors used to draw the buttons
+        /// </summary>
+        [Description("Colors used to draw the buttons"),
+        Category("Custom"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Color[] ButtonColors
+        {
+            get => _colors;
+            set
+            {
+                _colors = value;
+                for (int i = 0; i < _nButtons; i++)
+                    _buttons[i].Color = _colors[i];
+            }
+        }
+
+        /// <summary>
+        /// Frequencies used for the buttons
+        /// </summary>
+        [Description("Frequencies used for the buttons"),
+        Category("Custom"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public float[] ButtonFrequencies
+        {
+            get => _frequencies;
+            set
+            {
+                _frequencies = value;
+                for (int i = 0; i < _nButtons; i++)
+                    _buttons[i].Frequency = _frequencies[i];
+            }
+        }
+
+        /// <summary>
+        /// List with default color and frequency values for buttons
+        /// </summary>
+        [Description("List with default color and frequency values for buttons"),
+        Category("Custom"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public List<(int Value, float Frequency, string Color)> DefaultButtonList
+        {
+            get => _defButtons;
+            set => _defButtons = value;
         }
 
         #endregion
@@ -319,10 +379,27 @@ namespace SimonSays
             // Get the minimum dimension of the client area
             // Set the array of buttons to 0 elements
             _buttons = new SimonSays.SimonButton2[0];
+            _colors = new Color[0];
+            _frequencies = new float[0];
             //CreateButtons();
 
             //_nDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
             //AlignControls();
+
+            _defButtons = new List<(int Value, float Frequency, string Color)>
+            {
+                (0, 196, "FF0000FF"),
+                (1, 262, "FFFFFF00"),
+                (2, 392, "FF00FF00"),
+                (3, 330, "FFFF0000"),
+                (4, 275, "FFc71585"),
+                (5, 275, "FF800080"),
+                (6, 275, "FF8a2be2"),
+                (7, 275, "FF0d98ba"),
+                (8, 275, "FF9acd32"),
+                (9, 275, "FFffa500")
+            };
+
         }
 
         private void CreateButtons()
@@ -347,7 +424,8 @@ namespace SimonSays
             {
                 _buttons[i] = new SimonSays.SimonButton2()
                 {
-                    Color = Color.DarkRed,
+                    Color = _colors.Length == 0 ? Color.White : (_colors.Length > i  ? _colors[i] : Color.White),
+                    Frequency = _frequencies.Length == 0 ? 0.0f : (_frequencies.Length > i  ? _frequencies[i] : 0.0f),
                     Location = location,
                     Size = new Size(_nMinDimension, _nMinDimension),
                     //CenterRotation = new PointF(this.Width / 2.0f, this.Height / 2.0f),
@@ -357,12 +435,14 @@ namespace SimonSays
                     ClickOffset = new PointF(2, 2),
                     InnerRadius = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset),
                     OuterRadius = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset),
-                    AngleRotation = i * rotation,
+                    AngleRotation = i * rotation + _fRotation,
                     AngleSwept = rotation,
                     Value = i
                 };
                 //_buttons[i].Size = new Size(this.Width, this.Height);
                 _buttons[i].Click += new System.EventHandler(this.CustomButton_Click);
+                //_buttons[i].Frequency = 0;
+                //_buttons[i].Color = Color.White;
                 this.Controls.Add(_buttons[i]);
             }
 
