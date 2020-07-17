@@ -30,6 +30,7 @@ namespace SimonSays
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
             this.tabSettings = new System.Windows.Forms.TabControl();
             this.tabPlayMode = new System.Windows.Forms.TabPage();
             this.tabGame = new System.Windows.Forms.TabPage();
@@ -157,10 +158,14 @@ namespace SimonSays
             // 
             // DemoBoard
             // 
+            this.DemoBoard.BoardRotation = 0F;
+            this.DemoBoard.ButtonColors = new System.Drawing.Color[0];
+            this.DemoBoard.ButtonFrequencies = new float[0];
             this.DemoBoard.CenterButtonRatio = 0F;
             this.DemoBoard.ColorBackground = System.Drawing.Color.Transparent;
             this.DemoBoard.ColorInnerCircle = System.Drawing.Color.Gainsboro;
             this.DemoBoard.ColorOuterCircle = System.Drawing.Color.LightGray;
+            this.DemoBoard.DefaultButtonList = ((System.Collections.Generic.List<System.ValueTuple<int, float, string>>)(resources.GetObject("DemoBoard.DefaultButtonList")));
             this.DemoBoard.InnerButtonRatio = 0.55F;
             this.DemoBoard.Location = new System.Drawing.Point(403, 150);
             this.DemoBoard.Name = "DemoBoard";
@@ -234,15 +239,18 @@ namespace SimonSays
             // 
             // gridButtons
             // 
+            this.gridButtons.AllowUserToAddRows = false;
             this.gridButtons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridButtons.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColValue,
             this.ColFrequency,
             this.ColColor});
+            this.gridButtons.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this.gridButtons.Location = new System.Drawing.Point(23, 203);
             this.gridButtons.Name = "gridButtons";
             this.gridButtons.Size = new System.Drawing.Size(287, 134);
             this.gridButtons.TabIndex = 12;
+            this.gridButtons.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridButtons_CellClick);
             // 
             // ColValue
             // 

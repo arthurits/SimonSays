@@ -18,6 +18,7 @@ namespace SimonSays
     [Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design", typeof(System.ComponentModel.Design.IDesigner))]
     public partial class SimonButton2 : Button
     {
+        private const int MAX_BUTTONS = 10;
 
         #region Private variables
         private Color _color;
@@ -66,7 +67,7 @@ namespace SimonSays
         public Int32 Value
         {
             get { return _nValue; }
-            set { _nValue = value > 3 ? 3 : (value < 0 ? 0 : value); }
+            set { _nValue = value > MAX_BUTTONS ? MAX_BUTTONS : (value < 0 ? 0 : value); }
         }
 
         /// <summary>

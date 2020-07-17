@@ -36,24 +36,35 @@ namespace SimonSays
             _table.Columns.Add("Value", typeof(Int32));
             _table.Columns.Add("Frequency", typeof(float));
             _table.Columns.Add("Color", typeof(string));
-            _table.ColumnChanged += new DataColumnChangeEventHandler(OnColumnChanged);
+            _table.ColumnChanged += new DataColumnChangeEventHandler(OnDataGridChanged);
 
-            //gridButtons.Columns.Add(new DataGridViewTextBoxColumn());
-            //gridButtons.Columns.Add(new DataGridViewTextBoxColumn());
-            //gridButtons.Columns.Add(new ColorPickerColumn());
             gridButtons.DataSource = _table;
             gridButtons.Columns[0].ReadOnly = true;
             gridButtons.Columns[2].CellTemplate = new ColorPickerCell();
-            //gridButtons.Columns.Add();
-            //gridButtons.Columns.Add(new ColorPickerColumn());
-            //gridButtons.Columns.Add(new ColorPickerColumn());
+
         }
 
-        private void OnColumnChanged(object sender, DataColumnChangeEventArgs e)
+        private void OnDataGridChanged(object sender, DataColumnChangeEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("Event ColumnChanged");
             this.DemoBoard.ButtonFrequencies = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[1].ToString()).ToArray(), float.Parse);
-            this.DemoBoard.ButtonColors = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[1].ToString()).ToArray(), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
+            this.DemoBoard.ButtonColors = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[2].ToString()).ToArray(), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
+            //SendKeys.Send("{TAB}");
+            //SendKeys.Send("+{TAB}");
+        }
+
+        private void gridButtons_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex != 2) return;
+
+            //You can check for e.ColumnIndex to limit this to your specific column
+            this.gridButtons.BeginEdit(false);
+            var editingControl = (ColorPickerControl)this.gridButtons.EditingControl;
+            if (editingControl != null)
+                editingControl.ColorEditingControl_Click(null, null);
+                //editingControl.DroppedDown = true;
+            this.gridButtons.EndEdit();
+            this.gridButtons.CurrentCell = null;
         }
 
         public frmSettings(ProgramSettings<string, string> settings, ProgramSettings<string, string> defSets)
@@ -126,6 +137,8 @@ namespace SimonSays
         private void btnAccept_Click(object sender, EventArgs e)
         {
             _settings["NumberOfButtons"] = this.numButtons.Value.ToString();
+            _settings["ButtonColors"] = String.Join("-", this.DemoBoard.ButtonColors.Select(x => x.ToArgb().ToString("X")));
+            _settings["ButtonFrequencies"] = String.Join("-", this.DemoBoard.ButtonFrequencies);
             _settings["OuterButtonRatio"] = this.numButtonMax.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
             _settings["InnerButtonRatio"] = this.numButtonMin.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
             _settings["CenterButtonRatio"] = this.numButtonDistance.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
@@ -167,6 +180,8 @@ namespace SimonSays
                 */
 
                 this.numButtons.Value = Convert.ToInt32(_settings["NumberOfButtons"]);
+                this.DemoBoard.ButtonColors = Array.ConvertAll(_settings["ButtonColors"].Split('-'), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
+                this.DemoBoard.ButtonFrequencies = Array.ConvertAll(_settings["ButtonFrequencies"].Split('-'), float.Parse);
                 this.numButtonMax.Value = Convert.ToDecimal(_settings.GetOrDefault("OuterButtonRatio"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numButtonMin.Value = Convert.ToDecimal(_settings.GetOrDefault("InnerButtonRatio"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numButtonDistance.Value = Convert.ToDecimal(_settings.GetOrDefault("CenterButtonRatio"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
@@ -229,6 +244,10 @@ namespace SimonSays
 
         private void numButtons_ValueChanged(object sender, EventArgs e)
         {
+            DemoBoard.NumberOfButtons = (Int32)numButtons.Value;
+            if (trackButtons.Value != (Int32)numButtons.Value) trackButtons.Value = Convert.ToInt32(numButtons.Value);
+
+            // Update the table, gridButtons and DemoBoard
             int nButtons = (Int32)numButtons.Value;
             int nRows = _table.Rows.Count;
             int nDiff = nButtons - nRows;
@@ -248,8 +267,8 @@ namespace SimonSays
             }
             _table.AcceptChanges();
 
-            DemoBoard.NumberOfButtons = (Int32)numButtons.Value;
-            if (trackButtons.Value != (Int32)numButtons.Value) trackButtons.Value = Convert.ToInt32(numButtons.Value);
+            OnDataGridChanged(null, null);
+
         }
 
         private void trackButtons_ValueChanged(object sender, EventArgs e)

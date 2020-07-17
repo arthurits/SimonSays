@@ -42,8 +42,7 @@ namespace System.Windows.Forms
         public ColorPickerCell()
             : base()
         {
-        
-           
+          
         }
       
         public override void InitializeEditingControl(int rowIndex, object
@@ -54,38 +53,37 @@ namespace System.Windows.Forms
                                           dataGridViewCellStyle);
             ColorPickerControl ctl = DataGridView.EditingControl as ColorPickerControl;
             _ColorPicker = ctl;
+
             
             if (this.Value !=null && (this.Value.GetType() == typeof(Color)))
             {
                 ctl.BackColor = (Color)this.Value;
+                ctl._color = (Color)this.Value;
             }
+            else if (this.Value != null && this.Value.GetType() == typeof(string))
+            {
+                ctl.BackColor = Color.FromArgb(int.Parse(this.Value.ToString(), Globalization.NumberStyles.HexNumber));
+                ctl._color = Color.FromArgb(int.Parse(this.Value.ToString(), Globalization.NumberStyles.HexNumber));
+            }
+
         }
 
         public override Type EditType
         {
-            get
-            {
-               //Return the type of the editing contol that CalendarCell uses.
-             return typeof(ColorPickerControl);
-            }
+            //Return the type of the editing contol that CalendarCell uses.
+            get => typeof(ColorPickerControl);
         }
     
         public override Type ValueType
         {
-            get
-            {
-                // Return the type of the value that CalendarCell contains.
-               return typeof(Color);
-            }
+            // Return the type of the value that CalendarCell contains.
+            get => typeof(Color);
         }
         
         public override object DefaultNewRowValue
         {
-            get
-            {
-                // Use the current date and time as the default value.
-                return Color.White;
-            }
+            // Use the current date and time as the default value.
+            get => Color.White;
         }
      
         protected override void Paint(Graphics graphics,
@@ -177,6 +175,7 @@ namespace System.Windows.Forms
             ColorDlg.FullOpen = true;
             ColorDlg.SolidColorOnly = false;
             ColorDlg.ShowHelp = true;
+            ColorDlg.Color = this._color;
 
             if (ColorDlg.ShowDialog() == DialogResult.OK)
             {
@@ -187,6 +186,8 @@ namespace System.Windows.Forms
                     this.EditingControlDataGridView.NotifyCurrentCellDirty(true);
                 }
             }
+
+            this.EditingControlDataGridView.NotifyCurrentCellDirty(true);
         }
 
         // Implements the IDataGridViewEditingControl.EditingControlFormattedValue 

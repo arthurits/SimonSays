@@ -139,9 +139,9 @@ namespace SimonSays
         /// <param name="e"></param>
         private void OnGameTick(object sender, TickEventArgs e)
         {
-            foreach (ColorButton.SimonButton button in simonBoard.Controls.OfType<ColorButton.SimonButton>())
+            foreach (SimonSays.SimonButton2 button in simonBoard.Controls.OfType<SimonSays.SimonButton2>())
             {
-                if (button.ColorValue == e.ButtonValue)
+                if (button.Value == e.ButtonValue)
                     button.Clicked = e.Flash;
             }
 
@@ -320,6 +320,7 @@ namespace SimonSays
         }
         private void toolStripMain_Start_Click(object sender, EventArgs e)
         {
+            _Game.NumberOfButtons = this.simonBoard.NumberOfButtons;
             _Game.Start();
         }
         private void toolStripMain_Settings_Click(object sender, EventArgs e)
@@ -391,7 +392,7 @@ namespace SimonSays
             //settings["Stats"] = this.toolStripMain_Stats.Checked == true ? "1" : "0";
 
             settings["ButtonColors"] = String.Join("-", this.simonBoard.ButtonColors.Select(x => x.ToArgb().ToString("X")));
-            settings["ButtonFrequency"] = String.Join("-", this.simonBoard.ButtonFrequencies);
+            settings["ButtonFrequencies"] = String.Join("-", this.simonBoard.ButtonFrequencies);
 
             /*
             if (settings["SplitterDistance"] == "0.5")
@@ -451,12 +452,6 @@ namespace SimonSays
                 }
 
                 this.simonBoard.NumberOfButtons = Convert.ToInt32(programSettings.GetOrDefault("NumberOfButtons", defaultSettings["NumberOfButtons"]));
-                //var str = programSettings.GetOrDefault("ButtonColors", defaultSettings["ButtonColors"]).Split('-');
-                //var algo = str.Select(x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber))).ToArray();
-                //var algo2 = Array.ConvertAll(str, x => int.Parse(x, System.Globalization.NumberStyles.HexNumber));
-                this.simonBoard.ButtonColors = Array.ConvertAll(programSettings.GetOrDefault("ButtonColors", defaultSettings["ButtonColors"]).Split('-'), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
-                //this.simonBoard.ButtonColors = (Color[])programSettings.GetOrDefault("ButtonColors", defaultSettings["ButtonColors"]).Split('-').Select(x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
-                this.simonBoard.ButtonFrequencies = Array.ConvertAll(programSettings.GetOrDefault("ButtonFrequencies", defaultSettings["ButtonFrequencies"]).Split('-'), float.Parse);
                 this.simonBoard.InnerButtonRatio = Convert.ToSingle(programSettings.GetOrDefault("InnerButtonRatio", defaultSettings["InnerButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.simonBoard.OuterButtonRatio = Convert.ToSingle(programSettings.GetOrDefault("OuterButtonRatio", defaultSettings["OuterButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.simonBoard.CenterButtonRatio = Convert.ToSingle(programSettings.GetOrDefault("CenterButtonRatio", defaultSettings["CenterButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
@@ -468,6 +463,14 @@ namespace SimonSays
                 this.simonBoard.ColorInnerCircle = Color.FromArgb(Convert.ToInt32(programSettings.GetOrDefault("ColorInnerCircle", defaultSettings["ColorInnerCircle"])));
                 this.simonBoard.ColorOuterCircle = Color.FromArgb(Convert.ToInt32(programSettings.GetOrDefault("ColorOuterCircle", defaultSettings["ColorOuterCircle"])));
                 this.simonBoard.Font = new Font(programSettings.GetOrDefault("FontFamilyName", defaultSettings["FontFamilyName"]), simonBoard.Font.SizeInPoints);
+
+                this.simonBoard.ButtonFrequencies = Array.ConvertAll(programSettings.GetOrDefault("ButtonFrequencies", defaultSettings["ButtonFrequencies"]).Split('-'), float.Parse);
+                //var str = programSettings.GetOrDefault("ButtonColors", defaultSettings["ButtonColors"]).Split('-');
+                //var algo = str.Select(x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber))).ToArray();
+                //var algo2 = Array.ConvertAll(str, x => int.Parse(x, System.Globalization.NumberStyles.HexNumber));
+                this.simonBoard.ButtonColors = Array.ConvertAll(programSettings.GetOrDefault("ButtonColors", defaultSettings["ButtonColors"]).Split('-'), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
+                //this.simonBoard.ButtonColors = (Color[])programSettings.GetOrDefault("ButtonColors", defaultSettings["ButtonColors"]).Split('-').Select(x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
+                
             }
             catch(Exception ex)
             {

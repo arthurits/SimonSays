@@ -9,6 +9,8 @@ namespace SimonSays
 {
     class SimonGame
     {
+        #region Variable definitions
+        private Int32 _nNumButts = 0;
         private Int32[] _sequence = new int[100000];
         private Int32 _nScore;
         private Int32 _nCounter;
@@ -19,10 +21,6 @@ namespace SimonSays
         private Int32 _msBetween;
         private Int32 _msFlashlight;
         private Timer _timer;
-        public event EventHandler<TickEventArgs> Tick;
-        public event EventHandler<WrongEventArgs> WrongSequence;
-        public event EventHandler<CorrectEventArgs> CorrectSequence;
-        public event EventHandler<OverEventArgs> GameOver;
 
         private enum SimonGameType
         {
@@ -34,37 +32,60 @@ namespace SimonSays
             SimonRewind
         }
 
+        public event EventHandler<TickEventArgs> Tick;
+        public event EventHandler<WrongEventArgs> WrongSequence;
+        public event EventHandler<CorrectEventArgs> CorrectSequence;
+        public event EventHandler<OverEventArgs> GameOver;
+        
+        #endregion Variable definitions
+
+        #region Public interface
+        
+        /// <summary>
+        /// Number of buttons to generate the random sequence
+        /// </summary>
+        public Int32 NumberOfButtons
+        {
+            get => _nNumButts;
+            set { _nNumButts = value < 0 ? 0 : value;}
+        }        
+
         public Int32 ScoreTotal
         {
             //set { _nScore = value; }
-            get { return _nScore; }
+            get => _nScore;
         }
         public Int32 ScoreHighest
         {
             //set { _nCounter = value; }
-            get { return _nHighest; }
+            get => _nHighest;
         }
         public Int32 DurationFlash
         {
-            get { return _msFlashlight; }
+            get => _msFlashlight;
         }
         public Int32 DurationBetween
         {
-            set { _msBetween = value; }
-            get { return _msBetween; }
+            get => _msBetween;
+            set => _msBetween = value;
         }
+
         /// <summary>
         /// True if Simon is playing a sequence, flase otherwise
         /// </summary>
         public bool Play
         {
-            set { _nPlaySimon = value; }
-            get { return _nPlaySimon; }
+            get => _nPlaySimon;
+            set => _nPlaySimon = value;
         }
-        public bool Flash {
-            set { _nFlashLight = value; }
-            get { return _nFlashLight; }
+        public bool Flash
+        {
+            get => _nFlashLight;
+            set => _nFlashLight = value;
         }
+
+        #endregion Public interface
+
 
         public SimonGame()
         {
@@ -176,7 +197,7 @@ namespace SimonSays
         private void GetNewSequence()
         {
             Random rnd = new Random();
-            for (Int32 i = 0; i < _sequence.Length; i++) { _sequence[i] = rnd.Next(0, 4); } // Random numbers between 0 and 3
+            for (Int32 i = 0; i < _sequence.Length; i++) { _sequence[i] = rnd.Next(0, _nNumButts); } // Random numbers between 0 and 3
         }
 
         /// <summary>
