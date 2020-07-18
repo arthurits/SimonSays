@@ -318,7 +318,7 @@ namespace SimonSays
             {
                 _colors = value;
                 for (int i = 0; i < _buttons.Length; i++)
-                    _buttons[i].Color = _colors[i];
+                    _buttons[i].Color = _colors.Length == 0 ? Color.White : (_colors.Length > i ? _colors[i] : Color.White);
             }
         }
 
@@ -337,7 +337,7 @@ namespace SimonSays
             {
                 _frequencies = value;
                 for (int i = 0; i < _buttons.Length; i++)
-                    _buttons[i].Frequency = _frequencies[i];
+                    _buttons[i].Frequency = _frequencies.Length == 0 ? 0.0f : (_frequencies.Length > i ? _frequencies[i] : 0.0f);
             }
         }
 
@@ -424,6 +424,8 @@ namespace SimonSays
             {
                 _buttons[i] = new SimonSays.SimonButton2()
                 {
+                    Anchor=AnchorStyles.None,
+                    AutoSizeMode=AutoSizeMode.GrowAndShrink,
                     Color = _colors.Length == 0 ? Color.White : (_colors.Length > i  ? _colors[i] : Color.White),
                     Frequency = _frequencies.Length == 0 ? 0.0f : (_frequencies.Length > i  ? _frequencies[i] : 0.0f),
                     Location = location,
@@ -501,6 +503,9 @@ namespace SimonSays
 
         protected override void OnResize(EventArgs e)
         {
+            System.Diagnostics.Debug.WriteLine("Board OnResize 1 — Values: "+ String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
+            System.Diagnostics.Debug.WriteLine("Board OnResize 1 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
+
             //Invalidate();
             AlignLabels();
 
@@ -513,6 +518,8 @@ namespace SimonSays
 
             //Invalidate();
             base.OnResize(e);
+            System.Diagnostics.Debug.WriteLine("Board OnResize 2 — Values: " + String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
+            System.Diagnostics.Debug.WriteLine("Board OnResize 2 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
         }
 
         /// <summary>
@@ -537,6 +544,8 @@ namespace SimonSays
             float outRad = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
             float inRad = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
 
+            this.SuspendLayout();
+            
             for (int i = 0; i < _buttons.Length; i++)
             {
                 _buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
@@ -545,8 +554,21 @@ namespace SimonSays
                 _buttons[i].CenterButton = centerBut;
                 _buttons[i].OuterRadius = outRad;
                 _buttons[i].InnerRadius = inRad;
+                //_buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
+                //_buttons[i].Invalidate();
             }
 
+            this.ResumeLayout(true);
+
+            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — Sizes: " + String.Join(", ", _buttons.Select(c => c.Size).ToArray()));
+            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — Locations: " + String.Join(", ", _buttons.Select(c => c.Location).ToArray()));
+            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — CenterRotation: " + String.Join(", ", _buttons.Select(c => c.CenterRotation).ToArray()));
+            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — CenterButton: " + String.Join(", ", _buttons.Select(c => c.CenterButton).ToArray()));
+            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — OuterRadius: " + String.Join(", ", _buttons.Select(c => c.OuterRadius).ToArray()));
+            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — InnerRadius: " + String.Join(", ", _buttons.Select(c => c.InnerRadius).ToArray()));
+            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — Visible: " + String.Join(", ", _buttons.Select(c => c.Visible).ToArray()));
+            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — Values: " + String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
+            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
         }
 
         private void CustomButton_Click(object sender, EventArgs e)

@@ -200,10 +200,19 @@ namespace SimonSays
             this.simonBoard.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.simonBoard.CenterButtonRatio = 0.05F;
+            this.simonBoard.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.simonBoard.BoardRotation = 0F;
+            this.simonBoard.ButtonColors = new System.Drawing.Color[] {
+        System.Drawing.Color.Blue,
+        System.Drawing.Color.Yellow,
+        System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
+        System.Drawing.Color.Red};
+            this.simonBoard.ButtonFrequencies = new float[0];
+            this.simonBoard.CenterButtonRatio = 0F;
             this.simonBoard.ColorBackground = System.Drawing.Color.Transparent;
             this.simonBoard.ColorInnerCircle = System.Drawing.Color.White;
             this.simonBoard.ColorOuterCircle = System.Drawing.Color.Black;
+            this.simonBoard.DefaultButtonList = ((System.Collections.Generic.List<System.ValueTuple<int, float, string>>)(resources.GetObject("simonBoard.DefaultButtonList")));
             this.simonBoard.InnerButtonRatio = 0.55F;
             this.simonBoard.Location = new System.Drawing.Point(16, 70);
             this.simonBoard.Name = "simonBoard";

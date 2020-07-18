@@ -42,6 +42,10 @@ namespace SimonSays
             gridButtons.Columns[0].ReadOnly = true;
             gridButtons.Columns[2].CellTemplate = new ColorPickerCell();
 
+            // Force the creation of buttons
+            this.numButtons.Value = 2;
+            this.numButtons.Minimum = 2;
+
         }
 
         private void OnDataGridChanged(object sender, DataColumnChangeEventArgs e)

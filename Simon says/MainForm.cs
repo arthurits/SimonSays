@@ -526,11 +526,11 @@ namespace SimonSays
             settings["InnerBoardRatio"] = "0.35";
             settings["OuterBoardRatio"] = "0.90";
             settings["BoardRotation"] = "0";
-            settings["ColorBackground"] = Color.White.ToArgb().ToString();
-            settings["ColorInnerCircle"] = Color.LightSalmon.ToArgb().ToString();
+            settings["ColorBackground"] = Color.Transparent.ToArgb().ToString();
+            settings["ColorInnerCircle"] = Color.WhiteSmoke.ToArgb().ToString();
             settings["ColorOuterCircle"] = Color.Black.ToArgb().ToString();
             settings["FontFamilyName"] = "Microsoft Sans Serif";
-
+            
             settings["WindowPosition"] = "0";   // Remember windows position
 
             settings["PlayMode"] = "9";     //Fixed time (1) & random sequence (8)

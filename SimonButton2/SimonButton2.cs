@@ -53,7 +53,8 @@ namespace SimonSays
         public Color Color
         {
             get { return _color; }
-            set { _color = value; Invalidate(); }
+            set { _color = value; //Invalidate();
+            }
         }
 
         /// <summary>
@@ -100,7 +101,8 @@ namespace SimonSays
         public float AngleSwept
         {
             get { return _fAngleSwept; }
-            set { _fAngleSwept = value; Invalidate(); }
+            set { _fAngleSwept = value; //Invalidate(); 
+            }
         }
 
         /// <summary>
@@ -114,7 +116,8 @@ namespace SimonSays
         public float AngleRotation
         {
             get { return _fAngleRotation; }
-            set { _fAngleRotation = value; Invalidate(); }
+            set { _fAngleRotation = value; //Invalidate(); 
+            }
         }
 
         /// <summary>
@@ -128,7 +131,8 @@ namespace SimonSays
         public float RegionOffset
         {
             get { return _fRegionOffset; }
-            set { _fRegionOffset = value; Invalidate(); }
+            set { _fRegionOffset = value; //Invalidate(); 
+            }
         }
 
         /// <summary>
@@ -143,7 +147,8 @@ namespace SimonSays
         public PointF CenterButton
         {
             get { return _fCenterButton; }
-            set { _fCenterButton = value; Invalidate(); }
+            set { _fCenterButton = value; //Invalidate(); 
+            }
         }
 
         /// <summary>
@@ -158,7 +163,8 @@ namespace SimonSays
         public PointF CenterRotation
         {
             get { return _fCenterRotation; }
-            set { _fCenterRotation = value; Invalidate(); }
+            set { _fCenterRotation = value; //Invalidate(); 
+            }
         }
 
         /// <summary>
@@ -187,7 +193,8 @@ namespace SimonSays
         public float OuterRadius
         {
             get { return _fRadiusOuter; }
-            set { _fRadiusOuter = value < 0 ? 0 : value; Invalidate(); }
+            set { _fRadiusOuter = value < 0 ? 0 : value; //Invalidate(); 
+            }
         }
 
         /// <summary>
@@ -201,7 +208,8 @@ namespace SimonSays
         public float InnerRadius
         {
             get { return _fRadiusInner; }
-            set { _fRadiusInner = value < 0 ? 0 : value; Invalidate(); }
+            set { _fRadiusInner = value < 0 ? 0 : value; //Invalidate(); 
+            }
         }
 
         /// <summary>
@@ -242,6 +250,7 @@ namespace SimonSays
             // To ensure that your control is redrawn every time it is resized
             // https://msdn.microsoft.com/en-us/library/b818z6z6(v=vs.110).aspx
             SetStyle(ControlStyles.ResizeRedraw, true);
+            this.ResizeRedraw = true;
 
             this.DoubleBuffered = true;
             this.FlatAppearance.MouseOverBackColor = Color.Transparent;

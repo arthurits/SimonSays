@@ -163,7 +163,7 @@ namespace SimonSays
             this.DemoBoard.ButtonFrequencies = new float[0];
             this.DemoBoard.CenterButtonRatio = 0F;
             this.DemoBoard.ColorBackground = System.Drawing.Color.Transparent;
-            this.DemoBoard.ColorInnerCircle = System.Drawing.Color.Gainsboro;
+            this.DemoBoard.ColorInnerCircle = System.Drawing.Color.White;
             this.DemoBoard.ColorOuterCircle = System.Drawing.Color.LightGray;
             this.DemoBoard.DefaultButtonList = ((System.Collections.Generic.List<System.ValueTuple<int, float, string>>)(resources.GetObject("DemoBoard.DefaultButtonList")));
             this.DemoBoard.InnerButtonRatio = 0.55F;
@@ -349,19 +349,9 @@ namespace SimonSays
             0,
             0,
             0});
-            this.numButtons.Minimum = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
             this.numButtons.Name = "numButtons";
             this.numButtons.Size = new System.Drawing.Size(41, 22);
             this.numButtons.TabIndex = 2;
-            this.numButtons.Value = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
             this.numButtons.ValueChanged += new System.EventHandler(this.numButtons_ValueChanged);
             // 
             // lblButtons
