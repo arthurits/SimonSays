@@ -373,6 +373,7 @@ namespace SimonSays
             this.DoubleBuffered = true;
             // To ensure that your control is redrawn every time it is resized
             // https://msdn.microsoft.com/en-us/library/b818z6z6(v=vs.110).aspx
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.ResizeRedraw, true);
             this.ResizeRedraw = true;
 

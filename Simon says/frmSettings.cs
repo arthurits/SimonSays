@@ -50,7 +50,6 @@ namespace SimonSays
 
         private void OnDataGridChanged(object sender, DataColumnChangeEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Event ColumnChanged");
             this.DemoBoard.ButtonFrequencies = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[1].ToString()).ToArray(), float.Parse);
             this.DemoBoard.ButtonColors = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[2].ToString()).ToArray(), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
             //SendKeys.Send("{TAB}");

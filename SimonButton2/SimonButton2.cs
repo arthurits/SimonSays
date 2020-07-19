@@ -250,9 +250,10 @@ namespace SimonSays
             // To ensure that your control is redrawn every time it is resized
             // https://msdn.microsoft.com/en-us/library/b818z6z6(v=vs.110).aspx
             SetStyle(ControlStyles.ResizeRedraw, true);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.ResizeRedraw = true;
-
             this.DoubleBuffered = true;
+            
             this.FlatAppearance.MouseOverBackColor = Color.Transparent;
             this.FlatAppearance.MouseDownBackColor = Color.Transparent;
         }

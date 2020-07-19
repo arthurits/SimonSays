@@ -207,7 +207,11 @@ namespace SimonSays
         System.Drawing.Color.Yellow,
         System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0))))),
         System.Drawing.Color.Red};
-            this.simonBoard.ButtonFrequencies = new float[0];
+            this.simonBoard.ButtonFrequencies = new float[] {
+        196F,
+        330F,
+        392F,
+        262F};
             this.simonBoard.CenterButtonRatio = 0F;
             this.simonBoard.ColorBackground = System.Drawing.Color.Transparent;
             this.simonBoard.ColorInnerCircle = System.Drawing.Color.White;
