@@ -515,7 +515,9 @@ namespace SimonSays
             ComputeBoardRectangles();
 
             ButtonsOffsetParameters();
-            ResizeButtons();
+            if (this.Handle != null) BeginInvoke(new MethodInvoker(ResizeButtons));
+            //ResizeButtons();
+            // https://docs.microsoft.com/es-es/archive/blogs/alejacma/controls-wont-get-resized-once-the-nesting-hierarchy-of-windows-exceeds-a-certain-depth-x64
 
             //Invalidate();
             base.OnResize(e);
