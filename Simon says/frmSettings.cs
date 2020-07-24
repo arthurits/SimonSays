@@ -46,29 +46,7 @@ namespace SimonSays
             this.numButtons.Value = 2;
             this.numButtons.Minimum = 2;
 
-        }
-
-        private void OnDataGridChanged(object sender, DataColumnChangeEventArgs e)
-        {
-            this.DemoBoard.ButtonFrequencies = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[1].ToString()).ToArray(), float.Parse);
-            this.DemoBoard.ButtonColors = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[2].ToString()).ToArray(), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
-            //SendKeys.Send("{TAB}");
-            //SendKeys.Send("+{TAB}");
-        }
-
-        private void gridButtons_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.ColumnIndex != 2) return;
-
-            //You can check for e.ColumnIndex to limit this to your specific column
-            this.gridButtons.BeginEdit(false);
-            var editingControl = (ColorPickerControl)this.gridButtons.EditingControl;
-            if (editingControl != null)
-                editingControl.ColorEditingControl_Click(null, null);
-                //editingControl.DroppedDown = true;
-            this.gridButtons.EndEdit();
-            this.gridButtons.CurrentCell = null;
-        }
+        }     
 
         public frmSettings(ProgramSettings<string, string> settings, ProgramSettings<string, string> defSets)
             : this()
@@ -82,7 +60,7 @@ namespace SimonSays
                 //this.radIncremental.Checked = ((play & PlayMode.TimeIncremental) == PlayMode.TimeIncremental);
                 //this.numTimeIncrement.Enabled = this.radIncremental.Checked;
                 //this.trackTimeIncrement.Enabled = this.radIncremental.Checked;
-                
+
                 this.numButtons.Value = Convert.ToInt32(settings.GetOrDefault("NumberOfButtons", defSets["NumberOfButtons"]));
                 this.numButtonMax.Value = Convert.ToDecimal(settings.GetOrDefault("OuterButtonRatio", defSets["OuterButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numButtonMin.Value = Convert.ToDecimal(settings.GetOrDefault("InnerButtonRatio", defSets["InnerButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
@@ -102,6 +80,7 @@ namespace SimonSays
 
                 this.DemoBoard.ButtonColors = Array.ConvertAll(settings.GetOrDefault("ButtonColors", defSets["ButtonColors"]).Split('-'), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
                 this.DemoBoard.ButtonFrequencies = Array.ConvertAll(settings.GetOrDefault("ButtonFrequencies", defSets["ButtonFrequencies"]).Split('-'), float.Parse);
+                ModifyTable();
 
                 /*
                 int value = Convert.ToInt32(settings.ContainsKey("MaximumDigit") ? settings["MaximumDigit"] : defSets["MaximumDigit"]);
@@ -135,6 +114,28 @@ namespace SimonSays
             _settings = settings;
             _defaultSettings = defSets;
 
+        }
+
+        private void OnDataGridChanged(object sender, DataColumnChangeEventArgs e)
+        {
+            this.DemoBoard.ButtonFrequencies = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[1].ToString()).ToArray(), float.Parse);
+            this.DemoBoard.ButtonColors = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[2].ToString()).ToArray(), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
+            //SendKeys.Send("{TAB}");
+            //SendKeys.Send("+{TAB}");
+        }
+
+        private void gridButtons_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex != 2) return;
+
+            //You can check for e.ColumnIndex to limit this to your specific column
+            this.gridButtons.BeginEdit(false);
+            var editingControl = (ColorPickerControl)this.gridButtons.EditingControl;
+            if (editingControl != null)
+                editingControl.ColorEditingControl_Click(null, null);
+            //editingControl.DroppedDown = true;
+            this.gridButtons.EndEdit();
+            this.gridButtons.CurrentCell = null;
         }
 
         private void btnAccept_Click(object sender, EventArgs e)
@@ -243,6 +244,28 @@ namespace SimonSays
             }
         }
 
+        /// <summary>
+        /// Update the table, gridButtons and DemoBoard
+        /// </summary>
+        private void ModifyTable()
+        {
+            var list = this.DemoBoard.DefaultButtonList;
+            var numColors = this.DemoBoard.ButtonColors.Length;
+            var numFreq = this.DemoBoard.ButtonFrequencies.Length;
+            var colors = this.DemoBoard.ButtonColors;
+            var freq = this.DemoBoard.ButtonFrequencies;
+            int nRows = _table.Rows.Count;
+
+            for (int i = 0; i < nRows; i++)
+            {
+                this._table.Rows[i]["Frequency"] = i < numFreq ? freq[i] : list[nRows + i].Frequency;
+                this._table.Rows[i]["Color"] = i < numColors ? colors[i].ToArgb().ToString("X") : list[nRows + i].Color;
+            }
+
+            _table.AcceptChanges();
+
+            OnDataGridChanged(null, null);
+        }
 
 
         private void numButtons_ValueChanged(object sender, EventArgs e)
@@ -258,12 +281,19 @@ namespace SimonSays
             if (nDiff > 0)
             {
                 var list = this.DemoBoard.DefaultButtonList;
+                var numColors = this.DemoBoard.ButtonColors.Length;
+                var numFreq = this.DemoBoard.ButtonFrequencies.Length;
+
                 for (int i = 0; i < nDiff; i++)
-                    this._table.Rows.Add(new object[] { list[nRows + i].Value, list[nRows + i].Frequency, list[nRows + i].Color });
+                    this._table.Rows.Add(new object[] {
+                        list[nRows + i].Value,
+                        list[nRows + i].Frequency,
+                        list[nRows + i].Color
+                    });
             }
             else if (nDiff < 0)
             {
-                for (int i = 0; i<-nDiff; i++)
+                for (int i = 0; i < -nDiff; i++)
                 {
                     this._table.Rows.RemoveAt(nRows - 1 - i);
                 }
@@ -271,7 +301,6 @@ namespace SimonSays
             _table.AcceptChanges();
 
             OnDataGridChanged(null, null);
-
         }
 
         private void trackButtons_ValueChanged(object sender, EventArgs e)

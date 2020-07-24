@@ -58,6 +58,7 @@
             // 
             this.Controls.Add(this.lblScoreTotal);
             this.Controls.Add(this.lblScoreCurrent);
+            this.DoubleBuffered = true;
             this.Name = "CustomBoard";
             this.ResumeLayout(false);
 

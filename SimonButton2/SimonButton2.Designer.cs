@@ -32,11 +32,12 @@
             // 
             // SimonButton2
             // 
+            this.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.Transparent;
             this.FlatAppearance.BorderSize = 0;
             this.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Size = new System.Drawing.Size(100, 100);
-            this.Text = string.Empty;
             this.UseVisualStyleBackColor = false;
             this.ResumeLayout(false);
 

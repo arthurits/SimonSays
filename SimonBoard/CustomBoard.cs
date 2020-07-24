@@ -375,7 +375,7 @@ namespace SimonSays
             // https://msdn.microsoft.com/en-us/library/b818z6z6(v=vs.110).aspx
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             SetStyle(ControlStyles.ResizeRedraw, true);
-            this.ResizeRedraw = true;
+            this.ResizeRedraw = false;
 
             // Get the minimum dimension of the client area
             // Set the array of buttons to 0 elements
@@ -425,17 +425,17 @@ namespace SimonSays
             {
                 _buttons[i] = new SimonSays.SimonButton2()
                 {
-                    Anchor=AnchorStyles.None,
-                    AutoSizeMode=AutoSizeMode.GrowAndShrink,
-                    Color = _colors.Length == 0 ? Color.White : (_colors.Length > i  ? _colors[i] : Color.White),
-                    Frequency = _frequencies.Length == 0 ? 0.0f : (_frequencies.Length > i  ? _frequencies[i] : 0.0f),
+                    Anchor = AnchorStyles.None,
+                    AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                    Color = _colors.Length == 0 ? Color.White : (_colors.Length > i ? _colors[i] : Color.White),
+                    Frequency = _frequencies.Length == 0 ? 0.0f : (_frequencies.Length > i ? _frequencies[i] : 0.0f),
                     Location = location,
                     Size = new Size(_nMinDimension, _nMinDimension),
                     //CenterRotation = new PointF(this.Width / 2.0f, this.Height / 2.0f),
                     CenterRotation = centerRot,
                     //CenterButton = new PointF(this.Width / 2.0f, this.Height / 2.0f),
                     CenterButton = centerBut,
-                    ClickOffset = new PointF(2, 2),
+                    ClickOffset = new PointF(2 * (float)Math.Cos((rotation / 2) * Math.PI / 180), 2 * (float)Math.Sin((rotation / 2) * Math.PI / 180)),
                     InnerRadius = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset),
                     OuterRadius = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset),
                     AngleRotation = i * rotation + _fRotation,
@@ -506,7 +506,7 @@ namespace SimonSays
         {
             System.Diagnostics.Debug.WriteLine("Board OnResize 1 — Values: "+ String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
             System.Diagnostics.Debug.WriteLine("Board OnResize 1 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
-
+            
             //Invalidate();
             AlignLabels();
 
@@ -517,10 +517,11 @@ namespace SimonSays
             ButtonsOffsetParameters();
             if (this.Handle != null) BeginInvoke(new MethodInvoker(ResizeButtons));
             //ResizeButtons();
+            // https://sysadmins.lv/retired-msft-blogs/alejacma/controls-wont-get-resized-once-the-nesting-hierarchy-of-windows-exceeds-a-certain-depth-x64.aspx
             // https://docs.microsoft.com/es-es/archive/blogs/alejacma/controls-wont-get-resized-once-the-nesting-hierarchy-of-windows-exceeds-a-certain-depth-x64
 
-            //Invalidate();
-            base.OnResize(e);
+            Invalidate();
+            //base.OnResize(e);
             System.Diagnostics.Debug.WriteLine("Board OnResize 2 — Values: " + String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
             System.Diagnostics.Debug.WriteLine("Board OnResize 2 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
         }
@@ -551,7 +552,9 @@ namespace SimonSays
             
             for (int i = 0; i < _buttons.Length; i++)
             {
-                _buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
+                //_buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
+                _buttons[i].Width = _nMinDimension;
+                _buttons[i].Height = _nMinDimension;
                 _buttons[i].Location = location;
                 _buttons[i].CenterRotation = centerRot;
                 _buttons[i].CenterButton = centerBut;

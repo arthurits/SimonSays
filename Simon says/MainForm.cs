@@ -143,6 +143,7 @@ namespace SimonSays
             {
                 if (button.Value == e.ButtonValue)
                     button.Clicked = e.Flash;
+                
             }
 
             /*

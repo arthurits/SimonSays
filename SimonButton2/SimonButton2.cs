@@ -24,7 +24,8 @@ namespace SimonSays
         private Color _color;
         private bool _clicked = false;
         private Int32 _nValue = 0;
-        private Point _clickPoint;
+        private PointF _clickPoint;
+        private PointF _clickMidPoint;
         private PointF _clickOffset;
         private RectangleF _rectDefaultClickPoint;
         private float _fAngleSwept = 90f;
@@ -53,7 +54,7 @@ namespace SimonSays
         public Color Color
         {
             get { return _color; }
-            set { _color = value; //Invalidate();
+            set { _color = value; Invalidate();
             }
         }
 
@@ -85,7 +86,12 @@ namespace SimonSays
             set
             {
                 _clicked = value;
-                if (value == true) DoBeep(_nDuration);
+                if (value == true)
+                {
+                    DoBeep(_nDuration);
+                    CalculateMidPoint();
+                    _clickPoint = _clickMidPoint;
+                }
                 Invalidate();
             }
         }
@@ -101,7 +107,11 @@ namespace SimonSays
         public float AngleSwept
         {
             get { return _fAngleSwept; }
-            set { _fAngleSwept = value; //Invalidate(); 
+            set
+            {
+                _fAngleSwept = value;
+                CalculateMidPoint();
+                Invalidate(); 
             }
         }
 
@@ -116,7 +126,11 @@ namespace SimonSays
         public float AngleRotation
         {
             get { return _fAngleRotation; }
-            set { _fAngleRotation = value; //Invalidate(); 
+            set
+            {
+                _fAngleRotation = value;
+                CalculateMidPoint();
+                Invalidate(); 
             }
         }
 
@@ -131,7 +145,10 @@ namespace SimonSays
         public float RegionOffset
         {
             get { return _fRegionOffset; }
-            set { _fRegionOffset = value; //Invalidate(); 
+            set
+            {
+                _fRegionOffset = value;
+                Invalidate(); 
             }
         }
 
@@ -147,7 +164,10 @@ namespace SimonSays
         public PointF CenterButton
         {
             get { return _fCenterButton; }
-            set { _fCenterButton = value; //Invalidate(); 
+            set
+            {
+                _fCenterButton = value;
+                Invalidate(); 
             }
         }
 
@@ -163,7 +183,11 @@ namespace SimonSays
         public PointF CenterRotation
         {
             get { return _fCenterRotation; }
-            set { _fCenterRotation = value; //Invalidate(); 
+            set
+            {
+                _fCenterRotation = value;
+                CalculateMidPoint();
+                //Invalidate(); 
             }
         }
 
@@ -193,7 +217,11 @@ namespace SimonSays
         public float OuterRadius
         {
             get { return _fRadiusOuter; }
-            set { _fRadiusOuter = value < 0 ? 0 : value; //Invalidate(); 
+            set
+            {
+                _fRadiusOuter = value < 0 ? 0 : value;
+                CalculateMidPoint();
+                Invalidate(); 
             }
         }
 
@@ -208,7 +236,11 @@ namespace SimonSays
         public float InnerRadius
         {
             get { return _fRadiusInner; }
-            set { _fRadiusInner = value < 0 ? 0 : value; //Invalidate(); 
+            set
+            {
+                _fRadiusInner = value < 0 ? 0 : value;
+                CalculateMidPoint();
+                Invalidate(); 
             }
         }
 
@@ -256,6 +288,8 @@ namespace SimonSays
             
             this.FlatAppearance.MouseOverBackColor = Color.Transparent;
             this.FlatAppearance.MouseDownBackColor = Color.Transparent;
+
+            CalculateMidPoint();
         }
 
         protected override void OnMouseHover(EventArgs e)
@@ -289,7 +323,7 @@ namespace SimonSays
         /// <param name="e">Paint event argument</param>
         protected override void OnPaint(PaintEventArgs e)
         {
-            base.OnPaint(e);
+            //base.OnPaint(e);
             
             Graphics dc = e.Graphics;
             dc.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -311,7 +345,7 @@ namespace SimonSays
             path.AddArc(rectOut, AngleOffsetOutter, _fAngleSwept - 2 * AngleOffsetOutter);
             path.AddArc(rectIn, _fAngleSwept - AngleOffsetInner, -_fAngleSwept + 2 * AngleOffsetInner);
             path.CloseFigure();
-          
+            
             GraphicsPath pathRegion = new GraphicsPath();
             pathRegion.AddArc(rectRegionOut, 0, _fAngleSwept);
             pathRegion.AddArc(rectRegionIn, _fAngleSwept, -_fAngleSwept);
@@ -324,6 +358,11 @@ namespace SimonSays
             path.Transform(matrix);
             pathRegion.Transform(matrix);
             dc.FillPath(new SolidBrush(_color), path);
+
+            _clickMidPoint = new PointF(
+                (float)(Math.Cos((_fAngleRotation / 2) * Math.PI / 180) * (_fRadiusOuter - _fRadiusInner) / 2) + _fCenterRotation.X,
+                (float)(Math.Sin((_fAngleRotation / 2) * Math.PI / 180) * (_fRadiusOuter - _fRadiusInner) / 2) + _fCenterRotation.Y
+                );
 
             if (_clicked == true)
             {
@@ -412,6 +451,19 @@ namespace SimonSays
 
         }
 
+        /// <summary>
+        /// Calculates the mid point of the button. This is used to simulate the click at the button's center
+        /// </summary>
+        private void CalculateMidPoint()
+        {
+            double midAngle = ((_fAngleSwept / 2) + _fAngleRotation) * Math.PI / 180.0f;
+            float midLength = _fRadiusInner + ((_fRadiusOuter - _fRadiusInner) / 2.0f);
+            
+            _clickMidPoint = new PointF(
+                (float)(Math.Cos(midAngle) * midLength) + _fCenterRotation.X,
+                (float)(Math.Sin(midAngle) * midLength) + _fCenterRotation.Y
+                );
+        }
     }
 
     public class PointFConverter : TypeConverter
