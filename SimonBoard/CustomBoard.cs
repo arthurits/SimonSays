@@ -46,6 +46,7 @@ namespace SimonSays
         private float _fCenterButton = 0.0f;
         private float _fOuterButton = 0.95f;
         private float _fInnerButton = 0.55f;
+        private float _fButtonClickOffset = 0.0f;
 
         // Default buttons list
         private List<(int Value, float Frequency, string Color)> _defButtons;
@@ -279,6 +280,23 @@ namespace SimonSays
             {
                 _fInnerButton = value < 0 ? 0 : (value > 1 ? 1 : value);
                 ResizeButtons();
+            }
+        }
+
+        /// <summary>
+        /// Ratio (range 0 to 1) of the click offset
+        /// </summary>
+        [Description("Ratio (range 0 to 1) of the click offset"),
+        Category("Custom"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public float ButtonClickOffset
+        {
+            get => _fButtonClickOffset;
+            set
+            {
+                _fButtonClickOffset = value < 0 ? 0 : (value > 1 ? 1 : value);
             }
         }
 
