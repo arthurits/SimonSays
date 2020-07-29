@@ -456,6 +456,7 @@ namespace SimonSays
                 this.simonBoard.InnerButtonRatio = Convert.ToSingle(programSettings.GetOrDefault("InnerButtonRatio", defaultSettings["InnerButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.simonBoard.OuterButtonRatio = Convert.ToSingle(programSettings.GetOrDefault("OuterButtonRatio", defaultSettings["OuterButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.simonBoard.CenterButtonRatio = Convert.ToSingle(programSettings.GetOrDefault("CenterButtonRatio", defaultSettings["CenterButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                //this.simonBoard.ButtonClickOffset = Convert.ToSingle(programSettings.GetOrDefault("ButtonClickOffset", defaultSettings["ButtonClickOffset"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
 
                 this.simonBoard.PercentInnerRatio = Convert.ToSingle(programSettings.GetOrDefault("InnerBoardRatio", defaultSettings["InnerBoardRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.simonBoard.PercentOuterRatio = Convert.ToSingle(programSettings.GetOrDefault("OuterBoardRatio", defaultSettings["OuterBoardRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
@@ -523,6 +524,7 @@ namespace SimonSays
             settings["InnerButtonRatio"] = "0.55";
             settings["OuterButtonRatio"] = "0.90";
             settings["CenterButtonRatio"] = "0";
+            settings["ButtonClickOffset"] = "0.05";
 
             settings["InnerBoardRatio"] = "0.35";
             settings["OuterBoardRatio"] = "0.90";

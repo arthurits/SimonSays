@@ -65,6 +65,7 @@ namespace SimonSays
                 this.numButtonMax.Value = Convert.ToDecimal(settings.GetOrDefault("OuterButtonRatio", defSets["OuterButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numButtonMin.Value = Convert.ToDecimal(settings.GetOrDefault("InnerButtonRatio", defSets["InnerButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numButtonDistance.Value = Convert.ToDecimal(settings.GetOrDefault("CenterButtonRatio", defSets["CenterButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                this.numButtonClick.Value = Convert.ToDecimal(settings.GetOrDefault("ButtonClickOffset", defSets["ButtonClickOffset"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
 
                 this.numBoardIn.Value = Convert.ToDecimal(settings.GetOrDefault("InnerBoardRatio", defSets["InnerBoardRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numBoardOut.Value = Convert.ToDecimal(settings.GetOrDefault("OuterBoardRatio", defSets["OuterBoardRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
@@ -189,6 +190,7 @@ namespace SimonSays
                 this.numButtonMax.Value = Convert.ToDecimal(_settings.GetOrDefault("OuterButtonRatio"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numButtonMin.Value = Convert.ToDecimal(_settings.GetOrDefault("InnerButtonRatio"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numButtonDistance.Value = Convert.ToDecimal(_settings.GetOrDefault("CenterButtonRatio"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                this.numButtonClick.Value = Convert.ToDecimal(_settings.GetOrDefault("ButtonClickOffset"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
 
                 this.numBoardIn.Value = Convert.ToDecimal(_settings.GetOrDefault("InnerBoardRatio"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numBoardOut.Value = Convert.ToDecimal(_settings.GetOrDefault("OuterBoardRatio"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
@@ -345,6 +347,19 @@ namespace SimonSays
         {
             decimal ratio = Decimal.Round((decimal)trackButtonDistance.Value / 100, 2, MidpointRounding.AwayFromZero);
             if (numButtonDistance.Value != ratio) numButtonDistance.Value = ratio;
+        }
+
+        private void numButtonClick_ValueChanged(object sender, EventArgs e)
+        {
+            //DemoBoard.ButtonClickOffset = (float)numButtonClick.Value;
+            int ratio = Convert.ToInt32(100 * numButtonClick.Value);
+            if (trackButtonClick.Value != ratio) trackButtonClick.Value = ratio;
+        }
+
+        private void trackButtonClick_ValueChanged(object sender, EventArgs e)
+        {
+            decimal ratio = Decimal.Round((decimal)trackButtonClick.Value / 100, 2, MidpointRounding.AwayFromZero);
+            if (numButtonClick.Value != ratio) numButtonClick.Value = ratio;
         }
 
         private void numBoardOut_ValueChanged(object sender, EventArgs e)
