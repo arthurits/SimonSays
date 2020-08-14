@@ -443,8 +443,9 @@ namespace SimonSays
             {
                 _buttons[i] = new SimonSays.SimonButton2()
                 {
-                    Anchor = AnchorStyles.None,
-                    AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                    Anchor = AnchorStyles.Top | AnchorStyles.Left,
+                    AutoSize=false,
+                    //AutoSizeMode = AutoSizeMode.GrowAndShrink,
                     Color = _colors.Length == 0 ? Color.White : (_colors.Length > i ? _colors[i] : Color.White),
                     Frequency = _frequencies.Length == 0 ? 0.0f : (_frequencies.Length > i ? _frequencies[i] : 0.0f),
                     Location = location,
@@ -539,7 +540,7 @@ namespace SimonSays
             // https://docs.microsoft.com/es-es/archive/blogs/alejacma/controls-wont-get-resized-once-the-nesting-hierarchy-of-windows-exceeds-a-certain-depth-x64
 
             Invalidate();
-            //base.OnResize(e);
+            base.OnResize(e);
             System.Diagnostics.Debug.WriteLine("Board OnResize 2 — Values: " + String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
             System.Diagnostics.Debug.WriteLine("Board OnResize 2 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
         }
@@ -573,17 +574,21 @@ namespace SimonSays
                 //_buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
                 _buttons[i].Width = _nMinDimension;
                 _buttons[i].Height = _nMinDimension;
-                _buttons[i].Location = location;
-                _buttons[i].CenterRotation = centerRot;
-                _buttons[i].CenterButton = centerBut;
                 _buttons[i].OuterRadius = outRad;
                 _buttons[i].InnerRadius = inRad;
+                _buttons[i].Location = location;
+                //_buttons[i].Left = location.X;
+                //_buttons[i].Top = location.Y;
+                _buttons[i].CenterRotation = centerRot;
+                //_buttons[i].CenterButton = centerBut;
+
                 //_buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
                 //_buttons[i].Invalidate();
             }
 
             this.ResumeLayout(true);
 
+            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — _nMinDimension: " + _nMinDimension.ToString());
             System.Diagnostics.Debug.WriteLine("Board OnResize 3 — Sizes: " + String.Join(", ", _buttons.Select(c => c.Size).ToArray()));
             System.Diagnostics.Debug.WriteLine("Board OnResize 3 — Locations: " + String.Join(", ", _buttons.Select(c => c.Location).ToArray()));
             System.Diagnostics.Debug.WriteLine("Board OnResize 3 — CenterRotation: " + String.Join(", ", _buttons.Select(c => c.CenterRotation).ToArray()));
