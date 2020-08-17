@@ -392,7 +392,7 @@ namespace SimonSays
             // To ensure that your control is redrawn every time it is resized
             // https://msdn.microsoft.com/en-us/library/b818z6z6(v=vs.110).aspx
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.ResizeRedraw, true);
+            //SetStyle(ControlStyles.ResizeRedraw, true);
             this.ResizeRedraw = false;
 
             // Get the minimum dimension of the client area
@@ -407,10 +407,10 @@ namespace SimonSays
 
             _defButtons = new List<(int Value, float Frequency, string Color)>
             {
-                (0, 196, "FF0000FF"),
-                (1, 262, "FFFFFF00"),
-                (2, 392, "FF00FF00"),
-                (3, 330, "FFFF0000"),
+                (0, 196, "FF0000FF"),   // Blue
+                (1, 262, "FFFFFF00"),   // Yellow
+                (2, 392, "FF00FF00"),   // Green
+                (3, 330, "FFFF0000"),   // Red
                 (4, 275, "FFc71585"),
                 (5, 275, "FF800080"),
                 (6, 275, "FF8a2be2"),
@@ -439,13 +439,14 @@ namespace SimonSays
             var centerRot = new PointF(_nMinDimension / 2.0f, _nMinDimension / 2.0f);
             var centerBut = new PointF(_fApothem + centerRot.X, _fPolySide / 2.0f + centerRot.Y);
 
-            for (int i = 0; i < NumberOfButtons; i++)
+            for (int i = 0; i < _nButtons; i++)
             {
                 _buttons[i] = new SimonSays.SimonButton2()
                 {
+                    //Anchor = AnchorStyles.Top | AnchorStyles.Left |AnchorStyles.Right |AnchorStyles.Bottom,
                     Anchor = AnchorStyles.Top | AnchorStyles.Left,
-                    AutoSize=false,
-                    //AutoSizeMode = AutoSizeMode.GrowAndShrink,
+                    AutoSize =false,     // https://www.techrepublic.com/article/manage-winform-controls-using-the-anchor-and-dock-properties/
+                    AutoSizeMode = AutoSizeMode.GrowAndShrink,
                     Color = _colors.Length == 0 ? Color.White : (_colors.Length > i ? _colors[i] : Color.White),
                     Frequency = _frequencies.Length == 0 ? 0.0f : (_frequencies.Length > i ? _frequencies[i] : 0.0f),
                     Location = location,
@@ -506,8 +507,9 @@ namespace SimonSays
             solidBrush = new SolidBrush(_BackgroundColor);
             dc.FillRectangle(solidBrush, rc);
 
-            // Draw outer circle
             ComputeBoardRectangles();
+
+            // Draw outer circle
             solidBrush = new SolidBrush(_OuterColor);
             dc.FillEllipse(solidBrush, _OuterRect);
 
@@ -523,15 +525,19 @@ namespace SimonSays
 
         protected override void OnResize(EventArgs e)
         {
+            base.OnResize(e);
+
             System.Diagnostics.Debug.WriteLine("Board OnResize 1 — Values: "+ String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
             System.Diagnostics.Debug.WriteLine("Board OnResize 1 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
             
-            //Invalidate();
+            this.SuspendLayout();
+            
+            Invalidate();
             AlignLabels();
 
             // Get the minimum dimension of the client area
             _nMinDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
-            ComputeBoardRectangles();
+            //ComputeBoardRectangles();
 
             ButtonsOffsetParameters();
             if (this.Handle != null) BeginInvoke(new MethodInvoker(ResizeButtons));
@@ -539,8 +545,10 @@ namespace SimonSays
             // https://sysadmins.lv/retired-msft-blogs/alejacma/controls-wont-get-resized-once-the-nesting-hierarchy-of-windows-exceeds-a-certain-depth-x64.aspx
             // https://docs.microsoft.com/es-es/archive/blogs/alejacma/controls-wont-get-resized-once-the-nesting-hierarchy-of-windows-exceeds-a-certain-depth-x64
 
-            Invalidate();
-            base.OnResize(e);
+            //Invalidate();
+            //Update();
+            this.ResumeLayout(true);
+
             System.Diagnostics.Debug.WriteLine("Board OnResize 2 — Values: " + String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
             System.Diagnostics.Debug.WriteLine("Board OnResize 2 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
         }
@@ -563,30 +571,37 @@ namespace SimonSays
             var location = new Point((this.Width - _nMinDimension) / 2, (this.Height - _nMinDimension) / 2);        // The top-left coordinate of the buttons
             //var centerRot = new PointF(location.X + _nMinDimension / 2.0f, location.Y + _nMinDimension / 2.0f);
             var centerRot = new PointF(_nMinDimension / 2.0f, _nMinDimension / 2.0f);
-            var centerBut = new PointF(_fApothem + centerRot.X, SideLength(_nButtons, _fApothem) / 2f + centerRot.Y);
+            //var centerBut = new PointF(_fApothem + centerRot.X, SideLength(_nButtons, _fApothem) / 2.0f + centerRot.Y);
+            var centerBut = new PointF(_fApothem + centerRot.X, _fPolySide / 2.0f + centerRot.Y);
             float outRad = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
             float inRad = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
 
-            this.SuspendLayout();
+            /*
+            var centerRot = new PointF(_nMinDimension / 2.0f, _nMinDimension / 2.0f);
+            var centerBut = new PointF(_fApothem + centerRot.X, _fPolySide / 2.0f + centerRot.Y);
+            */
+
+            //this.SuspendLayout();
             
             for (int i = 0; i < _buttons.Length; i++)
             {
+                _buttons[i].Location = location;
+                //_buttons[i].Left = location.X;
+                //_buttons[i].Top = location.Y;
                 //_buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
                 _buttons[i].Width = _nMinDimension;
                 _buttons[i].Height = _nMinDimension;
                 _buttons[i].OuterRadius = outRad;
                 _buttons[i].InnerRadius = inRad;
-                _buttons[i].Location = location;
-                //_buttons[i].Left = location.X;
-                //_buttons[i].Top = location.Y;
+                
                 _buttons[i].CenterRotation = centerRot;
-                //_buttons[i].CenterButton = centerBut;
-
+                _buttons[i].CenterButton = centerBut;
+                
                 //_buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
-                //_buttons[i].Invalidate();
             }
+            
 
-            this.ResumeLayout(true);
+            //this.ResumeLayout(true);
 
             System.Diagnostics.Debug.WriteLine("Board OnResize 3 — _nMinDimension: " + _nMinDimension.ToString());
             System.Diagnostics.Debug.WriteLine("Board OnResize 3 — Sizes: " + String.Join(", ", _buttons.Select(c => c.Size).ToArray()));
