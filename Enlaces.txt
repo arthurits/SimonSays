@@ -1,2 +1,5 @@
 http://www.codeguru.com/columns/dotnet/making-sounds-with-waves-using-c.html
 http://www.codingcraze.com/c-audio-tutorial-10-plotting-audio-waveforms/
+
+https://www.cyotek.com/blog/adding-drag-handles-to-an-imagebox-to-allow-resizing-of-selection-regions
+

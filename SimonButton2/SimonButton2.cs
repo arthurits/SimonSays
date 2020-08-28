@@ -187,7 +187,8 @@ namespace SimonSays
             {
                 _fCenterRotation = value;
                 CalculateMidPoint();
-                //Invalidate(); 
+                //Invalidate();
+                Refresh();
             }
         }
 
@@ -283,9 +284,11 @@ namespace SimonSays
             // https://msdn.microsoft.com/en-us/library/b818z6z6(v=vs.110).aspx
             //SetStyle(ControlStyles.ResizeRedraw, true);
             SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
+            SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             //this.ResizeRedraw = true;
-            this.DoubleBuffered = true;
-            
+            //this.DoubleBuffered = true;
+
             this.FlatAppearance.MouseOverBackColor = Color.Transparent;
             this.FlatAppearance.MouseDownBackColor = Color.Transparent;
 

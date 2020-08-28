@@ -525,12 +525,12 @@ namespace SimonSays
 
         protected override void OnResize(EventArgs e)
         {
+            this.SuspendLayout();
+
             base.OnResize(e);
 
             System.Diagnostics.Debug.WriteLine("Board OnResize 1 — Values: "+ String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
             System.Diagnostics.Debug.WriteLine("Board OnResize 1 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
-            
-            this.SuspendLayout();
             
             Invalidate();
             AlignLabels();
@@ -576,32 +576,27 @@ namespace SimonSays
             float outRad = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
             float inRad = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
 
-            /*
-            var centerRot = new PointF(_nMinDimension / 2.0f, _nMinDimension / 2.0f);
-            var centerBut = new PointF(_fApothem + centerRot.X, _fPolySide / 2.0f + centerRot.Y);
-            */
-
-            //this.SuspendLayout();
+            this.SuspendLayout();
             
             for (int i = 0; i < _buttons.Length; i++)
             {
+                this.Controls.Remove(_buttons[i]);
                 _buttons[i].Location = location;
                 //_buttons[i].Left = location.X;
                 //_buttons[i].Top = location.Y;
                 //_buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
-                _buttons[i].Width = _nMinDimension;
-                _buttons[i].Height = _nMinDimension;
+                //_buttons[i].Width = _nMinDimension;
+                //_buttons[i].Height = _nMinDimension;
                 _buttons[i].OuterRadius = outRad;
                 _buttons[i].InnerRadius = inRad;
                 
                 _buttons[i].CenterRotation = centerRot;
                 _buttons[i].CenterButton = centerBut;
-                
-                //_buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
+                _buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
+                this.Controls.Add(_buttons[i]);
             }
             
-
-            //this.ResumeLayout(true);
+            this.ResumeLayout(true);
 
             System.Diagnostics.Debug.WriteLine("Board OnResize 3 — _nMinDimension: " + _nMinDimension.ToString());
             System.Diagnostics.Debug.WriteLine("Board OnResize 3 — Sizes: " + String.Join(", ", _buttons.Select(c => c.Size).ToArray()));
