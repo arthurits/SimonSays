@@ -167,7 +167,7 @@ namespace SimonSays
             set
             {
                 _fCenterButton = value;
-                Invalidate(); 
+                //Invalidate(); 
             }
         }
 
@@ -188,7 +188,6 @@ namespace SimonSays
                 _fCenterRotation = value;
                 CalculateMidPoint();
                 //Invalidate();
-                Refresh();
             }
         }
 
@@ -222,7 +221,7 @@ namespace SimonSays
             {
                 _fRadiusOuter = value < 0 ? 0 : value;
                 CalculateMidPoint();
-                Invalidate(); 
+                //Invalidate(); 
             }
         }
 
@@ -241,7 +240,7 @@ namespace SimonSays
             {
                 _fRadiusInner = value < 0 ? 0 : value;
                 CalculateMidPoint();
-                Invalidate(); 
+                //Invalidate(); 
             }
         }
 
@@ -295,6 +294,12 @@ namespace SimonSays
             CalculateMidPoint();
         }
 
+        [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+        }
+
         protected override void OnMouseHover(EventArgs e)
         {
             //base.OnMouseHover(e);
@@ -327,7 +332,7 @@ namespace SimonSays
         protected override void OnPaint(PaintEventArgs e)
         {
             //base.OnPaint(e);
-            
+            System.Diagnostics.Debug.WriteLine("SimonButton - OnPaint event. Button: " + _nValue.ToString());
             Graphics dc = e.Graphics;
             dc.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
@@ -397,6 +402,20 @@ namespace SimonSays
             }
 
             this.Region = new Region(pathRegion);
+
+        }
+
+        /// <summary>
+        /// Force the drawing of the control. This is only called when Invalidate won't raise the OnPaint event due to the control region being outside the ClientRectangle
+        /// </summary>
+        public void RePaint()
+        {
+            using (var g = this.CreateGraphics())
+            {
+                System.Windows.Forms.PaintEventArgs e = new System.Windows.Forms.PaintEventArgs(g, this.ClientRectangle);
+                OnPaint(e);
+            }
+            
 
         }
 

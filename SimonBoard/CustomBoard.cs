@@ -530,9 +530,9 @@ namespace SimonSays
             base.OnResize(e);
 
             System.Diagnostics.Debug.WriteLine("Board OnResize 1 — Values: "+ String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
-            System.Diagnostics.Debug.WriteLine("Board OnResize 1 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
+            //System.Diagnostics.Debug.WriteLine("Board OnResize 1 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
             
-            Invalidate();
+            //Invalidate();
             AlignLabels();
 
             // Get the minimum dimension of the client area
@@ -545,12 +545,12 @@ namespace SimonSays
             // https://sysadmins.lv/retired-msft-blogs/alejacma/controls-wont-get-resized-once-the-nesting-hierarchy-of-windows-exceeds-a-certain-depth-x64.aspx
             // https://docs.microsoft.com/es-es/archive/blogs/alejacma/controls-wont-get-resized-once-the-nesting-hierarchy-of-windows-exceeds-a-certain-depth-x64
 
-            //Invalidate();
+            Invalidate();
             //Update();
             this.ResumeLayout(true);
 
             System.Diagnostics.Debug.WriteLine("Board OnResize 2 — Values: " + String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
-            System.Diagnostics.Debug.WriteLine("Board OnResize 2 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
+            //System.Diagnostics.Debug.WriteLine("Board OnResize 2 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
         }
 
         /// <summary>
@@ -580,34 +580,23 @@ namespace SimonSays
             
             for (int i = 0; i < _buttons.Length; i++)
             {
-                this.Controls.Remove(_buttons[i]);
                 _buttons[i].Location = location;
                 //_buttons[i].Left = location.X;
                 //_buttons[i].Top = location.Y;
-                //_buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
+                _buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
                 //_buttons[i].Width = _nMinDimension;
                 //_buttons[i].Height = _nMinDimension;
                 _buttons[i].OuterRadius = outRad;
                 _buttons[i].InnerRadius = inRad;
-                
                 _buttons[i].CenterRotation = centerRot;
                 _buttons[i].CenterButton = centerBut;
-                _buttons[i].Size = new Size(_nMinDimension, _nMinDimension);
-                this.Controls.Add(_buttons[i]);
+                
+                // Force rapainting. Otherwise region might be outside ClientRectangle and thus the OnPaint event is not fired.
+                _buttons[i].RePaint();
             }
             
             this.ResumeLayout(true);
 
-            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — _nMinDimension: " + _nMinDimension.ToString());
-            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — Sizes: " + String.Join(", ", _buttons.Select(c => c.Size).ToArray()));
-            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — Locations: " + String.Join(", ", _buttons.Select(c => c.Location).ToArray()));
-            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — CenterRotation: " + String.Join(", ", _buttons.Select(c => c.CenterRotation).ToArray()));
-            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — CenterButton: " + String.Join(", ", _buttons.Select(c => c.CenterButton).ToArray()));
-            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — OuterRadius: " + String.Join(", ", _buttons.Select(c => c.OuterRadius).ToArray()));
-            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — InnerRadius: " + String.Join(", ", _buttons.Select(c => c.InnerRadius).ToArray()));
-            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — Visible: " + String.Join(", ", _buttons.Select(c => c.Visible).ToArray()));
-            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — Values: " + String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
-            System.Diagnostics.Debug.WriteLine("Board OnResize 3 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
         }
 
         private void CustomButton_Click(object sender, EventArgs e)
