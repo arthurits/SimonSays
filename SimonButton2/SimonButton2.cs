@@ -16,7 +16,7 @@ using System.Drawing.Drawing2D;
 namespace SimonSays
 {
     [Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design", typeof(System.ComponentModel.Design.IDesigner))]
-    public partial class SimonButton2 : Button
+    public partial class SimonButton : Button
     {
         private const int MAX_BUTTONS = 10;
 
@@ -275,7 +275,7 @@ namespace SimonSays
         #endregion Public interface
 
 
-        public SimonButton2()
+        public SimonButton()
         {
             InitializeComponent();
 

@@ -21,7 +21,7 @@ namespace SimonSays
         private Int32 _nScore = 0;
         private Int32 _nButtons = 4;
 
-        private SimonSays.SimonButton2[] _buttons;
+        private SimonSays.SimonButton[] _buttons;
         private Color[] _colors;
         private float[] _frequencies;
 
@@ -397,7 +397,7 @@ namespace SimonSays
 
             // Get the minimum dimension of the client area
             // Set the array of buttons to 0 elements
-            _buttons = new SimonSays.SimonButton2[0];
+            _buttons = new SimonSays.SimonButton[0];
             _colors = new Color[0];
             _frequencies = new float[0];
             //CreateButtons();
@@ -427,7 +427,7 @@ namespace SimonSays
             this.SuspendLayout();
             DeleteButtons();
 
-            _buttons = new SimonSays.SimonButton2[_nButtons];
+            _buttons = new SimonSays.SimonButton[_nButtons];
 
             // Get the minimum dimension of the client area
             _nMinDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
@@ -441,7 +441,7 @@ namespace SimonSays
 
             for (int i = 0; i < _nButtons; i++)
             {
-                _buttons[i] = new SimonSays.SimonButton2()
+                _buttons[i] = new SimonSays.SimonButton()
                 {
                     //Anchor = AnchorStyles.Top | AnchorStyles.Left |AnchorStyles.Right |AnchorStyles.Bottom,
                     Anchor = AnchorStyles.Top | AnchorStyles.Left,
@@ -489,7 +489,7 @@ namespace SimonSays
             }
 
             //Array.Clear(_buttons, 0, _buttons.Length);
-            //_buttons = new SimonSays.SimonButton2[0];
+            //_buttons = new SimonSays.SimonButton[0];
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -525,7 +525,7 @@ namespace SimonSays
 
         protected override void OnResize(EventArgs e)
         {
-            this.SuspendLayout();
+            //this.SuspendLayout();
 
             base.OnResize(e);
 
@@ -547,7 +547,7 @@ namespace SimonSays
 
             Invalidate();
             //Update();
-            this.ResumeLayout(true);
+            this.ResumeLayout();
 
             System.Diagnostics.Debug.WriteLine("Board OnResize 2 — Values: " + String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
             //System.Diagnostics.Debug.WriteLine("Board OnResize 2 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
@@ -576,7 +576,7 @@ namespace SimonSays
             float outRad = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
             float inRad = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
 
-            this.SuspendLayout();
+            //this.SuspendLayout();
             
             for (int i = 0; i < _buttons.Length; i++)
             {
@@ -595,7 +595,7 @@ namespace SimonSays
                 _buttons[i].RePaint();
             }
             
-            this.ResumeLayout(true);
+            this.ResumeLayout();
 
         }
 
@@ -604,7 +604,7 @@ namespace SimonSays
             //_Game.OnPress(((ColorButton.customButton)sender).ColorValue);
             //MessageBox.Show("Botón pulsado");
             // Call the function to generate the event
-            OnButtonClick(new ButtonClickEventArgs(((SimonSays.SimonButton2)sender).Value));
+            OnButtonClick(new ButtonClickEventArgs(((SimonSays.SimonButton)sender).Value));
             
         }
 

@@ -35,16 +35,14 @@ namespace SimonSays
             this.tabPlayMode = new System.Windows.Forms.TabPage();
             this.tabGame = new System.Windows.Forms.TabPage();
             this.tabInterface = new System.Windows.Forms.TabPage();
-            this.DemoBoard = new SimonSays.CustomBoard();
+            this.trackButtonClick = new System.Windows.Forms.TrackBar();
+            this.numButtonClick = new System.Windows.Forms.NumericUpDown();
+            this.lblButtonClick = new System.Windows.Forms.Label();
             this.trackButtonDistance = new System.Windows.Forms.TrackBar();
             this.trackButtonInner = new System.Windows.Forms.TrackBar();
             this.trackButtonOuter = new System.Windows.Forms.TrackBar();
             this.numButtonDistance = new System.Windows.Forms.NumericUpDown();
             this.lblButtonDistance = new System.Windows.Forms.Label();
-            this.gridButtons = new System.Windows.Forms.DataGridView();
-            this.ColValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numButtonMin = new System.Windows.Forms.NumericUpDown();
             this.numButtonMax = new System.Windows.Forms.NumericUpDown();
             this.lblButtonMin = new System.Windows.Forms.Label();
@@ -74,16 +72,34 @@ namespace SimonSays
             this.btnReset = new System.Windows.Forms.Button();
             this.btnAccept = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.lblButtonClick = new System.Windows.Forms.Label();
-            this.numButtonClick = new System.Windows.Forms.NumericUpDown();
-            this.trackButtonClick = new System.Windows.Forms.TrackBar();
+            this.groupMode = new System.Windows.Forms.GroupBox();
+            this.trackWaiting = new System.Windows.Forms.TrackBar();
+            this.numWaiting = new System.Windows.Forms.NumericUpDown();
+            this.radClassic = new System.Windows.Forms.RadioButton();
+            this.radAdds = new System.Windows.Forms.RadioButton();
+            this.radChoose = new System.Windows.Forms.RadioButton();
+            this.radBounce = new System.Windows.Forms.RadioButton();
+            this.radSurprise = new System.Windows.Forms.RadioButton();
+            this.radRewind = new System.Windows.Forms.RadioButton();
+            this.groupTime = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.chkSpeed = new System.Windows.Forms.CheckBox();
+            this.chkWaiting = new System.Windows.Forms.CheckBox();
+            this.DemoBoard = new SimonSays.CustomBoard();
+            this.gridButtons = new System.Windows.Forms.DataGridView();
+            this.ColValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabSettings.SuspendLayout();
+            this.tabPlayMode.SuspendLayout();
+            this.tabGame.SuspendLayout();
             this.tabInterface.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackButtonClick)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numButtonClick)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonDistance)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonInner)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonOuter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numButtonDistance)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridButtons)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numButtonMin)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numButtonMax)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtons)).BeginInit();
@@ -98,8 +114,11 @@ namespace SimonSays
             ((System.ComponentModel.ISupportInitialize)(this.trackBoardOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardIn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardOut)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numButtonClick)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackButtonClick)).BeginInit();
+            this.groupMode.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackWaiting)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numWaiting)).BeginInit();
+            this.groupTime.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridButtons)).BeginInit();
             this.SuspendLayout();
             // 
             // tabSettings
@@ -112,37 +131,41 @@ namespace SimonSays
             this.tabSettings.Margin = new System.Windows.Forms.Padding(4);
             this.tabSettings.Name = "tabSettings";
             this.tabSettings.SelectedIndex = 0;
-            this.tabSettings.Size = new System.Drawing.Size(618, 386);
+            this.tabSettings.Size = new System.Drawing.Size(468, 386);
             this.tabSettings.TabIndex = 0;
             // 
             // tabPlayMode
             // 
+            this.tabPlayMode.Controls.Add(this.chkWaiting);
+            this.tabPlayMode.Controls.Add(this.chkSpeed);
+            this.tabPlayMode.Controls.Add(this.numWaiting);
+            this.tabPlayMode.Controls.Add(this.trackWaiting);
+            this.tabPlayMode.Controls.Add(this.groupMode);
             this.tabPlayMode.Location = new System.Drawing.Point(4, 25);
             this.tabPlayMode.Margin = new System.Windows.Forms.Padding(4);
             this.tabPlayMode.Name = "tabPlayMode";
             this.tabPlayMode.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPlayMode.Size = new System.Drawing.Size(610, 357);
+            this.tabPlayMode.Size = new System.Drawing.Size(460, 357);
             this.tabPlayMode.TabIndex = 0;
             this.tabPlayMode.Text = "Play mode";
             this.tabPlayMode.UseVisualStyleBackColor = true;
             // 
             // tabGame
             // 
+            this.tabGame.Controls.Add(this.groupTime);
             this.tabGame.Location = new System.Drawing.Point(4, 25);
             this.tabGame.Name = "tabGame";
             this.tabGame.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGame.Size = new System.Drawing.Size(610, 357);
+            this.tabGame.Size = new System.Drawing.Size(460, 357);
             this.tabGame.TabIndex = 2;
             this.tabGame.Text = "Game";
             this.tabGame.UseVisualStyleBackColor = true;
             // 
             // tabInterface
             // 
-            this.tabInterface.Controls.Add(this.gridButtons);
             this.tabInterface.Controls.Add(this.trackButtonClick);
             this.tabInterface.Controls.Add(this.numButtonClick);
             this.tabInterface.Controls.Add(this.lblButtonClick);
-            this.tabInterface.Controls.Add(this.DemoBoard);
             this.tabInterface.Controls.Add(this.trackButtonDistance);
             this.tabInterface.Controls.Add(this.trackButtonInner);
             this.tabInterface.Controls.Add(this.trackButtonOuter);
@@ -159,38 +182,57 @@ namespace SimonSays
             this.tabInterface.Margin = new System.Windows.Forms.Padding(4);
             this.tabInterface.Name = "tabInterface";
             this.tabInterface.Padding = new System.Windows.Forms.Padding(4);
-            this.tabInterface.Size = new System.Drawing.Size(610, 357);
+            this.tabInterface.Size = new System.Drawing.Size(460, 357);
             this.tabInterface.TabIndex = 1;
             this.tabInterface.Text = "Interface";
             this.tabInterface.UseVisualStyleBackColor = true;
             // 
-            // DemoBoard
+            // trackButtonClick
             // 
-            this.DemoBoard.BoardRotation = 0F;
-            this.DemoBoard.ButtonColors = new System.Drawing.Color[0];
-            this.DemoBoard.ButtonFrequencies = new float[0];
-            this.DemoBoard.CenterButtonRatio = 0F;
-            this.DemoBoard.ColorBackground = System.Drawing.Color.Transparent;
-            this.DemoBoard.ColorInnerCircle = System.Drawing.Color.White;
-            this.DemoBoard.ColorOuterCircle = System.Drawing.Color.LightGray;
-            this.DemoBoard.DefaultButtonList = ((System.Collections.Generic.List<System.ValueTuple<int, float, string>>)(resources.GetObject("DemoBoard.DefaultButtonList")));
-            this.DemoBoard.InnerButtonRatio = 0.55F;
-            this.DemoBoard.Location = new System.Drawing.Point(403, 150);
-            this.DemoBoard.Name = "DemoBoard";
-            this.DemoBoard.NumberOfButtons = 4;
-            this.DemoBoard.OuterButtonRatio = 0.95F;
-            this.DemoBoard.PercentInnerRatio = 0.35F;
-            this.DemoBoard.PercentOuterRatio = 0.9F;
-            this.DemoBoard.Size = new System.Drawing.Size(200, 200);
-            this.DemoBoard.TabIndex = 18;
+            this.trackButtonClick.BackColor = System.Drawing.Color.White;
+            this.trackButtonClick.Location = new System.Drawing.Point(222, 234);
+            this.trackButtonClick.Maximum = 100;
+            this.trackButtonClick.Name = "trackButtonClick";
+            this.trackButtonClick.Size = new System.Drawing.Size(200, 45);
+            this.trackButtonClick.TabIndex = 21;
+            this.trackButtonClick.TickFrequency = 10;
+            this.trackButtonClick.ValueChanged += new System.EventHandler(this.trackButtonClick_ValueChanged);
+            // 
+            // numButtonClick
+            // 
+            this.numButtonClick.DecimalPlaces = 2;
+            this.numButtonClick.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.numButtonClick.Location = new System.Drawing.Point(152, 234);
+            this.numButtonClick.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numButtonClick.Name = "numButtonClick";
+            this.numButtonClick.Size = new System.Drawing.Size(47, 22);
+            this.numButtonClick.TabIndex = 20;
+            this.numButtonClick.ValueChanged += new System.EventHandler(this.numButtonClick_ValueChanged);
+            // 
+            // lblButtonClick
+            // 
+            this.lblButtonClick.AutoSize = true;
+            this.lblButtonClick.Location = new System.Drawing.Point(30, 237);
+            this.lblButtonClick.Name = "lblButtonClick";
+            this.lblButtonClick.Size = new System.Drawing.Size(110, 16);
+            this.lblButtonClick.TabIndex = 19;
+            this.lblButtonClick.Text = "Button click offset";
             // 
             // trackButtonDistance
             // 
             this.trackButtonDistance.BackColor = System.Drawing.Color.White;
-            this.trackButtonDistance.Location = new System.Drawing.Point(229, 146);
+            this.trackButtonDistance.Location = new System.Drawing.Point(222, 189);
             this.trackButtonDistance.Maximum = 100;
             this.trackButtonDistance.Name = "trackButtonDistance";
-            this.trackButtonDistance.Size = new System.Drawing.Size(174, 45);
+            this.trackButtonDistance.Size = new System.Drawing.Size(200, 45);
             this.trackButtonDistance.TabIndex = 17;
             this.trackButtonDistance.TickFrequency = 10;
             this.trackButtonDistance.ValueChanged += new System.EventHandler(this.trackButtonDistance_ValueChanged);
@@ -198,7 +240,7 @@ namespace SimonSays
             // trackButtonInner
             // 
             this.trackButtonInner.BackColor = System.Drawing.Color.White;
-            this.trackButtonInner.Location = new System.Drawing.Point(229, 107);
+            this.trackButtonInner.Location = new System.Drawing.Point(222, 144);
             this.trackButtonInner.Maximum = 100;
             this.trackButtonInner.Name = "trackButtonInner";
             this.trackButtonInner.Size = new System.Drawing.Size(200, 45);
@@ -209,10 +251,10 @@ namespace SimonSays
             // trackButtonOuter
             // 
             this.trackButtonOuter.BackColor = System.Drawing.Color.White;
-            this.trackButtonOuter.Location = new System.Drawing.Point(229, 69);
+            this.trackButtonOuter.Location = new System.Drawing.Point(222, 97);
             this.trackButtonOuter.Maximum = 100;
             this.trackButtonOuter.Name = "trackButtonOuter";
-            this.trackButtonOuter.Size = new System.Drawing.Size(242, 45);
+            this.trackButtonOuter.Size = new System.Drawing.Size(200, 45);
             this.trackButtonOuter.TabIndex = 15;
             this.trackButtonOuter.TickFrequency = 10;
             this.trackButtonOuter.ValueChanged += new System.EventHandler(this.trackButtonOuter_ValueChanged);
@@ -225,7 +267,7 @@ namespace SimonSays
             0,
             0,
             131072});
-            this.numButtonDistance.Location = new System.Drawing.Point(159, 146);
+            this.numButtonDistance.Location = new System.Drawing.Point(152, 189);
             this.numButtonDistance.Maximum = new decimal(new int[] {
             1,
             0,
@@ -239,47 +281,11 @@ namespace SimonSays
             // lblButtonDistance
             // 
             this.lblButtonDistance.AutoSize = true;
-            this.lblButtonDistance.Location = new System.Drawing.Point(37, 148);
+            this.lblButtonDistance.Location = new System.Drawing.Point(30, 191);
             this.lblButtonDistance.Name = "lblButtonDistance";
             this.lblButtonDistance.Size = new System.Drawing.Size(99, 16);
             this.lblButtonDistance.TabIndex = 13;
             this.lblButtonDistance.Text = "Button distance";
-            // 
-            // gridButtons
-            // 
-            this.gridButtons.AllowUserToAddRows = false;
-            this.gridButtons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gridButtons.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColValue,
-            this.ColFrequency,
-            this.ColColor});
-            this.gridButtons.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.gridButtons.Location = new System.Drawing.Point(31, 220);
-            this.gridButtons.Name = "gridButtons";
-            this.gridButtons.Size = new System.Drawing.Size(287, 134);
-            this.gridButtons.TabIndex = 12;
-            this.gridButtons.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridButtons_CellClick);
-            // 
-            // ColValue
-            // 
-            this.ColValue.DataPropertyName = "Value";
-            this.ColValue.HeaderText = "Value";
-            this.ColValue.Name = "ColValue";
-            this.ColValue.ReadOnly = true;
-            this.ColValue.Width = 50;
-            // 
-            // ColFrequency
-            // 
-            this.ColFrequency.DataPropertyName = "Frequency";
-            this.ColFrequency.HeaderText = "Frequency";
-            this.ColFrequency.Name = "ColFrequency";
-            this.ColFrequency.Width = 80;
-            // 
-            // ColColor
-            // 
-            this.ColColor.DataPropertyName = "Color";
-            this.ColColor.HeaderText = "Color";
-            this.ColColor.Name = "ColColor";
             // 
             // numButtonMin
             // 
@@ -289,7 +295,7 @@ namespace SimonSays
             0,
             0,
             131072});
-            this.numButtonMin.Location = new System.Drawing.Point(159, 107);
+            this.numButtonMin.Location = new System.Drawing.Point(152, 144);
             this.numButtonMin.Maximum = new decimal(new int[] {
             1,
             0,
@@ -308,7 +314,7 @@ namespace SimonSays
             0,
             0,
             131072});
-            this.numButtonMax.Location = new System.Drawing.Point(159, 69);
+            this.numButtonMax.Location = new System.Drawing.Point(152, 97);
             this.numButtonMax.Maximum = new decimal(new int[] {
             1,
             0,
@@ -322,7 +328,7 @@ namespace SimonSays
             // lblButtonMin
             // 
             this.lblButtonMin.AutoSize = true;
-            this.lblButtonMin.Location = new System.Drawing.Point(37, 107);
+            this.lblButtonMin.Location = new System.Drawing.Point(30, 144);
             this.lblButtonMin.Name = "lblButtonMin";
             this.lblButtonMin.Size = new System.Drawing.Size(109, 16);
             this.lblButtonMin.TabIndex = 5;
@@ -331,7 +337,7 @@ namespace SimonSays
             // lblButtonMax
             // 
             this.lblButtonMax.AutoSize = true;
-            this.lblButtonMax.Location = new System.Drawing.Point(37, 69);
+            this.lblButtonMax.Location = new System.Drawing.Point(30, 97);
             this.lblButtonMax.Name = "lblButtonMax";
             this.lblButtonMax.Size = new System.Drawing.Size(113, 16);
             this.lblButtonMax.TabIndex = 4;
@@ -340,7 +346,7 @@ namespace SimonSays
             // trackButtons
             // 
             this.trackButtons.BackColor = System.Drawing.Color.White;
-            this.trackButtons.Location = new System.Drawing.Point(144, 24);
+            this.trackButtons.Location = new System.Drawing.Point(137, 45);
             this.trackButtons.Minimum = 2;
             this.trackButtons.Name = "trackButtons";
             this.trackButtons.Size = new System.Drawing.Size(285, 45);
@@ -350,7 +356,7 @@ namespace SimonSays
             // 
             // numButtons
             // 
-            this.numButtons.Location = new System.Drawing.Point(96, 28);
+            this.numButtons.Location = new System.Drawing.Point(89, 49);
             this.numButtons.Margin = new System.Windows.Forms.Padding(4);
             this.numButtons.Maximum = new decimal(new int[] {
             10,
@@ -365,7 +371,7 @@ namespace SimonSays
             // lblButtons
             // 
             this.lblButtons.AutoSize = true;
-            this.lblButtons.Location = new System.Drawing.Point(37, 29);
+            this.lblButtons.Location = new System.Drawing.Point(30, 50);
             this.lblButtons.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblButtons.Name = "lblButtons";
             this.lblButtons.Size = new System.Drawing.Size(52, 16);
@@ -395,7 +401,7 @@ namespace SimonSays
             this.tabBoard.Location = new System.Drawing.Point(4, 25);
             this.tabBoard.Name = "tabBoard";
             this.tabBoard.Padding = new System.Windows.Forms.Padding(3);
-            this.tabBoard.Size = new System.Drawing.Size(610, 357);
+            this.tabBoard.Size = new System.Drawing.Size(460, 357);
             this.tabBoard.TabIndex = 3;
             this.tabBoard.Text = "Board UI";
             this.tabBoard.UseVisualStyleBackColor = true;
@@ -403,10 +409,10 @@ namespace SimonSays
             // trackBoardRotation
             // 
             this.trackBoardRotation.BackColor = System.Drawing.Color.White;
-            this.trackBoardRotation.Location = new System.Drawing.Point(248, 141);
+            this.trackBoardRotation.Location = new System.Drawing.Point(213, 141);
             this.trackBoardRotation.Maximum = 360;
             this.trackBoardRotation.Name = "trackBoardRotation";
-            this.trackBoardRotation.Size = new System.Drawing.Size(282, 45);
+            this.trackBoardRotation.Size = new System.Drawing.Size(231, 45);
             this.trackBoardRotation.TabIndex = 29;
             this.trackBoardRotation.TickFrequency = 30;
             this.trackBoardRotation.ValueChanged += new System.EventHandler(this.trackBoardRotation_ValueChanged);
@@ -414,7 +420,7 @@ namespace SimonSays
             // numBoardRotation
             // 
             this.numBoardRotation.DecimalPlaces = 2;
-            this.numBoardRotation.Location = new System.Drawing.Point(183, 141);
+            this.numBoardRotation.Location = new System.Drawing.Point(148, 141);
             this.numBoardRotation.Maximum = new decimal(new int[] {
             360,
             0,
@@ -428,7 +434,7 @@ namespace SimonSays
             // lblBoardRotation
             // 
             this.lblBoardRotation.AutoSize = true;
-            this.lblBoardRotation.Location = new System.Drawing.Point(52, 144);
+            this.lblBoardRotation.Location = new System.Drawing.Point(30, 144);
             this.lblBoardRotation.Name = "lblBoardRotation";
             this.lblBoardRotation.Size = new System.Drawing.Size(107, 16);
             this.lblBoardRotation.TabIndex = 27;
@@ -438,7 +444,7 @@ namespace SimonSays
             // 
             this.chkStartUp.AutoSize = true;
             this.chkStartUp.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.chkStartUp.Location = new System.Drawing.Point(52, 309);
+            this.chkStartUp.Location = new System.Drawing.Point(27, 314);
             this.chkStartUp.Name = "chkStartUp";
             this.chkStartUp.Size = new System.Drawing.Size(242, 20);
             this.chkStartUp.TabIndex = 26;
@@ -449,7 +455,7 @@ namespace SimonSays
             // btnFontFamily
             // 
             this.btnFontFamily.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFontFamily.Location = new System.Drawing.Point(225, 268);
+            this.btnFontFamily.Location = new System.Drawing.Point(203, 268);
             this.btnFontFamily.Name = "btnFontFamily";
             this.btnFontFamily.Size = new System.Drawing.Size(76, 21);
             this.btnFontFamily.TabIndex = 25;
@@ -460,7 +466,7 @@ namespace SimonSays
             // pctIn
             // 
             this.pctIn.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pctIn.Location = new System.Drawing.Point(407, 219);
+            this.pctIn.Location = new System.Drawing.Point(353, 219);
             this.pctIn.Name = "pctIn";
             this.pctIn.Size = new System.Drawing.Size(50, 25);
             this.pctIn.TabIndex = 24;
@@ -471,7 +477,7 @@ namespace SimonSays
             // pctOut
             // 
             this.pctOut.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pctOut.Location = new System.Drawing.Point(265, 219);
+            this.pctOut.Location = new System.Drawing.Point(211, 219);
             this.pctOut.Name = "pctOut";
             this.pctOut.Size = new System.Drawing.Size(50, 25);
             this.pctOut.TabIndex = 23;
@@ -482,7 +488,7 @@ namespace SimonSays
             // pctBack
             // 
             this.pctBack.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pctBack.Location = new System.Drawing.Point(84, 219);
+            this.pctBack.Location = new System.Drawing.Point(62, 219);
             this.pctBack.Name = "pctBack";
             this.pctBack.Size = new System.Drawing.Size(50, 25);
             this.pctBack.TabIndex = 22;
@@ -493,7 +499,7 @@ namespace SimonSays
             // lblFontFamily
             // 
             this.lblFontFamily.AutoSize = true;
-            this.lblFontFamily.Location = new System.Drawing.Point(52, 271);
+            this.lblFontFamily.Location = new System.Drawing.Point(30, 271);
             this.lblFontFamily.Name = "lblFontFamily";
             this.lblFontFamily.Size = new System.Drawing.Size(78, 16);
             this.lblFontFamily.TabIndex = 21;
@@ -502,7 +508,7 @@ namespace SimonSays
             // lblInColor
             // 
             this.lblInColor.AutoSize = true;
-            this.lblInColor.Location = new System.Drawing.Point(397, 195);
+            this.lblInColor.Location = new System.Drawing.Point(343, 195);
             this.lblInColor.Name = "lblInColor";
             this.lblInColor.Size = new System.Drawing.Size(70, 16);
             this.lblInColor.TabIndex = 20;
@@ -511,7 +517,7 @@ namespace SimonSays
             // lblOutColor
             // 
             this.lblOutColor.AutoSize = true;
-            this.lblOutColor.Location = new System.Drawing.Point(252, 195);
+            this.lblOutColor.Location = new System.Drawing.Point(198, 195);
             this.lblOutColor.Name = "lblOutColor";
             this.lblOutColor.Size = new System.Drawing.Size(76, 16);
             this.lblOutColor.TabIndex = 19;
@@ -520,7 +526,7 @@ namespace SimonSays
             // lblBoardBackground
             // 
             this.lblBoardBackground.AutoSize = true;
-            this.lblBoardBackground.Location = new System.Drawing.Point(52, 195);
+            this.lblBoardBackground.Location = new System.Drawing.Point(30, 195);
             this.lblBoardBackground.Name = "lblBoardBackground";
             this.lblBoardBackground.Size = new System.Drawing.Size(114, 16);
             this.lblBoardBackground.TabIndex = 18;
@@ -529,10 +535,10 @@ namespace SimonSays
             // trackBoardIn
             // 
             this.trackBoardIn.BackColor = System.Drawing.Color.White;
-            this.trackBoardIn.Location = new System.Drawing.Point(248, 96);
+            this.trackBoardIn.Location = new System.Drawing.Point(213, 94);
             this.trackBoardIn.Maximum = 100;
             this.trackBoardIn.Name = "trackBoardIn";
-            this.trackBoardIn.Size = new System.Drawing.Size(282, 45);
+            this.trackBoardIn.Size = new System.Drawing.Size(231, 45);
             this.trackBoardIn.TabIndex = 17;
             this.trackBoardIn.TickFrequency = 10;
             this.trackBoardIn.ValueChanged += new System.EventHandler(this.trackBoardIn_ValueChanged);
@@ -540,10 +546,10 @@ namespace SimonSays
             // trackBoardOut
             // 
             this.trackBoardOut.BackColor = System.Drawing.Color.White;
-            this.trackBoardOut.Location = new System.Drawing.Point(248, 51);
+            this.trackBoardOut.Location = new System.Drawing.Point(213, 47);
             this.trackBoardOut.Maximum = 100;
             this.trackBoardOut.Name = "trackBoardOut";
-            this.trackBoardOut.Size = new System.Drawing.Size(283, 45);
+            this.trackBoardOut.Size = new System.Drawing.Size(231, 45);
             this.trackBoardOut.TabIndex = 16;
             this.trackBoardOut.TickFrequency = 10;
             this.trackBoardOut.ValueChanged += new System.EventHandler(this.trackBoardOut_ValueChanged);
@@ -556,7 +562,7 @@ namespace SimonSays
             0,
             0,
             131072});
-            this.numBoardIn.Location = new System.Drawing.Point(183, 96);
+            this.numBoardIn.Location = new System.Drawing.Point(148, 94);
             this.numBoardIn.Maximum = new decimal(new int[] {
             1,
             0,
@@ -575,7 +581,7 @@ namespace SimonSays
             0,
             0,
             131072});
-            this.numBoardOut.Location = new System.Drawing.Point(183, 51);
+            this.numBoardOut.Location = new System.Drawing.Point(148, 47);
             this.numBoardOut.Maximum = new decimal(new int[] {
             1,
             0,
@@ -589,7 +595,7 @@ namespace SimonSays
             // lblBoardMin
             // 
             this.lblBoardMin.AutoSize = true;
-            this.lblBoardMin.Location = new System.Drawing.Point(52, 99);
+            this.lblBoardMin.Location = new System.Drawing.Point(30, 97);
             this.lblBoardMin.Name = "lblBoardMin";
             this.lblBoardMin.Size = new System.Drawing.Size(98, 16);
             this.lblBoardMin.TabIndex = 13;
@@ -598,7 +604,7 @@ namespace SimonSays
             // lblBoardMax
             // 
             this.lblBoardMax.AutoSize = true;
-            this.lblBoardMax.Location = new System.Drawing.Point(52, 54);
+            this.lblBoardMax.Location = new System.Drawing.Point(30, 50);
             this.lblBoardMax.Name = "lblBoardMax";
             this.lblBoardMax.Size = new System.Drawing.Size(106, 16);
             this.lblBoardMax.TabIndex = 12;
@@ -616,7 +622,7 @@ namespace SimonSays
             // 
             // btnAccept
             // 
-            this.btnAccept.Location = new System.Drawing.Point(401, 406);
+            this.btnAccept.Location = new System.Drawing.Point(253, 406);
             this.btnAccept.Name = "btnAccept";
             this.btnAccept.Size = new System.Drawing.Size(110, 30);
             this.btnAccept.TabIndex = 2;
@@ -626,7 +632,7 @@ namespace SimonSays
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(517, 406);
+            this.btnCancel.Location = new System.Drawing.Point(369, 406);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(110, 30);
             this.btnCancel.TabIndex = 3;
@@ -634,50 +640,211 @@ namespace SimonSays
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // lblButtonClick
+            // groupMode
             // 
-            this.lblButtonClick.AutoSize = true;
-            this.lblButtonClick.Location = new System.Drawing.Point(37, 186);
-            this.lblButtonClick.Name = "lblButtonClick";
-            this.lblButtonClick.Size = new System.Drawing.Size(110, 16);
-            this.lblButtonClick.TabIndex = 19;
-            this.lblButtonClick.Text = "Button click offset";
+            this.groupMode.Controls.Add(this.radRewind);
+            this.groupMode.Controls.Add(this.radSurprise);
+            this.groupMode.Controls.Add(this.radBounce);
+            this.groupMode.Controls.Add(this.radChoose);
+            this.groupMode.Controls.Add(this.radAdds);
+            this.groupMode.Controls.Add(this.radClassic);
+            this.groupMode.Location = new System.Drawing.Point(30, 30);
+            this.groupMode.Name = "groupMode";
+            this.groupMode.Size = new System.Drawing.Size(406, 136);
+            this.groupMode.TabIndex = 0;
+            this.groupMode.TabStop = false;
+            this.groupMode.Text = "Game mode";
             // 
-            // numButtonClick
+            // trackWaiting
             // 
-            this.numButtonClick.DecimalPlaces = 2;
-            this.numButtonClick.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.numButtonClick.Location = new System.Drawing.Point(159, 183);
-            this.numButtonClick.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numButtonClick.Name = "numButtonClick";
-            this.numButtonClick.Size = new System.Drawing.Size(47, 22);
-            this.numButtonClick.TabIndex = 20;
-            this.numButtonClick.ValueChanged += new System.EventHandler(this.numButtonClick_ValueChanged);
+            this.trackWaiting.BackColor = System.Drawing.Color.White;
+            this.trackWaiting.Location = new System.Drawing.Point(121, 290);
+            this.trackWaiting.Maximum = 100;
+            this.trackWaiting.Name = "trackWaiting";
+            this.trackWaiting.Size = new System.Drawing.Size(315, 45);
+            this.trackWaiting.TabIndex = 2;
+            this.trackWaiting.TickFrequency = 10;
+            this.trackWaiting.ValueChanged += new System.EventHandler(this.trackWaiting_ValueChanged);
             // 
-            // trackButtonClick
+            // numWaiting
             // 
-            this.trackButtonClick.BackColor = System.Drawing.Color.White;
-            this.trackButtonClick.Location = new System.Drawing.Point(229, 183);
-            this.trackButtonClick.Maximum = 100;
-            this.trackButtonClick.Name = "trackButtonClick";
-            this.trackButtonClick.Size = new System.Drawing.Size(173, 45);
-            this.trackButtonClick.TabIndex = 21;
-            this.trackButtonClick.TickFrequency = 10;
-            this.trackButtonClick.ValueChanged += new System.EventHandler(this.trackButtonClick_ValueChanged);
+            this.numWaiting.Location = new System.Drawing.Point(59, 290);
+            this.numWaiting.Name = "numWaiting";
+            this.numWaiting.Size = new System.Drawing.Size(47, 22);
+            this.numWaiting.TabIndex = 3;
+            this.numWaiting.ValueChanged += new System.EventHandler(this.numWaiting_ValueChanged);
+            // 
+            // radClassic
+            // 
+            this.radClassic.AutoSize = true;
+            this.radClassic.Location = new System.Drawing.Point(29, 30);
+            this.radClassic.Name = "radClassic";
+            this.radClassic.Size = new System.Drawing.Size(181, 20);
+            this.radClassic.TabIndex = 0;
+            this.radClassic.TabStop = true;
+            this.radClassic.Text = "Simon Says classic mode";
+            this.radClassic.UseVisualStyleBackColor = true;
+            // 
+            // radAdds
+            // 
+            this.radAdds.AutoSize = true;
+            this.radAdds.Location = new System.Drawing.Point(29, 59);
+            this.radAdds.Name = "radAdds";
+            this.radAdds.Size = new System.Drawing.Size(99, 20);
+            this.radAdds.TabIndex = 1;
+            this.radAdds.TabStop = true;
+            this.radAdds.Text = "Player adds";
+            this.radAdds.UseVisualStyleBackColor = true;
+            // 
+            // radChoose
+            // 
+            this.radChoose.AutoSize = true;
+            this.radChoose.Location = new System.Drawing.Point(29, 88);
+            this.radChoose.Name = "radChoose";
+            this.radChoose.Size = new System.Drawing.Size(135, 20);
+            this.radChoose.TabIndex = 2;
+            this.radChoose.TabStop = true;
+            this.radChoose.Text = "Choose your color";
+            this.radChoose.UseVisualStyleBackColor = true;
+            // 
+            // radBounce
+            // 
+            this.radBounce.AutoSize = true;
+            this.radBounce.Location = new System.Drawing.Point(243, 30);
+            this.radBounce.Name = "radBounce";
+            this.radBounce.Size = new System.Drawing.Size(112, 20);
+            this.radBounce.TabIndex = 3;
+            this.radBounce.TabStop = true;
+            this.radBounce.Text = "Simon bounce";
+            this.radBounce.UseVisualStyleBackColor = true;
+            // 
+            // radSurprise
+            // 
+            this.radSurprise.AutoSize = true;
+            this.radSurprise.Location = new System.Drawing.Point(243, 59);
+            this.radSurprise.Name = "radSurprise";
+            this.radSurprise.Size = new System.Drawing.Size(115, 20);
+            this.radSurprise.TabIndex = 4;
+            this.radSurprise.TabStop = true;
+            this.radSurprise.Text = "Simon surprise";
+            this.radSurprise.UseVisualStyleBackColor = true;
+            // 
+            // radRewind
+            // 
+            this.radRewind.AutoSize = true;
+            this.radRewind.Location = new System.Drawing.Point(243, 88);
+            this.radRewind.Name = "radRewind";
+            this.radRewind.Size = new System.Drawing.Size(106, 20);
+            this.radRewind.TabIndex = 5;
+            this.radRewind.TabStop = true;
+            this.radRewind.Text = "Simon rewind";
+            this.radRewind.UseVisualStyleBackColor = true;
+            // 
+            // groupTime
+            // 
+            this.groupTime.Controls.Add(this.radioButton1);
+            this.groupTime.Location = new System.Drawing.Point(24, 31);
+            this.groupTime.Name = "groupTime";
+            this.groupTime.Size = new System.Drawing.Size(229, 77);
+            this.groupTime.TabIndex = 2;
+            this.groupTime.TabStop = false;
+            this.groupTime.Text = "Time control";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Location = new System.Drawing.Point(35, 35);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(101, 20);
+            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "radioButton1";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // chkSpeed
+            // 
+            this.chkSpeed.AutoSize = true;
+            this.chkSpeed.Location = new System.Drawing.Point(30, 200);
+            this.chkSpeed.Name = "chkSpeed";
+            this.chkSpeed.Size = new System.Drawing.Size(276, 20);
+            this.chkSpeed.TabIndex = 4;
+            this.chkSpeed.Text = "Speed up Simon flashing (currently 4-9-13)";
+            this.chkSpeed.UseVisualStyleBackColor = true;
+            // 
+            // chkWaiting
+            // 
+            this.chkWaiting.AutoSize = true;
+            this.chkWaiting.Location = new System.Drawing.Point(30, 246);
+            this.chkWaiting.Name = "chkWaiting";
+            this.chkWaiting.Size = new System.Drawing.Size(219, 20);
+            this.chkWaiting.TabIndex = 5;
+            this.chkWaiting.Text = "Maximum waiting time (seconds)";
+            this.chkWaiting.UseVisualStyleBackColor = true;
+            this.chkWaiting.CheckedChanged += new System.EventHandler(this.chkWaiting_CheckedChanged);
+            // 
+            // DemoBoard
+            // 
+            this.DemoBoard.BoardRotation = 0F;
+            this.DemoBoard.ButtonClickOffset = 0F;
+            this.DemoBoard.ButtonColors = new System.Drawing.Color[0];
+            this.DemoBoard.ButtonFrequencies = new float[0];
+            this.DemoBoard.CenterButtonRatio = 0F;
+            this.DemoBoard.ColorBackground = System.Drawing.Color.Transparent;
+            this.DemoBoard.ColorInnerCircle = System.Drawing.Color.White;
+            this.DemoBoard.ColorOuterCircle = System.Drawing.Color.LightGray;
+            this.DemoBoard.DefaultButtonList = ((System.Collections.Generic.List<System.ValueTuple<int, float, string>>)(resources.GetObject("DemoBoard.DefaultButtonList")));
+            this.DemoBoard.InnerButtonRatio = 0.55F;
+            this.DemoBoard.Location = new System.Drawing.Point(531, 236);
+            this.DemoBoard.Name = "DemoBoard";
+            this.DemoBoard.NumberOfButtons = 4;
+            this.DemoBoard.OuterButtonRatio = 0.95F;
+            this.DemoBoard.PercentInnerRatio = 0.35F;
+            this.DemoBoard.PercentOuterRatio = 0.9F;
+            this.DemoBoard.Size = new System.Drawing.Size(200, 200);
+            this.DemoBoard.TabIndex = 20;
+            // 
+            // gridButtons
+            // 
+            this.gridButtons.AllowUserToAddRows = false;
+            this.gridButtons.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridButtons.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColValue,
+            this.ColFrequency,
+            this.ColColor});
+            this.gridButtons.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            this.gridButtons.Location = new System.Drawing.Point(488, 38);
+            this.gridButtons.Name = "gridButtons";
+            this.gridButtons.Size = new System.Drawing.Size(287, 192);
+            this.gridButtons.TabIndex = 21;
+            // 
+            // ColValue
+            // 
+            this.ColValue.DataPropertyName = "Value";
+            this.ColValue.HeaderText = "Value";
+            this.ColValue.Name = "ColValue";
+            this.ColValue.ReadOnly = true;
+            this.ColValue.Width = 50;
+            // 
+            // ColFrequency
+            // 
+            this.ColFrequency.DataPropertyName = "Frequency";
+            this.ColFrequency.HeaderText = "Frequency";
+            this.ColFrequency.Name = "ColFrequency";
+            this.ColFrequency.Width = 80;
+            // 
+            // ColColor
+            // 
+            this.ColColor.DataPropertyName = "Color";
+            this.ColColor.HeaderText = "Color";
+            this.ColColor.Name = "ColColor";
             // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(644, 448);
+            this.ClientSize = new System.Drawing.Size(786, 448);
+            this.Controls.Add(this.gridButtons);
+            this.Controls.Add(this.DemoBoard);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnAccept);
             this.Controls.Add(this.btnReset);
@@ -691,13 +858,17 @@ namespace SimonSays
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "frmSettings";
             this.tabSettings.ResumeLayout(false);
+            this.tabPlayMode.ResumeLayout(false);
+            this.tabPlayMode.PerformLayout();
+            this.tabGame.ResumeLayout(false);
             this.tabInterface.ResumeLayout(false);
             this.tabInterface.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackButtonClick)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numButtonClick)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonDistance)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonInner)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonOuter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numButtonDistance)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridButtons)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numButtonMin)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numButtonMax)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtons)).EndInit();
@@ -713,8 +884,13 @@ namespace SimonSays
             ((System.ComponentModel.ISupportInitialize)(this.trackBoardOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardIn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardOut)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numButtonClick)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trackButtonClick)).EndInit();
+            this.groupMode.ResumeLayout(false);
+            this.groupMode.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackWaiting)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numWaiting)).EndInit();
+            this.groupTime.ResumeLayout(false);
+            this.groupTime.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridButtons)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -732,7 +908,6 @@ namespace SimonSays
         private System.Windows.Forms.Label lblButtonMin;
         private System.Windows.Forms.Label lblButtonMax;
         private System.Windows.Forms.TabPage tabGame;
-        private System.Windows.Forms.DataGridView gridButtons;
         private System.Windows.Forms.NumericUpDown numButtonDistance;
         private System.Windows.Forms.Label lblButtonDistance;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnValue;
@@ -755,13 +930,9 @@ namespace SimonSays
         private System.Windows.Forms.Label lblFontFamily;
         private System.Windows.Forms.Label lblInColor;
         private System.Windows.Forms.Label lblOutColor;
-        private SimonSays.CustomBoard DemoBoard;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button btnAccept;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColValue;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColFrequency;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColColor;
         private System.Windows.Forms.Button btnFontFamily;
         private System.Windows.Forms.CheckBox chkStartUp;
         private System.Windows.Forms.TrackBar trackBoardRotation;
@@ -770,5 +941,23 @@ namespace SimonSays
         private System.Windows.Forms.TrackBar trackButtonClick;
         private System.Windows.Forms.NumericUpDown numButtonClick;
         private System.Windows.Forms.Label lblButtonClick;
+        private System.Windows.Forms.NumericUpDown numWaiting;
+        private System.Windows.Forms.TrackBar trackWaiting;
+        private System.Windows.Forms.GroupBox groupMode;
+        private System.Windows.Forms.RadioButton radClassic;
+        private System.Windows.Forms.RadioButton radChoose;
+        private System.Windows.Forms.RadioButton radAdds;
+        private System.Windows.Forms.RadioButton radSurprise;
+        private System.Windows.Forms.RadioButton radBounce;
+        private System.Windows.Forms.RadioButton radRewind;
+        private System.Windows.Forms.CheckBox chkWaiting;
+        private System.Windows.Forms.CheckBox chkSpeed;
+        private System.Windows.Forms.GroupBox groupTime;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private CustomBoard DemoBoard;
+        private System.Windows.Forms.DataGridView gridButtons;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColFrequency;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColColor;
     }
 }

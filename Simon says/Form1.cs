@@ -25,7 +25,7 @@ namespace SimonSays
             for (int i = 0; i < 4; i++)
             {
                 
-                SimonSays.SimonButton2 btn = new SimonSays.SimonButton2()
+                SimonSays.SimonButton btn = new SimonSays.SimonButton()
                 {
                     Color = Color.DarkBlue,
                     Location = new Point(0, 0),

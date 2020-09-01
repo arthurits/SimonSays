@@ -10,6 +10,7 @@ namespace SimonSays
     class SimonGame
     {
         #region Variable definitions
+        private PlayMode _playMode;         // The current play mode
         private Int32 _nNumButts = 0;
         private Int32[] _sequence = new int[100000];
         private Int32 _nScore;
@@ -22,14 +23,17 @@ namespace SimonSays
         private Int32 _msFlashlight;
         private Timer _timer;
 
-        private enum SimonGameType
+        [Flags]
+        public enum PlayMode
         {
-            SimonSays,
-            PlayerAdds,
-            ChooseYourColor,
-            SimonBounce,
-            SimonSurprise,
-            SimonRewind
+            TimeIncremental = 0b_0000_0001,
+            TimeWaiting = 0b_0000_0010,
+            SimonClassic = 0b_0000_0100,
+            PlayerAdds = 0b_0000_1000,
+            ChooseYourColor = 0b_0001_0000,
+            SimonBounce = 0b_0010_0000,
+            SimonSurprise = 0b_0100_0000,
+            SimonRewind = 0b_1000_0000
         }
 
         public event EventHandler<TickEventArgs> Tick;
@@ -83,6 +87,11 @@ namespace SimonSays
             get => _nFlashLight;
             set => _nFlashLight = value;
         }
+
+        /// <summary>
+        /// The actual play-mode selected by the user (time and sequence mode).
+        /// </summary>
+        public PlayMode GameMode { get => _playMode; set => _playMode = value; }
 
         #endregion Public interface
 

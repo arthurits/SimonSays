@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
-            this.simonButton2 = new SimonSays.SimonButton2();
+            this.simonButton2 = new SimonSays.SimonButton();
             this.SuspendLayout();
             // 
             // button1
@@ -82,7 +82,7 @@
         }
 
         #endregion
-        private SimonButton2 simonButton2;
+        private SimonButton simonButton2;
         private System.Windows.Forms.Button button1;
     }
 }

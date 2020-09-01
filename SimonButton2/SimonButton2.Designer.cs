@@ -1,6 +1,6 @@
 ﻿namespace SimonSays
 {
-    partial class SimonButton2
+    partial class SimonButton
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         {
             this.SuspendLayout();
             // 
-            // SimonButton2
+            // SimonButton
             // 
             this.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;

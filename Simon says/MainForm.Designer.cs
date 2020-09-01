@@ -202,6 +202,7 @@ namespace SimonSays
             | System.Windows.Forms.AnchorStyles.Right)));
             this.simonBoard.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.simonBoard.BoardRotation = 0F;
+            this.simonBoard.ButtonClickOffset = 0F;
             this.simonBoard.ButtonColors = new System.Drawing.Color[] {
         System.Drawing.Color.Blue,
         System.Drawing.Color.Yellow,
@@ -243,6 +244,8 @@ namespace SimonSays
             this.Text = "Simon Says — Memory Game";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSimon_FormClosing);
             this.Load += new System.EventHandler(this.frmSimon_Load);
+            this.ResizeBegin += new System.EventHandler(this.frmSimon_ResizeBegin);
+            this.ResizeEnd += new System.EventHandler(this.frmSimon_ResizeEnd);
             this.Resize += new System.EventHandler(this.frmSimon_Resize);
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();

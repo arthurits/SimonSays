@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0CF0B059-55D0-4397-B91A-2FD678525808}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>SimonButton2</RootNamespace>
-    <AssemblyName>SimonButton2</AssemblyName>
+    <RootNamespace>SimonButton</RootNamespace>
+    <AssemblyName>SimonButton</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

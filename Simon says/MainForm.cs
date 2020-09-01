@@ -139,7 +139,7 @@ namespace SimonSays
         /// <param name="e"></param>
         private void OnGameTick(object sender, TickEventArgs e)
         {
-            foreach (SimonSays.SimonButton2 button in simonBoard.Controls.OfType<SimonSays.SimonButton2>())
+            foreach (SimonSays.SimonButton button in simonBoard.Controls.OfType<SimonSays.SimonButton>())
             {
                 if (button.Value == e.ButtonValue)
                     button.Clicked = e.Flash;
@@ -175,10 +175,12 @@ namespace SimonSays
             //MessageBox.Show("Well done!\nTotal score: " + e.Score.ToString());
             this.simonBoard.ScoreTotal = _Game.ScoreTotal;
             this.simonBoard.ScoreHighest = _Game.ScoreHighest;
+            /*
             foreach (ColorButton.SimonButton button in simonBoard.Controls.OfType<ColorButton.SimonButton>())
             {
                 button.Duration = _Game.DurationFlash;
             }
+            */
         }
 
         private void OnGameOver(object sender, OverEventArgs e)
@@ -189,86 +191,7 @@ namespace SimonSays
 
         #endregion Events subscription
 
-        /*protected override void OnPaint(PaintEventArgs e)
-        {
-            
-            Rectangle rc = e.ClipRectangle;
-            Graphics dc = e.Graphics;
-            dc.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-
-            // Define and calculate size variables
-            Int32 nHeight = rc.Bottom - rc.Top - 50;
-            Int32 nWidth = rc.Width - 50;
-            Int32 nRadius = Math.Min(rc.Width, rc.Height);
-            float factorBoard = (float)0.9;
-            float factorCenter = (float)0.35;
-            Brush solidBrush = new SolidBrush(Color.FromArgb(100, 100, 240));
-
-            // Draw back clip rectangle
-            dc.FillRectangle(solidBrush, rc);
-
-            // Draw board elements
-            solidBrush = new SolidBrush(Color.FromArgb(40, 40, 40));
-            dc.FillEllipse(
-                solidBrush,
-                (float)((rc.Width - factorBoard * nRadius) / 2),
-                (float)((rc.Height - factorBoard * nRadius) / 2),
-                (float)(factorBoard * nRadius),
-                (float)(factorBoard * nRadius)
-                );
-
-                        // Create a path that consists of a single ellipse.
-                        //GraphicsPath path = new GraphicsPath();
-                        //path.AddEllipse(0, 0, 140, 70);
-
-                        // Use the path to construct a brush.
-                        //PathGradientBrush pthGrBrush = new PathGradientBrush(path);
-
-                        // Set the color at the center of the path to blue.
-                        //pthGrBrush.CenterColor = Color.FromArgb(255, 0, 0, 255);
-
-                        // Set the color along the entire boundary  
-                        // of the path to aqua.
-                        //Color[] colors = { Color.FromArgb(255, 0, 255, 255) };
-                        //pthGrBrush.SurroundColors = colors;
-
-                        //e.Graphics.FillEllipse(pthGrBrush, 0, 0, 140, 70);
-
-
-            solidBrush = new SolidBrush(Color.FromArgb(240, 240, 240));
-            dc.FillEllipse(
-                solidBrush,
-                (float)((rc.Width - factorCenter * nRadius) / 2),
-                (float)((rc.Height - factorCenter * nRadius) / 2),
-                (float)(factorCenter * nRadius),
-                (float)(factorCenter * nRadius)
-                );
-
-            Pen BluePen = new Pen(Color.Blue, 3);
-            dc.DrawRectangle(BluePen, nWidth / 2, nHeight / 2, 50, 50);
-            Pen RedPen = new Pen(Color.Red, 2);
-            dc.DrawEllipse(RedPen, nWidth / 2, nHeight / 2, 80, 60);
-
-            // Dispose
-            solidBrush.Dispose();
-            BluePen.Dispose();
-            RedPen.Dispose();
-            
-            // Call the OnPaint method of the base class
-            base.OnPaint(e);
-        }*/
-
         #region Form events
-
-        private void frmSimon_Resize(object sender, EventArgs e)
-        {
-            // Force the client area to be painted again
-            //Invalidate();
-            //this.btnGreen.Top = 0;
-            //this.btnGreen.Left = 0;
-            //this.btnGreen.Height = 400;
-            //this.btnGreen.Width = 400;
-        }
 
         private void frmSimon_Load(object sender, EventArgs e)
         {
@@ -297,13 +220,33 @@ namespace SimonSays
             SaveProgramSettings(_programSettings);
         }
 
+        private void frmSimon_Resize(object sender, EventArgs e)
+        {
+            // Force the client area to be painted again
+            //Invalidate();
+            //this.btnGreen.Top = 0;
+            //this.btnGreen.Left = 0;
+            //this.btnGreen.Height = 400;
+            //this.btnGreen.Width = 400;
+        }
+
+        private void frmSimon_ResizeBegin(object sender, EventArgs e)
+        {
+            this.SuspendLayout();
+        }
+
+        private void frmSimon_ResizeEnd(object sender, EventArgs e)
+        {
+            this.ResumeLayout();
+        }
+
         private void btnStart_Click(object sender, EventArgs e)
         {
             
         }
         private void btnSimon_Click(object sender, EventArgs e)
         {
-            _Game.OnPress(((ColorButton.SimonButton)sender).ColorValue);
+            //_Game.OnPress(((ColorButton.SimonButton)sender).ColorValue);
         }
         private void OnButtonClick(object sender, CustomBoard.ButtonClickEventArgs e)
         {
@@ -311,7 +254,6 @@ namespace SimonSays
         }
 
         #endregion Form events
-
 
         #region toolStripMain
         
@@ -472,7 +414,8 @@ namespace SimonSays
                 //var algo2 = Array.ConvertAll(str, x => int.Parse(x, System.Globalization.NumberStyles.HexNumber));
                 this.simonBoard.ButtonColors = Array.ConvertAll(programSettings.GetOrDefault("ButtonColors", defaultSettings["ButtonColors"]).Split('-'), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
                 //this.simonBoard.ButtonColors = (Color[])programSettings.GetOrDefault("ButtonColors", defaultSettings["ButtonColors"]).Split('-').Select(x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
-                
+                this._Game.GameMode = (SimonGame.PlayMode)Enum.Parse(typeof(SimonGame.PlayMode), programSettings.ContainsKey("PlayMode") ? programSettings["PlayMode"] : defaultSettings["PlayMode"]);
+
             }
             catch(Exception ex)
             {
@@ -536,16 +479,18 @@ namespace SimonSays
             
             settings["WindowPosition"] = "0";   // Remember windows position
 
-            settings["PlayMode"] = "9";     //Fixed time (1) & random sequence (8)
+            settings["PlayMode"] = "7";     // TimeIncremental (1) & TimeWaiting (2) & SimonClassic (4)
 
             settings["Sound"] = "1";        // Soundoff unchecked
             settings["Stats"] = "0";        // Stats unchecked
 
             settings["SplitterDistance"] = "265";
+
+            settings["TimeWaiting"] = "5";
         }
 
-        #endregion Application settings
 
+        #endregion Application settings
 
     }
 }

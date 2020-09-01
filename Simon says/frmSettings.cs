@@ -53,13 +53,18 @@ namespace SimonSays
         {
             try
             {
-                //PlayMode play = (PlayMode)Convert.ToInt32(settings.ContainsKey("PlayMode") ? settings["PlayMode"] : defSets["PlayMode"]);
-                //this.radProgressive.Checked = ((play & PlayMode.SequenceProgressive) == PlayMode.SequenceProgressive);
-                //this.radRandom.Checked = ((play & PlayMode.SequenceRandom) == PlayMode.SequenceRandom);
-                //this.radFixed.Checked = ((play & PlayMode.TimeFixed) == PlayMode.TimeFixed);
-                //this.radIncremental.Checked = ((play & PlayMode.TimeIncremental) == PlayMode.TimeIncremental);
-                //this.numTimeIncrement.Enabled = this.radIncremental.Checked;
-                //this.trackTimeIncrement.Enabled = this.radIncremental.Checked;
+                SimonGame.PlayMode play = (SimonGame.PlayMode)Convert.ToInt32(settings.ContainsKey("PlayMode") ? settings["PlayMode"] : defSets["PlayMode"]);
+                this.radClassic.Checked = ((play & SimonGame.PlayMode.SimonClassic) == SimonGame.PlayMode.SimonClassic);
+                this.radAdds.Checked = ((play & SimonGame.PlayMode.PlayerAdds) == SimonGame.PlayMode.PlayerAdds);
+                this.radChoose.Checked = ((play & SimonGame.PlayMode.ChooseYourColor) == SimonGame.PlayMode.ChooseYourColor);
+                this.radBounce.Checked = ((play & SimonGame.PlayMode.SimonBounce) == SimonGame.PlayMode.SimonBounce);
+                this.radSurprise.Checked = ((play & SimonGame.PlayMode.SimonSurprise) == SimonGame.PlayMode.SimonSurprise);
+                this.radRewind.Checked = ((play & SimonGame.PlayMode.SimonRewind) == SimonGame.PlayMode.SimonRewind);
+                this.chkSpeed.Checked = ((play & SimonGame.PlayMode.TimeIncremental) == SimonGame.PlayMode.TimeIncremental);
+                this.chkWaiting.Checked = ((play & SimonGame.PlayMode.TimeWaiting) == SimonGame.PlayMode.TimeWaiting);
+                this.numWaiting.Value = Convert.ToInt32(settings.GetOrDefault("TimeWaiting", defSets["TimeWaiting"]));
+                this.numWaiting.Enabled = this.chkWaiting.Checked;
+                this.trackWaiting.Enabled = this.chkWaiting.Checked;
 
                 this.numButtons.Value = Convert.ToInt32(settings.GetOrDefault("NumberOfButtons", defSets["NumberOfButtons"]));
                 this.numButtonMax.Value = Convert.ToDecimal(settings.GetOrDefault("OuterButtonRatio", defSets["OuterButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
@@ -82,23 +87,6 @@ namespace SimonSays
                 this.DemoBoard.ButtonColors = Array.ConvertAll(settings.GetOrDefault("ButtonColors", defSets["ButtonColors"]).Split('-'), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
                 this.DemoBoard.ButtonFrequencies = Array.ConvertAll(settings.GetOrDefault("ButtonFrequencies", defSets["ButtonFrequencies"]).Split('-'), float.Parse);
                 ModifyTable();
-
-                /*
-                int value = Convert.ToInt32(settings.ContainsKey("MaximumDigit") ? settings["MaximumDigit"] : defSets["MaximumDigit"]);
-                this.numMaxDigit.Value = value > numMaxDigit.Maximum ? numMaxDigit.Maximum : (value < numMaxDigit.Minimum ? numMaxDigit.Minimum : value);
-                this.numMinDigit.Maximum = this.numMaxDigit.Value;
-                value = Convert.ToInt32(settings.ContainsKey("MinimumDigit") ? settings["MinimumDigit"] : defSets["MinimumDigit"]);
-                this.numMinDigit.Value = value > numMinDigit.Maximum ? numMinDigit.Maximum : (value < numMinDigit.Minimum ? numMinDigit.Minimum : value);
-
-                this.numMaxAttempts.Value = Convert.ToInt32(settings.ContainsKey("MaximumAttempts") ? settings["MaximumAttempts"] : defSets["MaximumAttempts"]);
-                this.numMinLength.Value = Convert.ToInt32(settings.ContainsKey("MinimumLength") ? settings["MinimumLength"] : defSets["MinimumLength"]);
-
-                this.numCountRatio.Value = Convert.ToDecimal(settings.ContainsKey("CountDownRatio") ? settings["CountDownRatio"] : defSets["CountDownRatio"], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-                this.numNumbersRatio.Value = Convert.ToDecimal(settings.ContainsKey("NumbersRatio") ? settings["NumbersRatio"] : defSets["NumbersRatio"], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-                this.numBorderRatio.Value = Convert.ToDecimal(settings.ContainsKey("BorderRatio") ? settings["BorderRatio"] : defSets["BorderRatio"], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-                this.numFontRatio.Value = Convert.ToDecimal(settings.ContainsKey("FontRatio") ? settings["FontRatio"] : defSets["FontRatio"], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-                this.numResultsRatio.Value = Convert.ToDecimal(settings.ContainsKey("ResultsRatio") ? settings["ResultsRatio"] : defSets["ResultsRatio"], System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-                */
 
             }
             catch (KeyNotFoundException ex)
@@ -157,15 +145,19 @@ namespace SimonSays
             _settings["FontFamilyName"] = this.lblFontFamily.Text.Remove(0, 6); // Delete the leading "Font: " characters
             _settings["WindowPosition"] = (this.chkStartUp.Checked ? 1 : 0).ToString();
 
-            /*
             _settings["PlayMode"] = (
-                                    (this.radFixed.Checked ? 1 : 0) * 1 +
-                                    (this.radIncremental.Checked ? 1 : 0) * 2 +
-                                    (this.radProgressive.Checked ? 1 : 0) * 4 +
-                                    (this.radRandom.Checked ? 1 : 0) * 8
+                                    (this.chkSpeed.Checked ? 1 : 0) * 1 +
+                                    (this.chkWaiting.Checked ? 1 : 0) * 2 +
+                                    (this.radClassic.Checked ? 1 : 0) * 4 +
+                                    (this.radAdds.Checked ? 1 : 0) * 8 +
+                                    (this.radChoose.Checked ? 1 : 0) * 16 +
+                                    (this.radBounce.Checked ? 1 : 0) * 32 +
+                                    (this.radSurprise.Checked ? 1 : 0) * 64 +
+                                    (this.radRewind.Checked ? 1 : 0) * 128
                                     ).ToString();
-            */
-            
+
+            _settings["TimeWaiting"] = numWaiting.Value.ToString();
+
             this.DialogResult = DialogResult.OK;
             Close();
         }
@@ -174,15 +166,18 @@ namespace SimonSays
         {
             try
             {
-                /*
-                PlayMode play = (PlayMode)Convert.ToInt32(_settings["PlayMode"]);
-                this.radProgressive.Checked = ((play & PlayMode.SequenceProgressive) == PlayMode.SequenceProgressive);
-                this.radRandom.Checked = ((play & PlayMode.SequenceRandom) == PlayMode.SequenceRandom);
-                this.radFixed.Checked = ((play & PlayMode.TimeFixed) == PlayMode.TimeFixed);
-                this.radIncremental.Checked = ((play & PlayMode.TimeIncremental) == PlayMode.TimeIncremental);
-                this.numTimeIncrement.Enabled = this.radIncremental.Checked;
-                this.trackTimeIncrement.Enabled = this.radIncremental.Checked;
-                */
+                SimonGame.PlayMode play = (SimonGame.PlayMode)Convert.ToInt32(_settings.ContainsKey("PlayMode"));
+                this.radClassic.Checked = ((play & SimonGame.PlayMode.SimonClassic) == SimonGame.PlayMode.SimonClassic);
+                this.radAdds.Checked = ((play & SimonGame.PlayMode.PlayerAdds) == SimonGame.PlayMode.PlayerAdds);
+                this.radChoose.Checked = ((play & SimonGame.PlayMode.ChooseYourColor) == SimonGame.PlayMode.ChooseYourColor);
+                this.radBounce.Checked = ((play & SimonGame.PlayMode.SimonBounce) == SimonGame.PlayMode.SimonBounce);
+                this.radSurprise.Checked = ((play & SimonGame.PlayMode.SimonSurprise) == SimonGame.PlayMode.SimonSurprise);
+                this.radRewind.Checked = ((play & SimonGame.PlayMode.SimonRewind) == SimonGame.PlayMode.SimonRewind);
+                this.chkSpeed.Checked = ((play & SimonGame.PlayMode.TimeIncremental) == SimonGame.PlayMode.TimeIncremental);
+                this.chkWaiting.Checked = ((play & SimonGame.PlayMode.TimeWaiting) == SimonGame.PlayMode.TimeWaiting);
+                this.numWaiting.Value = Convert.ToInt32(_settings.GetOrDefault("TimeWaiting"));
+                this.numWaiting.Enabled = this.chkWaiting.Checked;
+                this.trackWaiting.Enabled = this.chkWaiting.Checked;
 
                 this.numButtons.Value = Convert.ToInt32(_settings["NumberOfButtons"]);
                 this.DemoBoard.ButtonColors = Array.ConvertAll(_settings["ButtonColors"].Split('-'), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
@@ -269,6 +264,24 @@ namespace SimonSays
             OnDataGridChanged(null, null);
         }
 
+        private void chkWaiting_CheckedChanged(object sender, EventArgs e)
+        {
+            var state = chkWaiting.Checked;
+            numWaiting.Enabled = state;
+            trackWaiting.Enabled = state;
+        }
+
+        private void numWaiting_ValueChanged(object sender, EventArgs e)
+        {
+            int ratio = Convert.ToInt32(numWaiting.Value);
+            if (trackWaiting.Value != ratio) trackWaiting.Value = ratio;
+        }
+
+        private void trackWaiting_ValueChanged(object sender, EventArgs e)
+        {
+            int ratio = trackWaiting.Value;
+            if (numWaiting.Value != ratio) numWaiting.Value = ratio;
+        }
 
         private void numButtons_ValueChanged(object sender, EventArgs e)
         {
@@ -499,7 +512,6 @@ namespace SimonSays
             }
             // https://stackoverflow.com/questions/2207709/convert-font-to-string-and-back-again
         }
-
 
     }
 }
