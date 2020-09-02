@@ -361,7 +361,7 @@ namespace SimonSays
 
             Matrix matrix = new Matrix();
             if (_clicked == true) matrix.Translate(_clickOffset.X, _clickOffset.Y);
-            if (_fAngleRotation > 0 && _fAngleRotation < 360) matrix.RotateAt(_fAngleRotation, _fCenterRotation, MatrixOrder.Append);
+            if (_fAngleRotation > 0 && _fAngleRotation <= 720) matrix.RotateAt(_fAngleRotation, _fCenterRotation, MatrixOrder.Append);  // Maximum rotation angle is 2*360
 
             path.Transform(matrix);
             pathRegion.Transform(matrix);
