@@ -201,12 +201,27 @@ namespace SimonSays
         }
 
         /// <summary>
-        /// Gets a nes sequence of colors to be played by Simon and reproduced by the player
+        /// Gets a new sequence of colors to be played by Simon and reproduced by the player
         /// </summary>
         private void GetNewSequence()
         {
-            Random rnd = new Random();
-            for (Int32 i = 0; i < _sequence.Length; i++) { _sequence[i] = rnd.Next(0, _nNumButts); } // Random numbers between 0 and 3
+            if ((_playMode & PlayMode.SimonClassic) == PlayMode.SimonClassic)
+            {
+                Random rnd = new Random();
+                for (Int32 i = 0; i < _sequence.Length; i++) { _sequence[i] = rnd.Next(0, _nNumButts); } // Random numbers between 0 and 3
+            }
+            if ((_playMode & PlayMode.SimonClassic) == PlayMode.SimonClassic)
+            {
+            }
+            if ((_playMode & PlayMode.SimonClassic) == PlayMode.SimonClassic)
+            {
+            }
+            if ((_playMode & PlayMode.SimonClassic) == PlayMode.SimonClassic)
+            {
+            }
+            if ((_playMode & PlayMode.SimonClassic) == PlayMode.SimonClassic)
+            {
+            }
         }
 
         /// <summary>

@@ -143,7 +143,6 @@ namespace SimonSays
             {
                 if (button.Value == e.ButtonValue)
                     button.Clicked = e.Flash;
-                
             }
 
             /*
@@ -265,6 +264,10 @@ namespace SimonSays
         {
             _Game.NumberOfButtons = this.simonBoard.NumberOfButtons;
             _Game.Start();
+        }
+        private void toolStripMain_Stop_Click(object sender, EventArgs e)
+        {
+            _Game.Stop();
         }
         private void toolStripMain_Settings_Click(object sender, EventArgs e)
         {
@@ -491,6 +494,7 @@ namespace SimonSays
 
 
         #endregion Application settings
+
 
     }
 }

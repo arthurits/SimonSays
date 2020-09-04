@@ -127,6 +127,7 @@ namespace SimonSays
             this.toolStripMain_Stop.Text = "Stop";
             this.toolStripMain_Stop.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripMain_Stop.ToolTipText = "Stop the game";
+            this.toolStripMain_Stop.Click += new System.EventHandler(this.toolStripMain_Stop_Click);
             // 
             // toolStripSeparator2
             // 
