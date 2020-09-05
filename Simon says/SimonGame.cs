@@ -153,7 +153,16 @@ namespace SimonSays
         public void OnPress(Int32 buttonValue)
         {
             if (_nPlaySimon == true) return; // If Simon is playing then exit the function
-            if (buttonValue == _sequence[_nCounter])
+
+            Int32 length = _sequence.Length;
+            Int32 sequence = _sequence[_nCounter];
+            
+            if ((_playMode & PlayMode.SimonRewind) == PlayMode.SimonRewind)
+            {
+                sequence = _sequence[_nScore - _nCounter];
+            }
+
+            if (buttonValue == sequence)
             {
                 if (_nCounter < _nScore) _nCounter++;
                 else
@@ -205,13 +214,16 @@ namespace SimonSays
         /// </summary>
         private void GetNewSequence()
         {
+            Random rnd = new Random();
+            for (Int32 i = 0; i < _sequence.Length; i++) { _sequence[i] = rnd.Next(0, _nNumButts); } // Random numbers between 0 and 3
+
             if ((_playMode & PlayMode.SimonClassic) == PlayMode.SimonClassic)
             {
-                Random rnd = new Random();
-                for (Int32 i = 0; i < _sequence.Length; i++) { _sequence[i] = rnd.Next(0, _nNumButts); } // Random numbers between 0 and 3
+                
             }
-            if ((_playMode & PlayMode.SimonClassic) == PlayMode.SimonClassic)
+            if ((_playMode & PlayMode.SimonRewind) == PlayMode.SimonRewind)
             {
+
             }
             if ((_playMode & PlayMode.SimonClassic) == PlayMode.SimonClassic)
             {

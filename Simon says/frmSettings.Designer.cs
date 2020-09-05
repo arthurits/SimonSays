@@ -30,10 +30,19 @@ namespace SimonSays
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSettings));
             this.tabSettings = new System.Windows.Forms.TabControl();
             this.tabPlayMode = new System.Windows.Forms.TabPage();
-            this.tabGame = new System.Windows.Forms.TabPage();
+            this.chkWaiting = new System.Windows.Forms.CheckBox();
+            this.chkSpeed = new System.Windows.Forms.CheckBox();
+            this.numWaiting = new System.Windows.Forms.NumericUpDown();
+            this.trackWaiting = new System.Windows.Forms.TrackBar();
+            this.groupMode = new System.Windows.Forms.GroupBox();
+            this.radRewind = new System.Windows.Forms.RadioButton();
+            this.radSurprise = new System.Windows.Forms.RadioButton();
+            this.radBounce = new System.Windows.Forms.RadioButton();
+            this.radChoose = new System.Windows.Forms.RadioButton();
+            this.radAdds = new System.Windows.Forms.RadioButton();
+            this.radClassic = new System.Windows.Forms.RadioButton();
             this.tabInterface = new System.Windows.Forms.TabPage();
             this.trackButtonClick = new System.Windows.Forms.TrackBar();
             this.numButtonClick = new System.Windows.Forms.NumericUpDown();
@@ -72,27 +81,16 @@ namespace SimonSays
             this.btnReset = new System.Windows.Forms.Button();
             this.btnAccept = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.groupMode = new System.Windows.Forms.GroupBox();
-            this.trackWaiting = new System.Windows.Forms.TrackBar();
-            this.numWaiting = new System.Windows.Forms.NumericUpDown();
-            this.radClassic = new System.Windows.Forms.RadioButton();
-            this.radAdds = new System.Windows.Forms.RadioButton();
-            this.radChoose = new System.Windows.Forms.RadioButton();
-            this.radBounce = new System.Windows.Forms.RadioButton();
-            this.radSurprise = new System.Windows.Forms.RadioButton();
-            this.radRewind = new System.Windows.Forms.RadioButton();
-            this.groupTime = new System.Windows.Forms.GroupBox();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.chkSpeed = new System.Windows.Forms.CheckBox();
-            this.chkWaiting = new System.Windows.Forms.CheckBox();
-            this.DemoBoard = new SimonSays.CustomBoard();
             this.gridButtons = new System.Windows.Forms.DataGridView();
             this.ColValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DemoBoard = new SimonSays.CustomBoard();
             this.tabSettings.SuspendLayout();
             this.tabPlayMode.SuspendLayout();
-            this.tabGame.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numWaiting)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackWaiting)).BeginInit();
+            this.groupMode.SuspendLayout();
             this.tabInterface.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonClick)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numButtonClick)).BeginInit();
@@ -114,17 +112,12 @@ namespace SimonSays
             ((System.ComponentModel.ISupportInitialize)(this.trackBoardOut)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardIn)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardOut)).BeginInit();
-            this.groupMode.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackWaiting)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numWaiting)).BeginInit();
-            this.groupTime.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridButtons)).BeginInit();
             this.SuspendLayout();
             // 
             // tabSettings
             // 
             this.tabSettings.Controls.Add(this.tabPlayMode);
-            this.tabSettings.Controls.Add(this.tabGame);
             this.tabSettings.Controls.Add(this.tabInterface);
             this.tabSettings.Controls.Add(this.tabBoard);
             this.tabSettings.Location = new System.Drawing.Point(13, 13);
@@ -150,16 +143,129 @@ namespace SimonSays
             this.tabPlayMode.Text = "Play mode";
             this.tabPlayMode.UseVisualStyleBackColor = true;
             // 
-            // tabGame
+            // chkWaiting
             // 
-            this.tabGame.Controls.Add(this.groupTime);
-            this.tabGame.Location = new System.Drawing.Point(4, 25);
-            this.tabGame.Name = "tabGame";
-            this.tabGame.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGame.Size = new System.Drawing.Size(460, 357);
-            this.tabGame.TabIndex = 2;
-            this.tabGame.Text = "Game";
-            this.tabGame.UseVisualStyleBackColor = true;
+            this.chkWaiting.AutoSize = true;
+            this.chkWaiting.Location = new System.Drawing.Point(30, 246);
+            this.chkWaiting.Name = "chkWaiting";
+            this.chkWaiting.Size = new System.Drawing.Size(219, 20);
+            this.chkWaiting.TabIndex = 5;
+            this.chkWaiting.Text = "Maximum waiting time (seconds)";
+            this.chkWaiting.UseVisualStyleBackColor = true;
+            this.chkWaiting.CheckedChanged += new System.EventHandler(this.chkWaiting_CheckedChanged);
+            // 
+            // chkSpeed
+            // 
+            this.chkSpeed.AutoSize = true;
+            this.chkSpeed.Location = new System.Drawing.Point(30, 200);
+            this.chkSpeed.Name = "chkSpeed";
+            this.chkSpeed.Size = new System.Drawing.Size(283, 20);
+            this.chkSpeed.TabIndex = 4;
+            this.chkSpeed.Text = "Speed up Simon flashing (currently 5-13-31)";
+            this.chkSpeed.UseVisualStyleBackColor = true;
+            // 
+            // numWaiting
+            // 
+            this.numWaiting.Location = new System.Drawing.Point(59, 290);
+            this.numWaiting.Name = "numWaiting";
+            this.numWaiting.Size = new System.Drawing.Size(47, 22);
+            this.numWaiting.TabIndex = 3;
+            this.numWaiting.ValueChanged += new System.EventHandler(this.numWaiting_ValueChanged);
+            // 
+            // trackWaiting
+            // 
+            this.trackWaiting.BackColor = System.Drawing.Color.White;
+            this.trackWaiting.Location = new System.Drawing.Point(121, 290);
+            this.trackWaiting.Maximum = 100;
+            this.trackWaiting.Name = "trackWaiting";
+            this.trackWaiting.Size = new System.Drawing.Size(315, 45);
+            this.trackWaiting.TabIndex = 2;
+            this.trackWaiting.TickFrequency = 10;
+            this.trackWaiting.ValueChanged += new System.EventHandler(this.trackWaiting_ValueChanged);
+            // 
+            // groupMode
+            // 
+            this.groupMode.Controls.Add(this.radRewind);
+            this.groupMode.Controls.Add(this.radSurprise);
+            this.groupMode.Controls.Add(this.radBounce);
+            this.groupMode.Controls.Add(this.radChoose);
+            this.groupMode.Controls.Add(this.radAdds);
+            this.groupMode.Controls.Add(this.radClassic);
+            this.groupMode.Location = new System.Drawing.Point(30, 30);
+            this.groupMode.Name = "groupMode";
+            this.groupMode.Size = new System.Drawing.Size(406, 136);
+            this.groupMode.TabIndex = 0;
+            this.groupMode.TabStop = false;
+            this.groupMode.Text = "Game mode";
+            // 
+            // radRewind
+            // 
+            this.radRewind.AutoSize = true;
+            this.radRewind.Location = new System.Drawing.Point(243, 88);
+            this.radRewind.Name = "radRewind";
+            this.radRewind.Size = new System.Drawing.Size(106, 20);
+            this.radRewind.TabIndex = 5;
+            this.radRewind.TabStop = true;
+            this.radRewind.Text = "Simon rewind";
+            this.radRewind.UseVisualStyleBackColor = true;
+            // 
+            // radSurprise
+            // 
+            this.radSurprise.AutoSize = true;
+            this.radSurprise.Location = new System.Drawing.Point(243, 59);
+            this.radSurprise.Name = "radSurprise";
+            this.radSurprise.Size = new System.Drawing.Size(115, 20);
+            this.radSurprise.TabIndex = 4;
+            this.radSurprise.TabStop = true;
+            this.radSurprise.Text = "Simon surprise";
+            this.radSurprise.UseVisualStyleBackColor = true;
+            this.radSurprise.CheckedChanged += new System.EventHandler(this.radSurprise_CheckedChanged);
+            // 
+            // radBounce
+            // 
+            this.radBounce.AutoSize = true;
+            this.radBounce.Location = new System.Drawing.Point(243, 30);
+            this.radBounce.Name = "radBounce";
+            this.radBounce.Size = new System.Drawing.Size(112, 20);
+            this.radBounce.TabIndex = 3;
+            this.radBounce.TabStop = true;
+            this.radBounce.Text = "Simon bounce";
+            this.radBounce.UseVisualStyleBackColor = true;
+            // 
+            // radChoose
+            // 
+            this.radChoose.AutoSize = true;
+            this.radChoose.Enabled = false;
+            this.radChoose.Location = new System.Drawing.Point(29, 88);
+            this.radChoose.Name = "radChoose";
+            this.radChoose.Size = new System.Drawing.Size(135, 20);
+            this.radChoose.TabIndex = 2;
+            this.radChoose.TabStop = true;
+            this.radChoose.Text = "Choose your color";
+            this.radChoose.UseVisualStyleBackColor = true;
+            // 
+            // radAdds
+            // 
+            this.radAdds.AutoSize = true;
+            this.radAdds.Enabled = false;
+            this.radAdds.Location = new System.Drawing.Point(29, 59);
+            this.radAdds.Name = "radAdds";
+            this.radAdds.Size = new System.Drawing.Size(99, 20);
+            this.radAdds.TabIndex = 1;
+            this.radAdds.TabStop = true;
+            this.radAdds.Text = "Player adds";
+            this.radAdds.UseVisualStyleBackColor = true;
+            // 
+            // radClassic
+            // 
+            this.radClassic.AutoSize = true;
+            this.radClassic.Location = new System.Drawing.Point(29, 30);
+            this.radClassic.Name = "radClassic";
+            this.radClassic.Size = new System.Drawing.Size(147, 20);
+            this.radClassic.TabIndex = 0;
+            this.radClassic.TabStop = true;
+            this.radClassic.Text = "Simon classic mode";
+            this.radClassic.UseVisualStyleBackColor = true;
             // 
             // tabInterface
             // 
@@ -640,169 +746,6 @@ namespace SimonSays
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
-            // groupMode
-            // 
-            this.groupMode.Controls.Add(this.radRewind);
-            this.groupMode.Controls.Add(this.radSurprise);
-            this.groupMode.Controls.Add(this.radBounce);
-            this.groupMode.Controls.Add(this.radChoose);
-            this.groupMode.Controls.Add(this.radAdds);
-            this.groupMode.Controls.Add(this.radClassic);
-            this.groupMode.Location = new System.Drawing.Point(30, 30);
-            this.groupMode.Name = "groupMode";
-            this.groupMode.Size = new System.Drawing.Size(406, 136);
-            this.groupMode.TabIndex = 0;
-            this.groupMode.TabStop = false;
-            this.groupMode.Text = "Game mode";
-            // 
-            // trackWaiting
-            // 
-            this.trackWaiting.BackColor = System.Drawing.Color.White;
-            this.trackWaiting.Location = new System.Drawing.Point(121, 290);
-            this.trackWaiting.Maximum = 100;
-            this.trackWaiting.Name = "trackWaiting";
-            this.trackWaiting.Size = new System.Drawing.Size(315, 45);
-            this.trackWaiting.TabIndex = 2;
-            this.trackWaiting.TickFrequency = 10;
-            this.trackWaiting.ValueChanged += new System.EventHandler(this.trackWaiting_ValueChanged);
-            // 
-            // numWaiting
-            // 
-            this.numWaiting.Location = new System.Drawing.Point(59, 290);
-            this.numWaiting.Name = "numWaiting";
-            this.numWaiting.Size = new System.Drawing.Size(47, 22);
-            this.numWaiting.TabIndex = 3;
-            this.numWaiting.ValueChanged += new System.EventHandler(this.numWaiting_ValueChanged);
-            // 
-            // radClassic
-            // 
-            this.radClassic.AutoSize = true;
-            this.radClassic.Location = new System.Drawing.Point(29, 30);
-            this.radClassic.Name = "radClassic";
-            this.radClassic.Size = new System.Drawing.Size(181, 20);
-            this.radClassic.TabIndex = 0;
-            this.radClassic.TabStop = true;
-            this.radClassic.Text = "Simon Says classic mode";
-            this.radClassic.UseVisualStyleBackColor = true;
-            // 
-            // radAdds
-            // 
-            this.radAdds.AutoSize = true;
-            this.radAdds.Location = new System.Drawing.Point(29, 59);
-            this.radAdds.Name = "radAdds";
-            this.radAdds.Size = new System.Drawing.Size(99, 20);
-            this.radAdds.TabIndex = 1;
-            this.radAdds.TabStop = true;
-            this.radAdds.Text = "Player adds";
-            this.radAdds.UseVisualStyleBackColor = true;
-            // 
-            // radChoose
-            // 
-            this.radChoose.AutoSize = true;
-            this.radChoose.Location = new System.Drawing.Point(29, 88);
-            this.radChoose.Name = "radChoose";
-            this.radChoose.Size = new System.Drawing.Size(135, 20);
-            this.radChoose.TabIndex = 2;
-            this.radChoose.TabStop = true;
-            this.radChoose.Text = "Choose your color";
-            this.radChoose.UseVisualStyleBackColor = true;
-            // 
-            // radBounce
-            // 
-            this.radBounce.AutoSize = true;
-            this.radBounce.Location = new System.Drawing.Point(243, 30);
-            this.radBounce.Name = "radBounce";
-            this.radBounce.Size = new System.Drawing.Size(112, 20);
-            this.radBounce.TabIndex = 3;
-            this.radBounce.TabStop = true;
-            this.radBounce.Text = "Simon bounce";
-            this.radBounce.UseVisualStyleBackColor = true;
-            // 
-            // radSurprise
-            // 
-            this.radSurprise.AutoSize = true;
-            this.radSurprise.Location = new System.Drawing.Point(243, 59);
-            this.radSurprise.Name = "radSurprise";
-            this.radSurprise.Size = new System.Drawing.Size(115, 20);
-            this.radSurprise.TabIndex = 4;
-            this.radSurprise.TabStop = true;
-            this.radSurprise.Text = "Simon surprise";
-            this.radSurprise.UseVisualStyleBackColor = true;
-            // 
-            // radRewind
-            // 
-            this.radRewind.AutoSize = true;
-            this.radRewind.Location = new System.Drawing.Point(243, 88);
-            this.radRewind.Name = "radRewind";
-            this.radRewind.Size = new System.Drawing.Size(106, 20);
-            this.radRewind.TabIndex = 5;
-            this.radRewind.TabStop = true;
-            this.radRewind.Text = "Simon rewind";
-            this.radRewind.UseVisualStyleBackColor = true;
-            // 
-            // groupTime
-            // 
-            this.groupTime.Controls.Add(this.radioButton1);
-            this.groupTime.Location = new System.Drawing.Point(24, 31);
-            this.groupTime.Name = "groupTime";
-            this.groupTime.Size = new System.Drawing.Size(229, 77);
-            this.groupTime.TabIndex = 2;
-            this.groupTime.TabStop = false;
-            this.groupTime.Text = "Time control";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(35, 35);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(101, 20);
-            this.radioButton1.TabIndex = 0;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "radioButton1";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // chkSpeed
-            // 
-            this.chkSpeed.AutoSize = true;
-            this.chkSpeed.Location = new System.Drawing.Point(30, 200);
-            this.chkSpeed.Name = "chkSpeed";
-            this.chkSpeed.Size = new System.Drawing.Size(276, 20);
-            this.chkSpeed.TabIndex = 4;
-            this.chkSpeed.Text = "Speed up Simon flashing (currently 4-9-13)";
-            this.chkSpeed.UseVisualStyleBackColor = true;
-            // 
-            // chkWaiting
-            // 
-            this.chkWaiting.AutoSize = true;
-            this.chkWaiting.Location = new System.Drawing.Point(30, 246);
-            this.chkWaiting.Name = "chkWaiting";
-            this.chkWaiting.Size = new System.Drawing.Size(219, 20);
-            this.chkWaiting.TabIndex = 5;
-            this.chkWaiting.Text = "Maximum waiting time (seconds)";
-            this.chkWaiting.UseVisualStyleBackColor = true;
-            this.chkWaiting.CheckedChanged += new System.EventHandler(this.chkWaiting_CheckedChanged);
-            // 
-            // DemoBoard
-            // 
-            this.DemoBoard.BoardRotation = 0F;
-            this.DemoBoard.ButtonClickOffset = 0F;
-            this.DemoBoard.ButtonColors = new System.Drawing.Color[0];
-            this.DemoBoard.ButtonFrequencies = new float[0];
-            this.DemoBoard.CenterButtonRatio = 0F;
-            this.DemoBoard.ColorBackground = System.Drawing.Color.Transparent;
-            this.DemoBoard.ColorInnerCircle = System.Drawing.Color.White;
-            this.DemoBoard.ColorOuterCircle = System.Drawing.Color.LightGray;
-            this.DemoBoard.DefaultButtonList = ((System.Collections.Generic.List<System.ValueTuple<int, float, string>>)(resources.GetObject("DemoBoard.DefaultButtonList")));
-            this.DemoBoard.InnerButtonRatio = 0.55F;
-            this.DemoBoard.Location = new System.Drawing.Point(531, 236);
-            this.DemoBoard.Name = "DemoBoard";
-            this.DemoBoard.NumberOfButtons = 4;
-            this.DemoBoard.OuterButtonRatio = 0.95F;
-            this.DemoBoard.PercentInnerRatio = 0.35F;
-            this.DemoBoard.PercentOuterRatio = 0.9F;
-            this.DemoBoard.Size = new System.Drawing.Size(200, 200);
-            this.DemoBoard.TabIndex = 20;
-            // 
             // gridButtons
             // 
             this.gridButtons.AllowUserToAddRows = false;
@@ -838,6 +781,26 @@ namespace SimonSays
             this.ColColor.HeaderText = "Color";
             this.ColColor.Name = "ColColor";
             // 
+            // DemoBoard
+            // 
+            this.DemoBoard.BoardRotation = 0F;
+            this.DemoBoard.ButtonClickOffset = 0F;
+            this.DemoBoard.ButtonColors = new System.Drawing.Color[0];
+            this.DemoBoard.ButtonFrequencies = new float[0];
+            this.DemoBoard.CenterButtonRatio = 0F;
+            this.DemoBoard.ColorBackground = System.Drawing.Color.Transparent;
+            this.DemoBoard.ColorInnerCircle = System.Drawing.Color.White;
+            this.DemoBoard.ColorOuterCircle = System.Drawing.Color.LightGray;
+            this.DemoBoard.InnerButtonRatio = 0.55F;
+            this.DemoBoard.Location = new System.Drawing.Point(531, 236);
+            this.DemoBoard.Name = "DemoBoard";
+            this.DemoBoard.NumberOfButtons = 4;
+            this.DemoBoard.OuterButtonRatio = 0.95F;
+            this.DemoBoard.PercentInnerRatio = 0.35F;
+            this.DemoBoard.PercentOuterRatio = 0.9F;
+            this.DemoBoard.Size = new System.Drawing.Size(200, 200);
+            this.DemoBoard.TabIndex = 20;
+            // 
             // frmSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -860,7 +823,10 @@ namespace SimonSays
             this.tabSettings.ResumeLayout(false);
             this.tabPlayMode.ResumeLayout(false);
             this.tabPlayMode.PerformLayout();
-            this.tabGame.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numWaiting)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackWaiting)).EndInit();
+            this.groupMode.ResumeLayout(false);
+            this.groupMode.PerformLayout();
             this.tabInterface.ResumeLayout(false);
             this.tabInterface.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackButtonClick)).EndInit();
@@ -884,12 +850,6 @@ namespace SimonSays
             ((System.ComponentModel.ISupportInitialize)(this.trackBoardOut)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardIn)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numBoardOut)).EndInit();
-            this.groupMode.ResumeLayout(false);
-            this.groupMode.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackWaiting)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numWaiting)).EndInit();
-            this.groupTime.ResumeLayout(false);
-            this.groupTime.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridButtons)).EndInit();
             this.ResumeLayout(false);
 
@@ -907,7 +867,6 @@ namespace SimonSays
         private System.Windows.Forms.NumericUpDown numButtonMax;
         private System.Windows.Forms.Label lblButtonMin;
         private System.Windows.Forms.Label lblButtonMax;
-        private System.Windows.Forms.TabPage tabGame;
         private System.Windows.Forms.NumericUpDown numButtonDistance;
         private System.Windows.Forms.Label lblButtonDistance;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnValue;
@@ -952,8 +911,6 @@ namespace SimonSays
         private System.Windows.Forms.RadioButton radRewind;
         private System.Windows.Forms.CheckBox chkWaiting;
         private System.Windows.Forms.CheckBox chkSpeed;
-        private System.Windows.Forms.GroupBox groupTime;
-        private System.Windows.Forms.RadioButton radioButton1;
         private CustomBoard DemoBoard;
         private System.Windows.Forms.DataGridView gridButtons;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColValue;

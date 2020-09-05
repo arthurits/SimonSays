@@ -364,9 +364,9 @@ namespace SimonSays
         /// </summary>
         [Description("List with default color and frequency values for buttons"),
         Category("Custom"),
-        Browsable(true),
+        Browsable(false),
         EditorBrowsable(EditorBrowsableState.Always),
-        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public List<(int Value, float Frequency, string Color)> DefaultButtonList
         {
             get => _defButtons;
@@ -407,16 +407,16 @@ namespace SimonSays
 
             _defButtons = new List<(int Value, float Frequency, string Color)>
             {
-                (0, 196, "FF0000FF"),   // Blue
-                (1, 262, "FFFFFF00"),   // Yellow
-                (2, 392, "FF00FF00"),   // Green
-                (3, 330, "FFFF0000"),   // Red
-                (4, 275, "FFc71585"),
-                (5, 275, "FF800080"),
-                (6, 275, "FF8a2be2"),
-                (7, 275, "FF0d98ba"),
-                (8, 275, "FF9acd32"),
-                (9, 275, "FFffa500")
+                (0, 196, "FF0000FF"),   // Blue     G3
+                (1, 262, "FFFFFF00"),   // Yellow   C4
+                (2, 392, "FF00FF00"),   // Green    E4
+                (3, 330, "FFFF0000"),   // Red      G4
+                (4, 165, "FFc71585"),   // zxs      E3
+                (5, 131, "FF800080"),   // aaa      C3
+                (6, 98, "FF8a2be2"),    // aaa      G2
+                (7, 784, "FF0d98ba"),   // aaa      G5
+                (8, 659, "FF9acd32"),   // aaa      E5 
+                (9, 523, "FFffa500")    // aaa      C5     
             };
 
         }
@@ -670,6 +670,34 @@ namespace SimonSays
             return Apothem * (float)(2.0 * Math.Tan(Math.PI / Sides));
         }
 
+        public void RandomizeButtons()
+        {
+            Random rand = new Random();
+
+            SuspendLayout();
+
+            // For each spot in the array, pick
+            // a random item to swap into that spot.
+            for (int i = 0; i < _buttons.Length - 1; i++)
+            {
+                int j = rand.Next(i, _buttons.Length);
+                var temp = _buttons[i].AngleRotation;
+                _buttons[i].AngleRotation = _buttons[j].AngleRotation;
+                _buttons[j].AngleRotation = temp;
+                _buttons[i].RePaint();
+                _buttons[j].RePaint();
+            }
+            //Invalidate();
+            ResumeLayout();
+        }
+
+        public void Stop()
+        {
+            for (int i = 0; i < _buttons.Length; i++)
+            {
+                _buttons[i].Clicked = false;
+            }
+        }
     }
 
 }

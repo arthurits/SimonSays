@@ -19,6 +19,9 @@ namespace SimonSays
         private ProgramSettings<string, string> _defaultSettings;
 
         private DataTable _table;
+        private Color[] _previousColors;        // To be used when the state of radSurpise changes only at radSurprise_CheckedChanged
+        private float[] _previousFrequencies;   // To be used when the state of radSurpise changes only at radSurprise_CheckedChanged
+
 
         // Public interface
         public ProgramSettings<string, string> GetSettings => _settings;
@@ -255,13 +258,43 @@ namespace SimonSays
 
             for (int i = 0; i < nRows; i++)
             {
-                this._table.Rows[i]["Frequency"] = i < numFreq ? freq[i] : list[nRows + i].Frequency;
-                this._table.Rows[i]["Color"] = i < numColors ? colors[i].ToArgb().ToString("X") : list[nRows + i].Color;
+                if (this.radSurprise.Checked == true)
+                {
+                    this._table.Rows[i]["Frequency"] = list[3].Frequency;
+                    this._table.Rows[i]["Color"] = list[3].Color;
+                }
+                else
+                {
+                    this._table.Rows[i]["Frequency"] = i < numFreq ? freq[i] : list[i].Frequency;
+                    this._table.Rows[i]["Color"] = i < numColors ? colors[i].ToArgb().ToString("X") : list[i].Color;
+                }
             }
 
             _table.AcceptChanges();
 
             OnDataGridChanged(null, null);
+        }
+
+        private void radSurprise_CheckedChanged(object sender, EventArgs e)
+        {
+            if (this.radSurprise.Checked == false)
+            {
+                //var list = this.DemoBoard.DefaultButtonList;
+                //this.DemoBoard.ButtonFrequencies = list.Select(x => x.Frequency).ToArray();
+                //this.DemoBoard.ButtonColors = Array.ConvertAll(list.Select(x => x.Color).ToArray(), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
+
+                this.DemoBoard.ButtonFrequencies = _previousFrequencies;
+                this.DemoBoard.ButtonColors = _previousColors;
+            }
+            else
+            {
+                _previousFrequencies = (float[])this.DemoBoard.ButtonFrequencies.Clone();
+                _previousColors = (Color[])this.DemoBoard.ButtonColors.Clone();
+
+            }
+
+            // Update the Table Grid and the DemoBoard
+            ModifyTable();
         }
 
         private void chkWaiting_CheckedChanged(object sender, EventArgs e)
@@ -305,6 +338,7 @@ namespace SimonSays
                         list[nRows + i].Frequency,
                         list[nRows + i].Color
                     });
+
             }
             else if (nDiff < 0)
             {
@@ -512,6 +546,7 @@ namespace SimonSays
             }
             // https://stackoverflow.com/questions/2207709/convert-font-to-string-and-back-again
         }
+
 
     }
 }

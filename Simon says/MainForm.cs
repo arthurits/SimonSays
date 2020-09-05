@@ -174,6 +174,12 @@ namespace SimonSays
             //MessageBox.Show("Well done!\nTotal score: " + e.Score.ToString());
             this.simonBoard.ScoreTotal = _Game.ScoreTotal;
             this.simonBoard.ScoreHighest = _Game.ScoreHighest;
+            
+            if ((this._Game.GameMode & SimonGame.PlayMode.SimonBounce)==SimonGame.PlayMode.SimonBounce)
+            {
+                this.simonBoard.RandomizeButtons();
+            }
+            
             /*
             foreach (ColorButton.SimonButton button in simonBoard.Controls.OfType<ColorButton.SimonButton>())
             {
@@ -268,6 +274,7 @@ namespace SimonSays
         private void toolStripMain_Stop_Click(object sender, EventArgs e)
         {
             _Game.Stop();
+            this.simonBoard.Stop();
         }
         private void toolStripMain_Settings_Click(object sender, EventArgs e)
         {
