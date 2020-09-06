@@ -291,6 +291,10 @@ namespace SimonSays
             this.FlatAppearance.MouseOverBackColor = Color.Transparent;
             this.FlatAppearance.MouseDownBackColor = Color.Transparent;
 
+            this.AutoSize = false;
+            this.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+            this.Dock = DockStyle.None;
+            
             CalculateMidPoint();
         }
 

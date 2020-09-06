@@ -9,10 +9,12 @@ namespace SimonSays
 {
     class SimonGame
     {
+        private const int MAX_SEQUENCE = 100000;
+
         #region Variable definitions
         private PlayMode _playMode;         // The current play mode
         private Int32 _nNumButts = 0;
-        private Int32[] _sequence = new int[100000];
+        private Int32[] _sequence;
         private Int32 _nScore;
         private Int32 _nCounter;
         private Int32 _nHighest;
@@ -26,14 +28,15 @@ namespace SimonSays
         [Flags]
         public enum PlayMode
         {
-            TimeIncremental = 0b_0000_0001,
-            TimeWaiting = 0b_0000_0010,
-            SimonClassic = 0b_0000_0100,
-            PlayerAdds = 0b_0000_1000,
-            ChooseYourColor = 0b_0001_0000,
-            SimonBounce = 0b_0010_0000,
-            SimonSurprise = 0b_0100_0000,
-            SimonRewind = 0b_1000_0000
+            TimeIncremental = 0b_0000_0001,     // 1
+            TimeWaiting = 0b_0000_0010,         // 2
+            SimonClassic = 0b_0000_0100,        // 4
+            PlayerAdds = 0b_0000_1000,          // 8
+            ChooseYourColor = 0b_0001_0000,     // 16
+            SimonBounce = 0b_0010_0000,         // 32
+            SimonSurprise = 0b_0100_0000,       // 64
+            SimonRewind = 0b_1000_0000,         // 128
+            SimonRandom = 0b_1_0000_0000        // 256
         }
 
         public event EventHandler<TickEventArgs> Tick;
@@ -134,6 +137,11 @@ namespace SimonSays
                 _timer.Enabled = true;
             });
 
+            if ((_playMode & PlayMode.SimonRandom) == PlayMode.SimonRandom)
+            {
+                GetNewSequence(_nScore + 1);
+            }
+
             //_timer.Interval = 200;
             //_timer.Enabled = true;
             //Start();
@@ -212,28 +220,13 @@ namespace SimonSays
         /// <summary>
         /// Gets a new sequence of colors to be played by Simon and reproduced by the player
         /// </summary>
-        private void GetNewSequence()
+        private void GetNewSequence(int optionalLength = MAX_SEQUENCE)
         {
+            _sequence = new int[optionalLength];
+
             Random rnd = new Random();
-            for (Int32 i = 0; i < _sequence.Length; i++) { _sequence[i] = rnd.Next(0, _nNumButts); } // Random numbers between 0 and 3
+            for (Int32 i = 0; i < optionalLength; i++) { _sequence[i] = rnd.Next(0, _nNumButts); } // Random numbers between 0 and 3
 
-            if ((_playMode & PlayMode.SimonClassic) == PlayMode.SimonClassic)
-            {
-                
-            }
-            if ((_playMode & PlayMode.SimonRewind) == PlayMode.SimonRewind)
-            {
-
-            }
-            if ((_playMode & PlayMode.SimonClassic) == PlayMode.SimonClassic)
-            {
-            }
-            if ((_playMode & PlayMode.SimonClassic) == PlayMode.SimonClassic)
-            {
-            }
-            if ((_playMode & PlayMode.SimonClassic) == PlayMode.SimonClassic)
-            {
-            }
         }
 
         /// <summary>
@@ -242,6 +235,11 @@ namespace SimonSays
         /// <returns>The time that corresponds to the actual score</returns>
         private int FindTime()
         {
+            if ((_playMode & PlayMode.TimeIncremental) != PlayMode.TimeIncremental)
+            {
+                return _arrayTimeSeq[0, 1];
+            }
+
             uint i;
             for (i = 0; i < _arrayTimeSeq.GetLength(0); i++)
             {

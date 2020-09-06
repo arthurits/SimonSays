@@ -85,6 +85,7 @@ namespace SimonSays
             this.ColValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColFrequency = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.radRandom = new System.Windows.Forms.RadioButton();
             this.DemoBoard = new SimonSays.CustomBoard();
             this.tabSettings.SuspendLayout();
             this.tabPlayMode.SuspendLayout();
@@ -146,7 +147,8 @@ namespace SimonSays
             // chkWaiting
             // 
             this.chkWaiting.AutoSize = true;
-            this.chkWaiting.Location = new System.Drawing.Point(30, 246);
+            this.chkWaiting.Enabled = false;
+            this.chkWaiting.Location = new System.Drawing.Point(30, 251);
             this.chkWaiting.Name = "chkWaiting";
             this.chkWaiting.Size = new System.Drawing.Size(219, 20);
             this.chkWaiting.TabIndex = 5;
@@ -157,7 +159,7 @@ namespace SimonSays
             // chkSpeed
             // 
             this.chkSpeed.AutoSize = true;
-            this.chkSpeed.Location = new System.Drawing.Point(30, 200);
+            this.chkSpeed.Location = new System.Drawing.Point(30, 205);
             this.chkSpeed.Name = "chkSpeed";
             this.chkSpeed.Size = new System.Drawing.Size(283, 20);
             this.chkSpeed.TabIndex = 4;
@@ -185,6 +187,7 @@ namespace SimonSays
             // 
             // groupMode
             // 
+            this.groupMode.Controls.Add(this.radRandom);
             this.groupMode.Controls.Add(this.radRewind);
             this.groupMode.Controls.Add(this.radSurprise);
             this.groupMode.Controls.Add(this.radBounce);
@@ -193,7 +196,7 @@ namespace SimonSays
             this.groupMode.Controls.Add(this.radClassic);
             this.groupMode.Location = new System.Drawing.Point(30, 30);
             this.groupMode.Name = "groupMode";
-            this.groupMode.Size = new System.Drawing.Size(406, 136);
+            this.groupMode.Size = new System.Drawing.Size(406, 155);
             this.groupMode.TabIndex = 0;
             this.groupMode.TabStop = false;
             this.groupMode.Text = "Game mode";
@@ -781,6 +784,17 @@ namespace SimonSays
             this.ColColor.HeaderText = "Color";
             this.ColColor.Name = "ColColor";
             // 
+            // radRandom
+            // 
+            this.radRandom.AutoSize = true;
+            this.radRandom.Location = new System.Drawing.Point(243, 117);
+            this.radRandom.Name = "radRandom";
+            this.radRandom.Size = new System.Drawing.Size(113, 20);
+            this.radRandom.TabIndex = 6;
+            this.radRandom.TabStop = true;
+            this.radRandom.Text = "Simon random";
+            this.radRandom.UseVisualStyleBackColor = true;
+            // 
             // DemoBoard
             // 
             this.DemoBoard.BoardRotation = 0F;
@@ -916,5 +930,6 @@ namespace SimonSays
         private System.Windows.Forms.DataGridViewTextBoxColumn ColValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColFrequency;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColColor;
+        private System.Windows.Forms.RadioButton radRandom;
     }
 }

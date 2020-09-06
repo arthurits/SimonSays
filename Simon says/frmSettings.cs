@@ -28,6 +28,11 @@ namespace SimonSays
 
         public frmSettings()
         {
+            // Set form icon
+            var strPath = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+            if (System.IO.File.Exists(strPath + @"\images\settings.ico")) this.Icon = new Icon(strPath + @"\images\settings.ico");
+
+            // General Intellisense initialization
             InitializeComponent();
 
             // Default buttons
@@ -45,7 +50,7 @@ namespace SimonSays
             gridButtons.Columns[0].ReadOnly = true;
             gridButtons.Columns[2].CellTemplate = new ColorPickerCell();
 
-            // Force the creation of buttons
+            // Force the creation of Simon Buttons
             this.numButtons.Value = 2;
             this.numButtons.Minimum = 2;
 
@@ -63,6 +68,7 @@ namespace SimonSays
                 this.radBounce.Checked = ((play & SimonGame.PlayMode.SimonBounce) == SimonGame.PlayMode.SimonBounce);
                 this.radSurprise.Checked = ((play & SimonGame.PlayMode.SimonSurprise) == SimonGame.PlayMode.SimonSurprise);
                 this.radRewind.Checked = ((play & SimonGame.PlayMode.SimonRewind) == SimonGame.PlayMode.SimonRewind);
+                this.radRandom.Checked = ((play & SimonGame.PlayMode.SimonRandom) == SimonGame.PlayMode.SimonRandom);
                 this.chkSpeed.Checked = ((play & SimonGame.PlayMode.TimeIncremental) == SimonGame.PlayMode.TimeIncremental);
                 this.chkWaiting.Checked = ((play & SimonGame.PlayMode.TimeWaiting) == SimonGame.PlayMode.TimeWaiting);
                 this.numWaiting.Value = Convert.ToInt32(settings.GetOrDefault("TimeWaiting", defSets["TimeWaiting"]));
@@ -156,7 +162,8 @@ namespace SimonSays
                                     (this.radChoose.Checked ? 1 : 0) * 16 +
                                     (this.radBounce.Checked ? 1 : 0) * 32 +
                                     (this.radSurprise.Checked ? 1 : 0) * 64 +
-                                    (this.radRewind.Checked ? 1 : 0) * 128
+                                    (this.radRewind.Checked ? 1 : 0) * 128 +
+                                    (this.radRandom.Checked ? 1 : 0) * 256
                                     ).ToString();
 
             _settings["TimeWaiting"] = numWaiting.Value.ToString();
@@ -169,6 +176,7 @@ namespace SimonSays
         {
             try
             {
+                // tabPlayMode
                 SimonGame.PlayMode play = (SimonGame.PlayMode)Convert.ToInt32(_settings.ContainsKey("PlayMode"));
                 this.radClassic.Checked = ((play & SimonGame.PlayMode.SimonClassic) == SimonGame.PlayMode.SimonClassic);
                 this.radAdds.Checked = ((play & SimonGame.PlayMode.PlayerAdds) == SimonGame.PlayMode.PlayerAdds);
@@ -176,12 +184,14 @@ namespace SimonSays
                 this.radBounce.Checked = ((play & SimonGame.PlayMode.SimonBounce) == SimonGame.PlayMode.SimonBounce);
                 this.radSurprise.Checked = ((play & SimonGame.PlayMode.SimonSurprise) == SimonGame.PlayMode.SimonSurprise);
                 this.radRewind.Checked = ((play & SimonGame.PlayMode.SimonRewind) == SimonGame.PlayMode.SimonRewind);
+                this.radRandom.Checked = ((play & SimonGame.PlayMode.SimonRandom) == SimonGame.PlayMode.SimonRandom);
                 this.chkSpeed.Checked = ((play & SimonGame.PlayMode.TimeIncremental) == SimonGame.PlayMode.TimeIncremental);
                 this.chkWaiting.Checked = ((play & SimonGame.PlayMode.TimeWaiting) == SimonGame.PlayMode.TimeWaiting);
                 this.numWaiting.Value = Convert.ToInt32(_settings.GetOrDefault("TimeWaiting"));
                 this.numWaiting.Enabled = this.chkWaiting.Checked;
                 this.trackWaiting.Enabled = this.chkWaiting.Checked;
 
+                // tabInterface
                 this.numButtons.Value = Convert.ToInt32(_settings["NumberOfButtons"]);
                 this.DemoBoard.ButtonColors = Array.ConvertAll(_settings["ButtonColors"].Split('-'), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
                 this.DemoBoard.ButtonFrequencies = Array.ConvertAll(_settings["ButtonFrequencies"].Split('-'), float.Parse);
@@ -190,6 +200,7 @@ namespace SimonSays
                 this.numButtonDistance.Value = Convert.ToDecimal(_settings.GetOrDefault("CenterButtonRatio"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numButtonClick.Value = Convert.ToDecimal(_settings.GetOrDefault("ButtonClickOffset"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
 
+                // tabBoard
                 this.numBoardIn.Value = Convert.ToDecimal(_settings.GetOrDefault("InnerBoardRatio"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numBoardOut.Value = Convert.ToDecimal(_settings.GetOrDefault("OuterBoardRatio"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
                 this.numBoardRotation.Value = Convert.ToDecimal(_settings.GetOrDefault("BoardRotation"), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
@@ -285,11 +296,13 @@ namespace SimonSays
 
                 this.DemoBoard.ButtonFrequencies = _previousFrequencies;
                 this.DemoBoard.ButtonColors = _previousColors;
+                this.gridButtons.Enabled = true;
             }
             else
             {
                 _previousFrequencies = (float[])this.DemoBoard.ButtonFrequencies.Clone();
                 _previousColors = (Color[])this.DemoBoard.ButtonColors.Clone();
+                this.gridButtons.Enabled = false;
 
             }
 

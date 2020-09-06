@@ -681,11 +681,17 @@ namespace SimonSays
             for (int i = 0; i < _buttons.Length - 1; i++)
             {
                 int j = rand.Next(i, _buttons.Length);
-                var temp = _buttons[i].AngleRotation;
-                _buttons[i].AngleRotation = _buttons[j].AngleRotation;
-                _buttons[j].AngleRotation = temp;
-                _buttons[i].RePaint();
-                _buttons[j].RePaint();
+                var tempColor = _buttons[i].Color;
+                var tempValue = _buttons[i].Value;
+                var tempFreq = _buttons[i].Frequency;
+                _buttons[i].Color = _buttons[j].Color;
+                _buttons[i].Value = _buttons[j].Value;
+                _buttons[i].Frequency = _buttons[j].Frequency;
+                _buttons[j].Color = tempColor;
+                _buttons[j].Value = tempValue;
+                _buttons[j].Frequency = tempFreq;
+                //_buttons[i].RePaint();
+                //_buttons[j].RePaint();
             }
             //Invalidate();
             ResumeLayout();
