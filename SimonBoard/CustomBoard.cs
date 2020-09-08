@@ -438,6 +438,8 @@ namespace SimonSays
             //var centerRot = new PointF(location.X + _nMinDimension / 2.0f, location.Y + _nMinDimension / 2.0f);
             var centerRot = new PointF(_nMinDimension / 2.0f, _nMinDimension / 2.0f);
             var centerBut = new PointF(_fApothem + centerRot.X, _fPolySide / 2.0f + centerRot.Y);
+            var angleOffsetInner = (180.0 / Math.PI) * Math.Asin(_fCenterButton * Math.Sin((rotation / 2) * Math.PI / 180.0));
+            var angleOffsetOuter = (180.0 / Math.PI) * Math.Asin(_fCenterButton * Math.Sin((rotation / 2) * Math.PI / 180.0));
 
             for (int i = 0; i < _nButtons; i++)
             {
@@ -460,6 +462,7 @@ namespace SimonSays
                     OuterRadius = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset),
                     AngleRotation = i * rotation + _fRotation,
                     AngleSwept = rotation,
+                    AngleOffset = 0f,
                     Value = i
                 };
                 //_buttons[i].Size = new Size(this.Width, this.Height);
