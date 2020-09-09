@@ -30,7 +30,8 @@ namespace SimonSays
         private RectangleF _rectDefaultClickPoint;
         private float _fAngleSwept = 90f;
         private float _fAngleRotation = 0f;
-        private float _fAngleOffset = 0f;
+        private float _fAngleOffsetOuter = 0f;
+        private float _fAngleOffsetInner = 0f;
         private PointF _fCenterButton;          // Center for drawing the button. It's equal to CenterRotation plus an offset
         private float _fRegionOffset = 1f;
         private PointF _fCenterRotation;        // Center around which the rotation is done. Typically it's the center of the controls
@@ -136,19 +137,38 @@ namespace SimonSays
         }
 
         /// <summary>
-        /// Angle in degrees to be trimmed from both ends in order to create a space separating the buttons
+        /// Angle in degrees to be trimmed off from the outer button arc and from both ends in order to create a space separating the buttons
         /// </summary>
         [Description("Angle in degrees to be trimmed from both ends in order to create a space separating the buttons"),
         Category("Button properties"),
         Browsable(true),
         EditorBrowsable(EditorBrowsableState.Always),
         DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public float AngleOffset
+        public float AngleOffsetOuter
         {
-            get { return _fAngleOffset; }
+            get { return _fAngleOffsetOuter; }
             set
             {
-                _fAngleOffset = value;
+                _fAngleOffsetOuter = value;
+                //CalculateMidPoint();
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Angle in degrees to be trimmed off from the inner button arc and from both ends in order to create a space separating the buttons
+        /// </summary>
+        [Description("Angle in degrees to be trimmed from both ends in order to create a space separating the buttons"),
+        Category("Button properties"),
+        Browsable(true),
+        EditorBrowsable(EditorBrowsableState.Always),
+        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public float AngleOffsetInner
+        {
+            get { return _fAngleOffsetInner; }
+            set
+            {
+                _fAngleOffsetInner = value;
                 //CalculateMidPoint();
                 Invalidate();
             }

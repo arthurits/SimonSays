@@ -438,8 +438,10 @@ namespace SimonSays
             //var centerRot = new PointF(location.X + _nMinDimension / 2.0f, location.Y + _nMinDimension / 2.0f);
             var centerRot = new PointF(_nMinDimension / 2.0f, _nMinDimension / 2.0f);
             var centerBut = new PointF(_fApothem + centerRot.X, _fPolySide / 2.0f + centerRot.Y);
-            var angleOffsetInner = (180.0 / Math.PI) * Math.Asin(_fCenterButton * Math.Sin((rotation / 2) * Math.PI / 180.0));
-            var angleOffsetOuter = (180.0 / Math.PI) * Math.Asin(_fCenterButton * Math.Sin((rotation / 2) * Math.PI / 180.0));
+            var angleOffsetInner = (float)((180.0 / Math.PI) * Math.Asin(_fCenterButton * Math.Sin((rotation / 2) * Math.PI / 180.0)));
+            //var angleOffsetOuter = (180.0 / Math.PI) * Math.Asin(_fCenterButton * Math.Sin((rotation / 2) * Math.PI / 180.0));
+            var innerRadius = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
+            var outerRadius = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
 
             for (int i = 0; i < _nButtons; i++)
             {
@@ -447,7 +449,7 @@ namespace SimonSays
                 {
                     //Anchor = AnchorStyles.Top | AnchorStyles.Left |AnchorStyles.Right |AnchorStyles.Bottom,
                     Anchor = AnchorStyles.Top | AnchorStyles.Left,
-                    AutoSize =false,     // https://www.techrepublic.com/article/manage-winform-controls-using-the-anchor-and-dock-properties/
+                    AutoSize = false,     // https://www.techrepublic.com/article/manage-winform-controls-using-the-anchor-and-dock-properties/
                     AutoSizeMode = AutoSizeMode.GrowAndShrink,
                     Color = _colors.Length == 0 ? Color.White : (_colors.Length > i ? _colors[i] : Color.White),
                     Frequency = _frequencies.Length == 0 ? 0.0f : (_frequencies.Length > i ? _frequencies[i] : 0.0f),
@@ -458,11 +460,12 @@ namespace SimonSays
                     //CenterButton = new PointF(this.Width / 2.0f, this.Height / 2.0f),
                     CenterButton = centerBut,
                     ClickOffset = new PointF(2 * (float)Math.Cos((rotation / 2) * Math.PI / 180), 2 * (float)Math.Sin((rotation / 2) * Math.PI / 180)),
-                    InnerRadius = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset),
-                    OuterRadius = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset),
+                    InnerRadius = innerRadius,
+                    OuterRadius = outerRadius,
                     AngleRotation = i * rotation + _fRotation,
                     AngleSwept = rotation,
-                    AngleOffset = 0f,
+                    AngleOffsetInner = angleOffsetInner,
+                    AngleOffsetOuter = angleOffsetInner * innerRadius / outerRadius,
                     Value = i
                 };
                 //_buttons[i].Size = new Size(this.Width, this.Height);
