@@ -207,7 +207,7 @@ namespace SimonSays
             set
             {
                 _fCenterButton = value;
-                //Invalidate(); 
+                Invalidate(); 
             }
         }
 
@@ -387,6 +387,7 @@ namespace SimonSays
 
             //RectangleF rectOut = new RectangleF(_fRegionOffset / 2, _fRegionOffset / 2, 2 * TotalRadiusOutter, 2 * TotalRadiusOutter);
             RectangleF rectCenterButton= new RectangleF(_fCenterButton.X, _fCenterButton.Y, 0, 0);
+            rectCenterButton = new RectangleF(_fCenterRotation.X, _fCenterRotation.Y, 0, 0);
             RectangleF rectOut = RectangleF.Inflate(rectCenterButton, TotalRadiusOutter, TotalRadiusOutter);
             RectangleF rectIn = RectangleF.Inflate(rectCenterButton, TotalRadiusInner, TotalRadiusInner);
             
@@ -394,8 +395,8 @@ namespace SimonSays
             RectangleF rectRegionIn = RectangleF.Inflate(rectIn, -_fRegionOffset / 2, -_fRegionOffset / 2);    // Inflates in both + and - directions, hence _fRegionOffset / 2 for a total of _fRegionOffset
 
             GraphicsPath path = new GraphicsPath();
-            path.AddArc(rectOut, AngleOffsetOutter, _fAngleSwept - 2 * AngleOffsetOutter);
-            path.AddArc(rectIn, _fAngleSwept - AngleOffsetInner, -_fAngleSwept + 2 * AngleOffsetInner);
+            path.AddArc(rectOut, AngleOffsetOutter + _fAngleOffsetOuter, _fAngleSwept - 2 * AngleOffsetOutter - 2 * _fAngleOffsetOuter);
+            path.AddArc(rectIn, _fAngleSwept - AngleOffsetInner - _fAngleOffsetInner, -_fAngleSwept + 2 * AngleOffsetInner + 2 * _fAngleOffsetInner);
             path.CloseFigure();
             
             GraphicsPath pathRegion = new GraphicsPath();

@@ -458,7 +458,7 @@ namespace SimonSays
                     //CenterRotation = new PointF(this.Width / 2.0f, this.Height / 2.0f),
                     CenterRotation = centerRot,
                     //CenterButton = new PointF(this.Width / 2.0f, this.Height / 2.0f),
-                    CenterButton = centerBut,
+                    //CenterButton = centerBut,
                     ClickOffset = new PointF(2 * (float)Math.Cos((rotation / 2) * Math.PI / 180), 2 * (float)Math.Sin((rotation / 2) * Math.PI / 180)),
                     InnerRadius = innerRadius,
                     OuterRadius = outerRadius,
@@ -567,6 +567,7 @@ namespace SimonSays
             _fApothem = _fCenterButton * _fOuterCircle * _nMinDimension / 2;
             _fPolySide = SideLength(_nButtons, _fApothem);
             _fRadiusOffset = (float)Math.Sqrt(Math.Pow(_fApothem, 2) + Math.Pow(_fPolySide / 2, 2));
+            _fRadiusOffset = 0.0f;
         }
 
         /// <summary>
@@ -574,6 +575,8 @@ namespace SimonSays
         /// </summary>
         private void ResizeButtons()
         {
+            if (_buttons.Length == 0) return;
+
             var location = new Point((this.Width - _nMinDimension) / 2, (this.Height - _nMinDimension) / 2);        // The top-left coordinate of the buttons
             //var centerRot = new PointF(location.X + _nMinDimension / 2.0f, location.Y + _nMinDimension / 2.0f);
             var centerRot = new PointF(_nMinDimension / 2.0f, _nMinDimension / 2.0f);
@@ -582,8 +585,11 @@ namespace SimonSays
             float outRad = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
             float inRad = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
 
+            var angleOffsetInner = (float)((180.0 / Math.PI) * Math.Asin(_fCenterButton * Math.Sin(((360 / _buttons.Length) / 2) * Math.PI / 180.0)));
+            var angleOffsetOuter = angleOffsetInner * inRad / outRad;
+
             //this.SuspendLayout();
-            
+
             for (int i = 0; i < _buttons.Length; i++)
             {
                 _buttons[i].Location = location;
@@ -595,8 +601,9 @@ namespace SimonSays
                 _buttons[i].OuterRadius = outRad;
                 _buttons[i].InnerRadius = inRad;
                 _buttons[i].CenterRotation = centerRot;
-                _buttons[i].CenterButton = centerBut;
-                
+                //_buttons[i].CenterButton = centerBut;
+                _buttons[i].AngleOffsetInner = angleOffsetInner;
+                _buttons[i].AngleOffsetOuter = angleOffsetOuter;
                 // Force rapainting. Otherwise region might be outside ClientRectangle and thus the OnPaint event is not fired.
                 _buttons[i].RePaint();
             }
