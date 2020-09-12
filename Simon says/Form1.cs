@@ -31,7 +31,6 @@ namespace SimonSays
                     Location = new Point(0, 0),
                     Size = new Size(_nDimension, _nDimension),
                     CenterRotation = new PointF(_nDimension / 2.0f, _nDimension / 2.0f),
-                    CenterButton = new PointF(_nDimension / 2.0f, _nDimension / 2.0f),
                     ClickOffset = new PointF(2, 2),
                     InnerRadius = 0.55f * _nDimension/2.0f,
                     OuterRadius = 0.99f * _nDimension/2.0f,

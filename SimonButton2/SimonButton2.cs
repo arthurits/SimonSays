@@ -193,25 +193,6 @@ namespace SimonSays
         }
 
         /// <summary>
-        /// The center for drawing the button
-        /// </summary>
-        [Description("The center for drawing the button"),
-        Category("Button properties"),
-        Browsable(true),
-        EditorBrowsable(EditorBrowsableState.Always),
-        DesignerSerializationVisibility(DesignerSerializationVisibility.Visible),
-        TypeConverter(typeof(PointFConverter))]
-        public PointF CenterButton
-        {
-            get { return _fCenterButton; }
-            set
-            {
-                _fCenterButton = value;
-                Invalidate(); 
-            }
-        }
-
-        /// <summary>
         /// The location of the rotation axis (typically the center of the control)
         /// </summary>
         [Description("The location of the rotation axis (typically the center of the control)"),
@@ -386,8 +367,7 @@ namespace SimonSays
             float AngleOffsetInner = (180 * 0.5f * _fRegionOffset / TotalRadiusInner) / (float)Math.PI;
 
             //RectangleF rectOut = new RectangleF(_fRegionOffset / 2, _fRegionOffset / 2, 2 * TotalRadiusOutter, 2 * TotalRadiusOutter);
-            RectangleF rectCenterButton= new RectangleF(_fCenterButton.X, _fCenterButton.Y, 0, 0);
-            rectCenterButton = new RectangleF(_fCenterRotation.X, _fCenterRotation.Y, 0, 0);
+            RectangleF rectCenterButton = new RectangleF(_fCenterRotation.X, _fCenterRotation.Y, 0, 0);
             RectangleF rectOut = RectangleF.Inflate(rectCenterButton, TotalRadiusOutter, TotalRadiusOutter);
             RectangleF rectIn = RectangleF.Inflate(rectCenterButton, TotalRadiusInner, TotalRadiusInner);
             
@@ -400,8 +380,8 @@ namespace SimonSays
             path.CloseFigure();
             
             GraphicsPath pathRegion = new GraphicsPath();
-            pathRegion.AddArc(rectRegionOut, 0, _fAngleSwept);
-            pathRegion.AddArc(rectRegionIn, _fAngleSwept, -_fAngleSwept);
+            pathRegion.AddArc(rectRegionOut, 0 + _fAngleOffsetOuter, _fAngleSwept - 2 * _fAngleOffsetOuter);
+            pathRegion.AddArc(rectRegionIn, _fAngleSwept - _fAngleOffsetInner, -_fAngleSwept + 2 * _fAngleOffsetInner);
             pathRegion.CloseFigure();
 
             Matrix matrix = new Matrix();

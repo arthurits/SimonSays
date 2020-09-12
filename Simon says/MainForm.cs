@@ -476,7 +476,7 @@ namespace SimonSays
             settings["ButtonFrequencies"] = "196-262-392-330";
             settings["InnerButtonRatio"] = "0.55";
             settings["OuterButtonRatio"] = "0.90";
-            settings["CenterButtonRatio"] = "0";
+            settings["CenterButtonRatio"] = "0.20";
             settings["ButtonClickOffset"] = "0.05";
 
             settings["InnerBoardRatio"] = "0.35";

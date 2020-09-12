@@ -243,7 +243,7 @@ namespace SimonSays
             {
                 _fCenterButton = value < 0 ? 0 : (value > 1 ? 1 : value);
                 //_fApothem = _fCenterButton * _fOuterCircle * _nMinDimension;
-                ButtonsOffsetParameters();
+                //ButtonsOffsetParameters();
                 ResizeButtons();
             }
         }
@@ -431,23 +431,24 @@ namespace SimonSays
 
             // Get the minimum dimension of the client area
             _nMinDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
-            ButtonsOffsetParameters();
+            //ButtonsOffsetParameters();
 
             var rotation = 360f / _nButtons;
             var location = new Point((this.Width - _nMinDimension) / 2, (this.Height - _nMinDimension) / 2);        // The top-left coordinate of the buttons
             //var centerRot = new PointF(location.X + _nMinDimension / 2.0f, location.Y + _nMinDimension / 2.0f);
             var centerRot = new PointF(_nMinDimension / 2.0f, _nMinDimension / 2.0f);
-            var centerBut = new PointF(_fApothem + centerRot.X, _fPolySide / 2.0f + centerRot.Y);
-            var angleOffsetInner = (float)((180.0 / Math.PI) * Math.Asin(_fCenterButton * Math.Sin((rotation / 2) * Math.PI / 180.0)));
-            //var angleOffsetOuter = (180.0 / Math.PI) * Math.Asin(_fCenterButton * Math.Sin((rotation / 2) * Math.PI / 180.0));
+            
             var innerRadius = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
             var outerRadius = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
+
+            var angleOffsetInner = (float)(Math.Asin(_fCenterButton * Math.Sin((rotation / 2) * Math.PI / 180.0)));
+            var angleOffsetOuter = (float)((180.0 / Math.PI) * Math.Asin(Math.Sin(angleOffsetInner) * innerRadius / outerRadius)); // Angle in degrees
+            angleOffsetInner *= (float)(180.0 / Math.PI);   // Conversion to degrees
 
             for (int i = 0; i < _nButtons; i++)
             {
                 _buttons[i] = new SimonSays.SimonButton()
                 {
-                    //Anchor = AnchorStyles.Top | AnchorStyles.Left |AnchorStyles.Right |AnchorStyles.Bottom,
                     Anchor = AnchorStyles.Top | AnchorStyles.Left,
                     AutoSize = false,     // https://www.techrepublic.com/article/manage-winform-controls-using-the-anchor-and-dock-properties/
                     AutoSizeMode = AutoSizeMode.GrowAndShrink,
@@ -455,23 +456,19 @@ namespace SimonSays
                     Frequency = _frequencies.Length == 0 ? 0.0f : (_frequencies.Length > i ? _frequencies[i] : 0.0f),
                     Location = location,
                     Size = new Size(_nMinDimension, _nMinDimension),
-                    //CenterRotation = new PointF(this.Width / 2.0f, this.Height / 2.0f),
                     CenterRotation = centerRot,
-                    //CenterButton = new PointF(this.Width / 2.0f, this.Height / 2.0f),
-                    //CenterButton = centerBut,
                     ClickOffset = new PointF(2 * (float)Math.Cos((rotation / 2) * Math.PI / 180), 2 * (float)Math.Sin((rotation / 2) * Math.PI / 180)),
                     InnerRadius = innerRadius,
                     OuterRadius = outerRadius,
                     AngleRotation = i * rotation + _fRotation,
                     AngleSwept = rotation,
                     AngleOffsetInner = angleOffsetInner,
-                    AngleOffsetOuter = angleOffsetInner * innerRadius / outerRadius,
+                    AngleOffsetOuter = angleOffsetOuter,
                     Value = i
                 };
-                //_buttons[i].Size = new Size(this.Width, this.Height);
+                
                 _buttons[i].Click += new System.EventHandler(this.CustomButton_Click);
-                //_buttons[i].Frequency = 0;
-                //_buttons[i].Color = Color.White;
+                
                 this.Controls.Add(_buttons[i]);
             }
 
@@ -545,7 +542,7 @@ namespace SimonSays
             _nMinDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
             //ComputeBoardRectangles();
 
-            ButtonsOffsetParameters();
+            //ButtonsOffsetParameters();
             if (this.Handle != null) BeginInvoke(new MethodInvoker(ResizeButtons));
             //ResizeButtons();
             // https://sysadmins.lv/retired-msft-blogs/alejacma/controls-wont-get-resized-once-the-nesting-hierarchy-of-windows-exceeds-a-certain-depth-x64.aspx
@@ -557,17 +554,6 @@ namespace SimonSays
 
             System.Diagnostics.Debug.WriteLine("Board OnResize 2 — Values: " + String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
             //System.Diagnostics.Debug.WriteLine("Board OnResize 2 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
-        }
-
-        /// <summary>
-        /// Computes the offset parameters for the buttons
-        /// </summary>
-        private void ButtonsOffsetParameters()
-        {
-            _fApothem = _fCenterButton * _fOuterCircle * _nMinDimension / 2;
-            _fPolySide = SideLength(_nButtons, _fApothem);
-            _fRadiusOffset = (float)Math.Sqrt(Math.Pow(_fApothem, 2) + Math.Pow(_fPolySide / 2, 2));
-            _fRadiusOffset = 0.0f;
         }
 
         /// <summary>
@@ -585,8 +571,10 @@ namespace SimonSays
             float outRad = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
             float inRad = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
 
-            var angleOffsetInner = (float)((180.0 / Math.PI) * Math.Asin(_fCenterButton * Math.Sin(((360 / _buttons.Length) / 2) * Math.PI / 180.0)));
-            var angleOffsetOuter = angleOffsetInner * inRad / outRad;
+            var angleOffsetInner = (float)(Math.Asin(_fCenterButton * Math.Sin(((360 / _buttons.Length) / 2) * Math.PI / 180.0))); // Angle in radians because of Math.Asin
+            var angleOffsetOuter = (float)((180.0 / Math.PI) * Math.Asin(Math.Sin(angleOffsetInner) * inRad / outRad)); // Angle in degrees
+            //var angleOffsetOuter = angleOffsetInner * inRad / outRad;
+            angleOffsetInner *= (float)(180.0 / Math.PI);   // Conversion to degrees
 
             //this.SuspendLayout();
 

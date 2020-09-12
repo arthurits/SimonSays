@@ -50,7 +50,6 @@
             this.simonButton2.AngleRotation = 0F;
             this.simonButton2.AngleSwept = 90F;
             this.simonButton2.BackColor = System.Drawing.Color.Transparent;
-            this.simonButton2.CenterButton = ((System.Drawing.PointF)(resources.GetObject("simonButton2.CenterButton")));
             this.simonButton2.CenterRotation = ((System.Drawing.PointF)(resources.GetObject("simonButton2.CenterRotation")));
             this.simonButton2.Clicked = false;
             this.simonButton2.ClickOffset = ((System.Drawing.PointF)(resources.GetObject("simonButton2.ClickOffset")));
