@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimonBoard", "SimonBoard\Si
 		{0CF0B059-55D0-4397-B91A-2FD678525808} = {0CF0B059-55D0-4397-B91A-2FD678525808}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimonButton2", "SimonButton2\SimonButton2.csproj", "{0CF0B059-55D0-4397-B91A-2FD678525808}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimonButton", "SimonButton\SimonButton.csproj", "{0CF0B059-55D0-4397-B91A-2FD678525808}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

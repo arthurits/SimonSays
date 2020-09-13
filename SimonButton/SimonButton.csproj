@@ -42,19 +42,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SimonButton2.cs">
+    <Compile Include="SimonButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="SimonButton2.Designer.cs">
-      <DependentUpon>SimonButton2.cs</DependentUpon>
+    <Compile Include="SimonButton.Designer.cs">
+      <DependentUpon>SimonButton.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WaveGenerator.cs" />
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="SimonButton2.resx">
-      <DependentUpon>SimonButton2.cs</DependentUpon>
+    <EmbeddedResource Include="SimonButton.resx">
+      <DependentUpon>SimonButton.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

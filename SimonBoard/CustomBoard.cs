@@ -27,9 +27,6 @@ namespace SimonSays
 
         // Definición de los botones
         private Int32 _nMinDimension = 0;
-        private float _fApothem = 0f;
-        private float _fPolySide = 0f;
-        private float _fRadiusOffset = 0f;
         private float _fOuterCircle = 0.9f;
         private float _fInnerCircle = 0.35f;
         private float _fRotation = 0f;
@@ -94,6 +91,7 @@ namespace SimonSays
                 _fOuterCircle = value < 0 ? 0 : (value > 1 ? 1 : value);
                 ComputeBoardRectangles();
                 Invalidate();
+                ResizeButtons();
             }
         }
 
@@ -317,7 +315,7 @@ namespace SimonSays
                 for (int i = 0; i < _buttons.Length; i++)
                     _buttons[i].AngleRotation = _buttons[i].Value * _buttons[i].AngleSwept + _fRotation;
                 ResizeButtons();
-                Invalidate();
+                //Invalidate();
             }
         }
 
@@ -423,28 +421,27 @@ namespace SimonSays
 
         private void CreateButtons()
         {
-            // Delete previous buttons if any
             this.SuspendLayout();
-            DeleteButtons();
-
-            _buttons = new SimonSays.SimonButton[_nButtons];
 
             // Get the minimum dimension of the client area
             _nMinDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
-            //ButtonsOffsetParameters();
 
             var rotation = 360f / _nButtons;
             var location = new Point((this.Width - _nMinDimension) / 2, (this.Height - _nMinDimension) / 2);        // The top-left coordinate of the buttons
             //var centerRot = new PointF(location.X + _nMinDimension / 2.0f, location.Y + _nMinDimension / 2.0f);
             var centerRot = new PointF(_nMinDimension / 2.0f, _nMinDimension / 2.0f);
             
-            var innerRadius = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
-            var outerRadius = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
+            var innerRadius = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f);
+            var outerRadius = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f);
 
             var angleOffsetInner = (float)(Math.Asin(_fCenterButton * Math.Sin((rotation / 2) * Math.PI / 180.0)));
             var angleOffsetOuter = (float)((180.0 / Math.PI) * Math.Asin(Math.Sin(angleOffsetInner) * innerRadius / outerRadius)); // Angle in degrees
             angleOffsetInner *= (float)(180.0 / Math.PI);   // Conversion to degrees
 
+            // Delete previous buttons if any
+            // Create new buttons and set the properties
+            DeleteButtons();    // Also deletes the click event handler
+            _buttons = new SimonSays.SimonButton[_nButtons];
             for (int i = 0; i < _nButtons; i++)
             {
                 _buttons[i] = new SimonSays.SimonButton()
@@ -467,8 +464,8 @@ namespace SimonSays
                     Value = i
                 };
                 
+                // Subscribe to click event handler and add the button to the form's controls
                 _buttons[i].Click += new System.EventHandler(this.CustomButton_Click);
-                
                 this.Controls.Add(_buttons[i]);
             }
 
@@ -476,14 +473,17 @@ namespace SimonSays
 
         }
 
+        // Remove the current buttons from the form's controls and remove the Click event handler
+        // Remove them from the internal array list _buttons[]
         private void DeleteButtons()
         {
             // Delete previous buttons if any
             // https://stackoverflow.com/questions/4630391/get-all-controls-of-a-specific-type
 
             int i = 0;
+            int numButtons = _buttons.Length;
 
-            while (i < _buttons.Length)
+            while (i < numButtons)
             {
                 _buttons[i].Click -= new System.EventHandler(this.CustomButton_Click);
                 this.Controls.Remove(_buttons[i]);
@@ -533,16 +533,13 @@ namespace SimonSays
             base.OnResize(e);
 
             System.Diagnostics.Debug.WriteLine("Board OnResize 1 — Values: "+ String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
-            //System.Diagnostics.Debug.WriteLine("Board OnResize 1 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
             
             //Invalidate();
             AlignLabels();
 
             // Get the minimum dimension of the client area
             _nMinDimension = Math.Min(this.ClientRectangle.Height, this.ClientRectangle.Width);
-            //ComputeBoardRectangles();
 
-            //ButtonsOffsetParameters();
             if (this.Handle != null) BeginInvoke(new MethodInvoker(ResizeButtons));
             //ResizeButtons();
             // https://sysadmins.lv/retired-msft-blogs/alejacma/controls-wont-get-resized-once-the-nesting-hierarchy-of-windows-exceeds-a-certain-depth-x64.aspx
@@ -553,7 +550,6 @@ namespace SimonSays
             this.ResumeLayout();
 
             System.Diagnostics.Debug.WriteLine("Board OnResize 2 — Values: " + String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
-            //System.Diagnostics.Debug.WriteLine("Board OnResize 2 — AngleRotation: " + String.Join(", ", _buttons.Select(c => c.AngleRotation).ToArray()));
         }
 
         /// <summary>
@@ -566,10 +562,8 @@ namespace SimonSays
             var location = new Point((this.Width - _nMinDimension) / 2, (this.Height - _nMinDimension) / 2);        // The top-left coordinate of the buttons
             //var centerRot = new PointF(location.X + _nMinDimension / 2.0f, location.Y + _nMinDimension / 2.0f);
             var centerRot = new PointF(_nMinDimension / 2.0f, _nMinDimension / 2.0f);
-            //var centerBut = new PointF(_fApothem + centerRot.X, SideLength(_nButtons, _fApothem) / 2.0f + centerRot.Y);
-            var centerBut = new PointF(_fApothem + centerRot.X, _fPolySide / 2.0f + centerRot.Y);
-            float outRad = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
-            float inRad = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f) - (_fRadiusOffset);
+            float outRad = (_fOuterButton * _fOuterCircle * _nMinDimension / 2f);
+            float inRad = (_fInnerButton * _fOuterCircle * _nMinDimension / 2f);
 
             var angleOffsetInner = (float)(Math.Asin(_fCenterButton * Math.Sin(((360 / _buttons.Length) / 2) * Math.PI / 180.0))); // Angle in radians because of Math.Asin
             var angleOffsetOuter = (float)((180.0 / Math.PI) * Math.Asin(Math.Sin(angleOffsetInner) * inRad / outRad)); // Angle in degrees
@@ -589,9 +583,9 @@ namespace SimonSays
                 _buttons[i].OuterRadius = outRad;
                 _buttons[i].InnerRadius = inRad;
                 _buttons[i].CenterRotation = centerRot;
-                //_buttons[i].CenterButton = centerBut;
                 _buttons[i].AngleOffsetInner = angleOffsetInner;
                 _buttons[i].AngleOffsetOuter = angleOffsetOuter;
+                
                 // Force rapainting. Otherwise region might be outside ClientRectangle and thus the OnPaint event is not fired.
                 _buttons[i].RePaint();
             }
@@ -649,39 +643,22 @@ namespace SimonSays
             lblScoreTotal.Location = new Point((this.ClientRectangle.Width - lblScoreTotal.Width) / 2, this.ClientRectangle.Height / 2 );
         }
 
-        /// <summary>
-        /// Computes the apothem of a n-sided regular polygon
-        /// </summary>
-        /// <param name="Sides">Number of sides of the regular polygon</param>
-        /// <param name="SideLength">Length (pixels) of each side</param>
-        /// <returns></returns>
-        private float Apothem(int Sides, float SideLength)
-        {
-            return SideLength / (float)(2.0 * Math.Tan(Math.PI / Sides));
-        }
-
-        /// <summary>
-        /// Computes the side-length of a n-sided regular polygon
-        /// </summary>
-        /// <param name="Sides">Number of sides of the regular polygon</param>
-        /// <param name="Apothem">Apothem of the n-sided regular polygon</param>
-        /// <returns></returns>
-        private float SideLength(int Sides, float Apothem)
-        {
-            return Apothem * (float)(2.0 * Math.Tan(Math.PI / Sides));
-        }
-
+        // Randomly exchange the position of the buttons
         public void RandomizeButtons()
         {
             Random rand = new Random();
 
             SuspendLayout();
 
+            int numButtons = _buttons.Length;
+            
+
             // For each spot in the array, pick
             // a random item to swap into that spot.
-            for (int i = 0; i < _buttons.Length - 1; i++)
+            for (int i = 0; i < _nButtons - 1; i++)
             {
-                int j = rand.Next(i, _buttons.Length);
+                int j = rand.Next(i, _nButtons);  
+                
                 var tempColor = _buttons[i].Color;
                 var tempValue = _buttons[i].Value;
                 var tempFreq = _buttons[i].Frequency;
@@ -691,6 +668,7 @@ namespace SimonSays
                 _buttons[j].Color = tempColor;
                 _buttons[j].Value = tempValue;
                 _buttons[j].Frequency = tempFreq;
+                
                 //_buttons[i].RePaint();
                 //_buttons[j].RePaint();
             }
@@ -698,6 +676,7 @@ namespace SimonSays
             ResumeLayout();
         }
 
+        // Stop the buttons: if any is clicked then unclick it
         public void Stop()
         {
             for (int i = 0; i < _buttons.Length; i++)

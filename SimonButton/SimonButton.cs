@@ -132,7 +132,8 @@ namespace SimonSays
             {
                 _fAngleRotation = value;
                 CalculateMidPoint();
-                Invalidate(); 
+                //if (this.Handle != null) BeginInvoke(new MethodInvoker(Invalidate));
+                Invalidate();
             }
         }
 

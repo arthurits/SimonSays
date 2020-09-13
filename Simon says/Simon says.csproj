@@ -112,6 +112,7 @@
     <Compile Include="Win32.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
@@ -153,9 +154,9 @@
       <Project>{e9715915-0dfd-4b46-8341-3e50a7a77687}</Project>
       <Name>SimonBoard</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SimonButton2\SimonButton2.csproj">
+    <ProjectReference Include="..\SimonButton\SimonButton.csproj">
       <Project>{0cf0b059-55d0-4397-b91a-2fd678525808}</Project>
-      <Name>SimonButton2</Name>
+      <Name>SimonButton</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

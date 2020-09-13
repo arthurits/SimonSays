@@ -57,9 +57,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SimonButton2\SimonButton2.csproj">
+    <ProjectReference Include="..\SimonButton\SimonButton.csproj">
       <Project>{0cf0b059-55d0-4397-b91a-2fd678525808}</Project>
-      <Name>SimonButton2</Name>
+      <Name>SimonButton</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

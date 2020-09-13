@@ -424,6 +424,7 @@ namespace SimonSays
 
         private void numBoardOut_ValueChanged(object sender, EventArgs e)
         {
+            numBoardIn.Maximum = numBoardOut.Value;
             DemoBoard.PercentOuterRatio = (float)numBoardOut.Value;
             int ratio = Convert.ToInt32(100 * numBoardOut.Value);
             if (trackBoardOut.Value != ratio) trackBoardOut.Value = ratio;
@@ -444,6 +445,13 @@ namespace SimonSays
 
         private void trackBoardIn_ValueChanged(object sender, EventArgs e)
         {
+            int value = Convert.ToInt32(100 * numBoardIn.Maximum);
+            if (trackBoardIn.Value > value)
+            {
+                trackBoardIn.Value = value;
+                return;
+            }
+
             decimal ratio = Decimal.Round((decimal)trackBoardIn.Value / 100, 2, MidpointRounding.AwayFromZero);
             if (numBoardIn.Value != ratio) numBoardIn.Value = ratio;
         }
