@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -6,9 +7,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Simon says")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A recreation of the classic Simon game invented by Ralph H. Baer and Howard J. Morrison")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Arthurits Ltd.")]
 [assembly: AssemblyProduct("Simon says")]
 [assembly: AssemblyCopyright("Copyright ©  2014 — 2020")]
 [assembly: AssemblyTrademark("")]
