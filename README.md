@@ -20,7 +20,7 @@ The program is highly costumizable (number of buttons, colors, sounds, et cetera
 
 ## Screenshots
 Game screen
-![Main screen](Media/Screenshot 01.png?raw=true "Main screen")
+![Main screen](Media/Screenshot 01.png)
 
 Game settings
 ![Settings game mode](Media/Screenshot 02.png?raw=true "Settings game mode")
