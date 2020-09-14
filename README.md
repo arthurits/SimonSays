@@ -26,6 +26,7 @@ Game settings
 ![Settings game mode](Media/Screenshot 02.png?raw=true "Settings game mode")
 ![Settings interface](Media/Screenshot 03.png?raw=true "Settings interface")
 ![Main board UI](Media/Screenshot 04.png?raw=true "Main board UI")
+![alipay](Media/Screenshot 04.png?raw=true)
 
 ## License
 Free for personal use.
