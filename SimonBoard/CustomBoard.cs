@@ -639,7 +639,11 @@ namespace SimonSays
             // ComputeBoardRectangles();
 
             // Score text boxes
+            lblScoreCurrent.Width = Convert.ToInt32(0.9 * _InnerRect.Width);
+            lblScoreCurrent.Height = Convert.ToInt32(0.2 * lblScoreCurrent.Width);
             lblScoreCurrent.Location = new Point((this.ClientRectangle.Width - lblScoreCurrent.Width) / 2, this.ClientRectangle.Height / 2 - lblScoreCurrent.Height);
+            lblScoreTotal.Width = Convert.ToInt32(0.9 * _InnerRect.Width);
+            lblScoreTotal.Height = Convert.ToInt32(0.2 * lblScoreTotal.Width);
             lblScoreTotal.Location = new Point((this.ClientRectangle.Width - lblScoreTotal.Width) / 2, this.ClientRectangle.Height / 2 );
         }
 

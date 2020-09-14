@@ -20,7 +20,6 @@ The program is highly costumizable (number of buttons, colors, sounds, et cetera
 
 ## Screenshots
 Game board
-![Main](/Media/Screenshot 01.png)
 ![Main screen](/Media/Screenshot 01.png?raw=true "Game board")
 
 Game settings
