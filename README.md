@@ -20,12 +20,12 @@ The program is highly costumizable (number of buttons, colors, sounds, et cetera
 
 ## Screenshots
 Game screen
-![Alt text](/Media/Screenshot 01.png?raw=true "Main screen")
+![Main screen](Media/Screenshot 01.png?raw=true "Main screen")
 
 Game settings
-![Alt text](/Media/Screenshot 02.png?raw=true "Settings game mode")
-![Alt text](/Media/Screenshot 03.png?raw=true "Settings interface")
-![Alt text](/Media/Screenshot 04.png?raw=true "Main board UI")
+![Settings game mode](Media/Screenshot 02.png?raw=true "Settings game mode")
+![Settings interface](Media/Screenshot 03.png?raw=true "Settings interface")
+![Main board UI](Media/Screenshot 04.png?raw=true "Main board UI")
 
 ## License
 Free for personal use.
