@@ -190,7 +190,7 @@ namespace SimonSays
 
         private void OnGameOver(object sender, OverEventArgs e)
         {
-            MessageBox.Show("Game over.\nTotal score: " + e.Score.ToString());
+            MessageBox.Show("Your total score is: " + e.Score.ToString(),"Game over");
             this.simonBoard.ScoreTotal = 0;
         }
 
@@ -223,6 +223,15 @@ namespace SimonSays
 
             // Guardar los datos de configuración
             SaveProgramSettings(_programSettings);
+        }
+
+        private void frmSimon_Shown(object sender, EventArgs e)
+        {
+            // Send Close event to the splash screen
+            using (var closeSplashEvent = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset, "CloseSplashScreenEvent"))
+            {
+                closeSplashEvent.Set();
+            }
         }
 
         private void frmSimon_Resize(object sender, EventArgs e)
@@ -274,7 +283,9 @@ namespace SimonSays
         private void toolStripMain_Stop_Click(object sender, EventArgs e)
         {
             _Game.Stop();
+            string strScore = simonBoard.ScoreTotal.ToString();
             this.simonBoard.Stop();
+            MessageBox.Show("Your total score is: " + strScore, "Game stopped");
         }
         private void toolStripMain_Settings_Click(object sender, EventArgs e)
         {
@@ -500,8 +511,8 @@ namespace SimonSays
         }
 
 
-        #endregion Application settings
 
+        #endregion Application settings
 
     }
 }

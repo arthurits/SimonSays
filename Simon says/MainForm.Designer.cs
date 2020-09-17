@@ -218,7 +218,6 @@ namespace SimonSays
             this.simonBoard.ColorBackground = System.Drawing.Color.Transparent;
             this.simonBoard.ColorInnerCircle = System.Drawing.Color.White;
             this.simonBoard.ColorOuterCircle = System.Drawing.Color.Black;
-            this.simonBoard.DefaultButtonList = ((System.Collections.Generic.List<System.ValueTuple<int, float, string>>)(resources.GetObject("simonBoard.DefaultButtonList")));
             this.simonBoard.InnerButtonRatio = 0.55F;
             this.simonBoard.Location = new System.Drawing.Point(16, 70);
             this.simonBoard.Name = "simonBoard";
@@ -245,6 +244,7 @@ namespace SimonSays
             this.Text = "Simon Says — Memory Game";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSimon_FormClosing);
             this.Load += new System.EventHandler(this.frmSimon_Load);
+            this.Shown += new System.EventHandler(this.frmSimon_Shown);
             this.ResizeBegin += new System.EventHandler(this.frmSimon_ResizeBegin);
             this.ResizeEnd += new System.EventHandler(this.frmSimon_ResizeEnd);
             this.Resize += new System.EventHandler(this.frmSimon_Resize);

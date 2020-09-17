@@ -511,6 +511,7 @@ namespace SimonSays
             dc.FillRectangle(solidBrush, rc);
 
             ComputeBoardRectangles();
+            AlignLabels();
 
             // Draw outer circle
             solidBrush = new SolidBrush(_OuterColor);
@@ -533,6 +534,10 @@ namespace SimonSays
             base.OnResize(e);
 
             System.Diagnostics.Debug.WriteLine("Board OnResize 1 — Values: "+ String.Join(", ", _buttons.Select(c => c.Value).ToArray()));
+
+            // If the window is minimized, there is no need to redraw the board and buttons
+            if (this.ParentForm == null) return;    // There's a resize event before the parent is assigned
+            if (this.ParentForm.WindowState == FormWindowState.Minimized) return;
             
             //Invalidate();
             AlignLabels();
@@ -639,11 +644,15 @@ namespace SimonSays
             // ComputeBoardRectangles();
 
             // Score text boxes
-            lblScoreCurrent.Width = Convert.ToInt32(0.9 * _InnerRect.Width);
-            lblScoreCurrent.Height = Convert.ToInt32(0.2 * lblScoreCurrent.Width);
+            //lblScoreCurrent.Width = Convert.ToInt32(0.9 * _InnerRect.Width);
+            //lblScoreCurrent.Height = Convert.ToInt32(0.2 * lblScoreCurrent.Width);
+            //lblScoreCurrent.Font = new Font(lblScoreCurrent.Font.FontFamily.Name, 0.65f * lblScoreCurrent.Height);
+            lblScoreCurrent.Font = new Font(lblScoreCurrent.Font.FontFamily.Name, 0.12f * _InnerRect.Width);
             lblScoreCurrent.Location = new Point((this.ClientRectangle.Width - lblScoreCurrent.Width) / 2, this.ClientRectangle.Height / 2 - lblScoreCurrent.Height);
-            lblScoreTotal.Width = Convert.ToInt32(0.9 * _InnerRect.Width);
-            lblScoreTotal.Height = Convert.ToInt32(0.2 * lblScoreTotal.Width);
+            //lblScoreTotal.Width = Convert.ToInt32(0.9 * _InnerRect.Width);
+            //lblScoreTotal.Height = Convert.ToInt32(0.2 * lblScoreTotal.Width);
+            //lblScoreTotal.Font = new Font(lblScoreTotal.Font.FontFamily.Name, 0.65f * lblScoreTotal.Height);
+            lblScoreTotal.Font = new Font(lblScoreTotal.Font.FontFamily.Name, 0.12f * _InnerRect.Width);
             lblScoreTotal.Location = new Point((this.ClientRectangle.Width - lblScoreTotal.Width) / 2, this.ClientRectangle.Height / 2 );
         }
 
@@ -687,6 +696,7 @@ namespace SimonSays
             {
                 _buttons[i].Clicked = false;
             }
+            ScoreTotal = 0;
         }
     }
 
