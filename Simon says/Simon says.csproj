@@ -175,7 +175,7 @@
     <Content Include="images\settings.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="images\Simon splash.png" />
+    <Content Include="images\simon splash.png" />
     <Content Include="images\simon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

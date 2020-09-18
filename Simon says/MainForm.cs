@@ -483,7 +483,7 @@ namespace SimonSays
             settings["WindowHeight"] = this.ClientSize.Height.ToString();
 
             settings["NumberOfButtons"] = "4";
-            settings["ButtonColors"] = "FF0000FF-FFFFFF00-FF00FF00-FFFF0000";
+            settings["ButtonColors"] = "FF0000FF-FFFFEC00-FF009540-FFFF0000";   // Blue-Yellow-Green-Red
             settings["ButtonFrequencies"] = "196-262-392-330";
             settings["InnerButtonRatio"] = "0.55";
             settings["OuterButtonRatio"] = "0.90";
