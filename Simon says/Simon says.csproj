@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net6.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <RootNamespace>SimonSays</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
@@ -19,10 +19,6 @@
     <OutputPath>bin\x64\Release\</OutputPath>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SimonBoard\SimonBoard.csproj" />
-    <ProjectReference Include="..\SimonButton\SimonButton.csproj" />
-  </ItemGroup>
   <ItemGroup>
     <Content Include="images\about.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -58,6 +54,7 @@
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Remove="controls\WaveGenerator.cs" />
     <Compile Remove="IDropDownDisplayAdapte.cs" />
   </ItemGroup>
 </Project>

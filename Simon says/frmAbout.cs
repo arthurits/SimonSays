@@ -1,148 +1,140 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Reflection;
 
-namespace SimonSays
+namespace SimonSays;
+
+partial class frmAbout : Form
 {
-    partial class frmAbout : Form
+
+    #region Descriptores de acceso de atributos de ensamblado
+
+    public string AssemblyTitle
     {
-
-        #region Descriptores de acceso de atributos de ensamblado
-
-        public string AssemblyTitle
+        get
         {
-            get
+            object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
+            if (attributes.Length > 0)
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-                if (attributes.Length > 0)
+                AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
+                if (titleAttribute.Title != "")
                 {
-                    AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (titleAttribute.Title != "")
-                    {
-                        return titleAttribute.Title;
-                    }
+                    return titleAttribute.Title;
                 }
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
             }
+            return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
         }
+    }
 
-        public string AssemblyVersion
+    public string AssemblyVersion
+    {
+        get
         {
-            get
-            {
-                return Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            }
+            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
+    }
 
-        public string AssemblyDescription
+    public string AssemblyDescription
+    {
+        get
         {
-            get
+            object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
+            if (attributes.Length == 0)
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyDescriptionAttribute)attributes[0]).Description;
+                return "";
             }
+            return ((AssemblyDescriptionAttribute)attributes[0]).Description;
         }
+    }
 
-        public string AssemblyProduct
+    public string AssemblyProduct
+    {
+        get
         {
-            get
+            object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
+            if (attributes.Length == 0)
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyProductAttribute)attributes[0]).Product;
+                return "";
             }
+            return ((AssemblyProductAttribute)attributes[0]).Product;
         }
+    }
 
-        public string AssemblyCopyright
+    public string AssemblyCopyright
+    {
+        get
         {
-            get
+            object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+            if (attributes.Length == 0)
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
+                return "";
             }
+            return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
         }
+    }
 
-        public string AssemblyCompany
+    public string AssemblyCompany
+    {
+        get
         {
-            get
+            object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
+            if (attributes.Length == 0)
             {
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-                if (attributes.Length == 0)
-                {
-                    return "";
-                }
-                return ((AssemblyCompanyAttribute)attributes[0]).Company;
+                return "";
             }
+            return ((AssemblyCompanyAttribute)attributes[0]).Company;
         }
+    }
+    
+    #endregion
+
+    public frmAbout()
+    {
+        InitializeComponent();
+        // this.Text = String.Format("About {0}", AssemblyTitle);
+        this.labelProductName.Text = AssemblyProduct;
+        this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
+        this.labelCopyright.Text = AssemblyCopyright;
+        this.labelCompanyName.Text = AssemblyCompany;
+        this.textBoxDescription.Text = AssemblyDescription;
         
-        #endregion
+        // Set form icons and images
+        var path = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+        //if (System.IO.File.Exists(path + @"\images\about.ico")) this.Icon = new Icon(path + @"\images\about.ico");
 
-        public frmAbout()
+        //Bitmap image = new Icon(path + @"\images\logo.ico", 256, 256).ToBitmap();
+        if (System.IO.File.Exists(path + @"\images\logo@256.png")) this.logoPictureBox.Image = new Bitmap(path + @"\images\logo@256.png");
+    }
+
+    [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
+    protected override void WndProc(ref Message m)
+    {
+        const int WM_PARENTNOTIFY = 0x210;
+        const int WM_LBUTTONDOWN = 0x201;
+        const int WM_LBUTTONUP = 0x202;
+        const int WM_KEYDOWN = 0x100;
+        const int WM_KEYUP = 0x101;
+        const int VK_ESCAPE = 0x1B;
+        const int VK_RETURN = 0x0D;
+
+        // https://stackoverflow.com/questions/27646476/how-to-fire-form-click-event-even-when-clicking-on-user-controls-in-c-sharp
+        if (m.Msg == WM_PARENTNOTIFY && m.WParam.ToInt32() == WM_LBUTTONDOWN)
         {
-            InitializeComponent();
-            // this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-            this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
-            
-            // Set form icons and images
-            var path = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
-            //if (System.IO.File.Exists(path + @"\images\about.ico")) this.Icon = new Icon(path + @"\images\about.ico");
+            this.Close();
+            /*
+            // get the clicked position
+            var x = (int)(m.LParam.ToInt32() & 0xFFFF);
+            var y = (int)(m.LParam.ToInt32() >> 16);
 
-            //Bitmap image = new Icon(path + @"\images\logo.ico", 256, 256).ToBitmap();
-            if (System.IO.File.Exists(path + @"\images\logo@256.png")) this.logoPictureBox.Image = new Bitmap(path + @"\images\logo@256.png");
+            // get the clicked control
+            var childControl = this.GetChildAtPoint(new Point(x, y));
+
+            // call onClick (which fires Click event)
+            OnClick(EventArgs.Empty)
+            */
+            // do something else...
         }
+        else if (m.Msg == WM_KEYUP && ((m.WParam.ToInt32() == VK_ESCAPE) | (m.WParam.ToInt32() == VK_RETURN)))
+            this.Close();
 
-        [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Demand, Name = "FullTrust")]
-        protected override void WndProc(ref Message m)
-        {
-            const int WM_PARENTNOTIFY = 0x210;
-            const int WM_LBUTTONDOWN = 0x201;
-            const int WM_LBUTTONUP = 0x202;
-            const int WM_KEYDOWN = 0x100;
-            const int WM_KEYUP = 0x101;
-            const int VK_ESCAPE = 0x1B;
-            const int VK_RETURN = 0x0D;
-
-            // https://stackoverflow.com/questions/27646476/how-to-fire-form-click-event-even-when-clicking-on-user-controls-in-c-sharp
-            if (m.Msg == WM_PARENTNOTIFY && m.WParam.ToInt32() == WM_LBUTTONDOWN)
-            {
-                this.Close();
-                /*
-                // get the clicked position
-                var x = (int)(m.LParam.ToInt32() & 0xFFFF);
-                var y = (int)(m.LParam.ToInt32() >> 16);
-
-                // get the clicked control
-                var childControl = this.GetChildAtPoint(new Point(x, y));
-
-                // call onClick (which fires Click event)
-                OnClick(EventArgs.Empty)
-                */
-                // do something else...
-            }
-            else if (m.Msg == WM_KEYUP && ((m.WParam.ToInt32() == VK_ESCAPE) | (m.WParam.ToInt32() == VK_RETURN)))
-                this.Close();
-
-            base.WndProc(ref m);
-        }
+        base.WndProc(ref m);
     }
 }
