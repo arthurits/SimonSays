@@ -1,9 +1,8 @@
 # Simon Says
 A recreation of the classic Simon game invented by Ralph H. Baer and Howard J. Morrison.
 
-Copyright © 2020 by arthurits
-
-Latest release: alpha v0.1     |     [Downloading & release notes](https://github.com/arthurits/SimonSays/releases)
+Copyright © 2020-2022 by Arthurits Ltd. No commercial nor profit use allowed. This software is provided only for personal and not-for-profit use.
+Download latest release: ![GitHub release (latest by date)](https://img.shields.io/github/v/release/arthurits/SimonSays?include_prereleases)
 
 ## How to play
 The programm starts with a one tone-and-light sequence that the user has to repeat by pushing the corresponding buttons.
