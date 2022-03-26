@@ -13,6 +13,12 @@ using System.Drawing.Drawing2D;
 // http://csharphelper.com/blog/2019/10/connect-two-line-segments-with-a-circular-arc-in-c/
 // https://stackoverflow.com/questions/32418695/windows-forms-splash-screen-show-a-form-while-loading-main-form
 
+// https://computergraphics.stackexchange.com/questions/6028/rounding-a-corner-formed-by-arc-and-line
+// https://stackoverflow.com/questions/49436868/algorithm-for-rounding-a-corner-between-line-and-arc
+// https://stackoverflow.com/questions/24771828/how-to-calculate-rounded-corners-for-a-polygon
+// https://www.codeproject.com/Articles/128705/WPF-rounded-corners-polygon
+// https://docs.microsoft.com/en-us/windows/apps/desktop/modernize/apply-rounded-corners
+
 namespace SimonSays
 {
     [Designer("System.Windows.Forms.Design.ParentControlDesigner, System.Design", typeof(System.ComponentModel.Design.IDesigner))]
