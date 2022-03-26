@@ -18,10 +18,10 @@ The program is highly costumizable (number of buttons, colors, sounds, et cetera
 * Simon random: instead of adding one color/sound to the previous sequence, in *Simon random* each sequence is randomly created each time.
 
 ## Screenshots
-#### Game board
+Game board
 ![Main screen](/Media/Screenshot-01.png?raw=true "Game board")
 
-#### Game settings
+Game settings
 ![Settings game mode](/Media/Screenshot-02.png?raw=true "Settings game mode")
 ![Settings interface](/Media/Screenshot-03.png?raw=true "Settings interface")
 ![Main board UI](/Media/Screenshot-04.png?raw=true "Main board UI")
