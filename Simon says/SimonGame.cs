@@ -21,15 +21,15 @@ class SimonGame
     [Flags]
     public enum PlayMode
     {
-        TimeIncremental = 0b_0000_0001,     // 1
-        TimeWaiting = 0b_0000_0010,         // 2
-        SimonClassic = 0b_0000_0100,        // 4
-        PlayerAdds = 0b_0000_1000,          // 8
-        ChooseYourColor = 0b_0001_0000,     // 16
-        SimonBounce = 0b_0010_0000,         // 32
-        SimonSurprise = 0b_0100_0000,       // 64
-        SimonRewind = 0b_1000_0000,         // 128
-        SimonRandom = 0b_1_0000_0000        // 256
+        TimeIncremental = 1 << 0,   // 1
+        TimeWaiting = 1 << 1,       // 2
+        SimonClassic = 1 << 2,      // 4
+        PlayerAdds = 1 << 3,        // 8
+        ChooseYourColor = 1 << 4,   // 16
+        SimonBounce = 1 << 5,       // 32
+        SimonSurprise = 1 << 6,     // 64
+        SimonRewind = 1 << 7,       // 128
+        SimonRandom = 1 << 8        // 256
     }
 
     public event EventHandler<TickEventArgs> Tick;

@@ -5,21 +5,16 @@ namespace SimonSays;
 public partial class frmSettings : Form
 {
     // Internal variables
-    private ProgramSettings<string, string> _settings;
-    private ProgramSettings<string, string> _defaultSettings;
+    public ClassSettings Settings { get; private set; }
 
     private DataTable _table;
     private Color[] _previousColors;        // To be used when the state of radSurpise changes only at radSurprise_CheckedChanged
     private float[] _previousFrequencies;   // To be used when the state of radSurpise changes only at radSurprise_CheckedChanged
 
-
-    // Public interface
-    public ProgramSettings<string, string> GetSettings => _settings;
-
     public frmSettings()
     {
         // Set form icon
-        var strPath = System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName);
+        var strPath = System.IO.Path.GetDirectoryName(Environment.ProcessPath);
         if (System.IO.File.Exists(strPath + @"\images\settings.ico")) this.Icon = new Icon(strPath + @"\images\settings.ico");
 
         // General Intellisense initialization
@@ -44,14 +39,25 @@ public partial class frmSettings : Form
         this.numButtons.Value = 2;
         this.numButtons.Minimum = 2;
 
-    }     
+    }
 
-    public frmSettings(ProgramSettings<string, string> settings, ProgramSettings<string, string> defSets)
+    public frmSettings(ClassSettings settings)
         : this()
     {
+        UpdateControls(settings);
+    }
+
+    /// <summary>
+    /// Updates the form's controls with values from the settings class
+    /// </summary>
+    /// <param name="settings">Class containing the values to show on the form's controls</param>
+    private void UpdateControls(ClassSettings settings)
+    {
+        Settings = settings;
+
         try
         {
-            SimonGame.PlayMode play = (SimonGame.PlayMode)Convert.ToInt32(settings.ContainsKey("PlayMode") ? settings["PlayMode"] : defSets["PlayMode"]);
+            SimonGame.PlayMode play = (SimonGame.PlayMode)Settings.PlayMode;
             this.radClassic.Checked = ((play & SimonGame.PlayMode.SimonClassic) == SimonGame.PlayMode.SimonClassic);
             this.radAdds.Checked = ((play & SimonGame.PlayMode.PlayerAdds) == SimonGame.PlayMode.PlayerAdds);
             this.radChoose.Checked = ((play & SimonGame.PlayMode.ChooseYourColor) == SimonGame.PlayMode.ChooseYourColor);
@@ -61,102 +67,70 @@ public partial class frmSettings : Form
             this.radRandom.Checked = ((play & SimonGame.PlayMode.SimonRandom) == SimonGame.PlayMode.SimonRandom);
             this.chkSpeed.Checked = ((play & SimonGame.PlayMode.TimeIncremental) == SimonGame.PlayMode.TimeIncremental);
             this.chkWaiting.Checked = ((play & SimonGame.PlayMode.TimeWaiting) == SimonGame.PlayMode.TimeWaiting);
-            this.numWaiting.Value = Convert.ToInt32(settings.GetOrDefault("TimeWaiting", defSets["TimeWaiting"]));
+            this.numWaiting.Value = Settings.TimeWaiting;
             this.numWaiting.Enabled = this.chkWaiting.Checked;
             this.trackWaiting.Enabled = this.chkWaiting.Checked;
 
-            this.numButtons.Value = Convert.ToInt32(settings.GetOrDefault("NumberOfButtons", defSets["NumberOfButtons"]));
-            this.numButtonMax.Value = Convert.ToDecimal(settings.GetOrDefault("OuterButtonRatio", defSets["OuterButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-            this.numButtonMin.Value = Convert.ToDecimal(settings.GetOrDefault("InnerButtonRatio", defSets["InnerButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-            this.numButtonDistance.Value = Convert.ToDecimal(settings.GetOrDefault("CenterButtonRatio", defSets["CenterButtonRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-            this.numButtonClick.Value = Convert.ToDecimal(settings.GetOrDefault("ButtonClickOffset", defSets["ButtonClickOffset"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+            this.numButtons.Value = Settings.NumberOfButtons;
+            this.numButtonMax.Value = Convert.ToDecimal(Settings.OuterButtonRatio, Settings.AppCulture);
+            this.numButtonMin.Value = Convert.ToDecimal(Settings.InnerButtonRatio, Settings.AppCulture);
+            this.numButtonDistance.Value = Convert.ToDecimal(Settings.CenterButtonRatio, Settings.AppCulture);
+            this.numButtonClick.Value = Convert.ToDecimal(Settings.ButtonClickOffset);
 
-            this.numBoardIn.Value = Convert.ToDecimal(settings.GetOrDefault("InnerBoardRatio", defSets["InnerBoardRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-            this.numBoardOut.Value = Convert.ToDecimal(settings.GetOrDefault("OuterBoardRatio", defSets["OuterBoardRatio"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-            this.numBoardRotation.Value = Convert.ToDecimal(settings.GetOrDefault("BoardRotation", defSets["BoardRotation"]), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-            this.pctBack.BackColor = Color.FromArgb(Convert.ToInt32(settings.GetOrDefault("ColorBackground", defSets["ColorBackground"])));
-            this.pctOut.BackColor = Color.FromArgb(Convert.ToInt32(settings.GetOrDefault("ColorOuterCircle", defSets["ColorOuterCircle"])));
-            this.pctIn.BackColor = Color.FromArgb(Convert.ToInt32(settings.GetOrDefault("ColorInnerCircle", defSets["ColorInnerCircle"])));
+            this.numBoardIn.Value = Convert.ToDecimal(Settings.InnerBoardRatio);
+            this.numBoardOut.Value = Convert.ToDecimal(Settings.OuterBoardRatio);
+            this.numBoardRotation.Value = Convert.ToDecimal(Settings.BoardRotation);
+            this.pctBack.BackColor = Color.FromArgb(Settings.ColorBackground);
+            this.pctOut.BackColor = Color.FromArgb(Settings.ColorOuterCircle);
+            this.pctIn.BackColor = Color.FromArgb(Settings.ColorInnerCircle);
 
-            this.DemoBoard.Font = new Font(settings.GetOrDefault("FontFamilyName", defSets["FontFamilyName"]), DemoBoard.Font.SizeInPoints);
+            this.DemoBoard.Font = new Font(Settings.FontFamilyName, DemoBoard.Font.SizeInPoints);
             this.lblFontFamily.Text = "Font: " + this.DemoBoard.Font.FontFamily.Name;
 
-            this.chkStartUp.Checked = Convert.ToInt32(settings.GetOrDefault("WindowPosition", defSets["WindowPosition"])) == 1 ? true : false;
+            this.chkStartUp.Checked = Settings.WindowPosition;
 
-            this.DemoBoard.ButtonColors = Array.ConvertAll(settings.GetOrDefault("ButtonColors", defSets["ButtonColors"]).Split('-'), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
-            this.DemoBoard.ButtonFrequencies = Array.ConvertAll(settings.GetOrDefault("ButtonFrequencies", defSets["ButtonFrequencies"]).Split('-'), float.Parse);
+            this.DemoBoard.ButtonColors = Array.ConvertAll(Settings.ButtonColors.Split('-'), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
+            this.DemoBoard.ButtonFrequencies = Array.ConvertAll(Settings.ButtonFrequencies.Split('-'), float.Parse);
             ModifyTable();
-
         }
-        catch (KeyNotFoundException ex)
+        catch (Exception)
         {
             using (new CenterWinDialog(this))
-                MessageBox.Show(this,
-                    "Unexpected error while applying settings.\nPlease report the error to the engineer.\n" + ex.GetType().ToString() + "\n" + ex.Message,
-                    "Settings error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                MessageBox.Show(this, "Unexpected error while applying settings.\nPlease report the error to the engineer.", "Settings error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-
-        //ApplySettings(_settings);
-        _settings = settings;
-        _defaultSettings = defSets;
-
     }
 
-    private void OnDataGridChanged(object sender, DataColumnChangeEventArgs e)
+
+
+    private void Accept_Click(object sender, EventArgs e)
     {
-        this.DemoBoard.ButtonFrequencies = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[1].ToString()).ToArray(), float.Parse);
-        this.DemoBoard.ButtonColors = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[2].ToString()).ToArray(), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
-        //SendKeys.Send("{TAB}");
-        //SendKeys.Send("+{TAB}");
-    }
+        Settings.NumberOfButtons = Convert.ToInt32(this.numButtons.Value);
+        Settings.ButtonColors = String.Join("-", this.DemoBoard.ButtonColors.Select(x => x.ToArgb().ToString("X")));
+        Settings.ButtonFrequencies = String.Join("-", this.DemoBoard.ButtonFrequencies);
+        Settings.OuterButtonRatio = Convert.ToSingle(this.numButtonMax.Value, Settings.AppCulture);
+        Settings.InnerButtonRatio = Convert.ToSingle(this.numButtonMin.Value, Settings.AppCulture);
+        Settings.CenterButtonRatio = Convert.ToSingle(this.numButtonDistance.Value, Settings.AppCulture);
 
-    private void gridButtons_CellClick(object sender, DataGridViewCellEventArgs e)
-    {
-        if (e.ColumnIndex != 2) return;
+        Settings.InnerBoardRatio = Convert.ToSingle(this.numBoardIn.Value, Settings.AppCulture);
+        Settings.OuterBoardRatio = Convert.ToSingle(this.numBoardOut.Value, Settings.AppCulture);
+        Settings.BoardRotation = Convert.ToSingle(this.numBoardRotation.Value, Settings.AppCulture);
+        Settings.ColorBackground = this.pctBack.BackColor.ToArgb();
+        Settings.ColorOuterCircle = this.pctOut.BackColor.ToArgb();
+        Settings.ColorInnerCircle = this.pctIn.BackColor.ToArgb();
+        Settings.FontFamilyName = this.lblFontFamily.Text.Remove(0, 6); // Delete the leading "Font: " characters
+        Settings.WindowPosition = this.chkStartUp.Checked;
 
-        //You can check for e.ColumnIndex to limit this to your specific column
-        this.gridButtons.BeginEdit(false);
-        var editingControl = (ColorPickerControl)this.gridButtons.EditingControl;
-        if (editingControl != null)
-            editingControl.ColorEditingControl_Click(null, null);
-        //editingControl.DroppedDown = true;
-        this.gridButtons.EndEdit();
-        this.gridButtons.CurrentCell = null;
-    }
+        Settings.PlayMode = (this.chkSpeed.Checked ? (int)SimonGame.PlayMode.TimeIncremental : 0) +
+                            (this.chkWaiting.Checked ? (int)SimonGame.PlayMode.TimeWaiting : 0)  +
+                            (this.radClassic.Checked ? (int)SimonGame.PlayMode.SimonClassic : 0) +
+                            (this.radAdds.Checked ? (int)SimonGame.PlayMode.PlayerAdds : 0)  +
+                            (this.radChoose.Checked ? (int)SimonGame.PlayMode.ChooseYourColor : 0) +
+                            (this.radBounce.Checked ? (int)SimonGame.PlayMode.SimonBounce : 0) +
+                            (this.radSurprise.Checked ? (int)SimonGame.PlayMode.SimonSurprise : 0) +
+                            (this.radRewind.Checked ? (int)SimonGame.PlayMode.SimonRewind : 0) +
+                            (this.radRandom.Checked ? (int)SimonGame.PlayMode.SimonRandom : 0);
 
-    private void btnAccept_Click(object sender, EventArgs e)
-    {
-        _settings["NumberOfButtons"] = this.numButtons.Value.ToString();
-        _settings["ButtonColors"] = String.Join("-", this.DemoBoard.ButtonColors.Select(x => x.ToArgb().ToString("X")));
-        _settings["ButtonFrequencies"] = String.Join("-", this.DemoBoard.ButtonFrequencies);
-        _settings["OuterButtonRatio"] = this.numButtonMax.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-        _settings["InnerButtonRatio"] = this.numButtonMin.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-        _settings["CenterButtonRatio"] = this.numButtonDistance.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-
-        _settings["InnerBoardRatio"] = this.numBoardIn.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-        _settings["OuterBoardRatio"] = this.numBoardOut.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-        _settings["BoardRotation"] = this.numBoardRotation.Value.ToString(System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
-        _settings["ColorBackground"] = this.pctBack.BackColor.ToArgb().ToString();
-        _settings["ColorOuterCircle"] = this.pctOut.BackColor.ToArgb().ToString();
-        _settings["ColorInnerCircle"] = this.pctIn.BackColor.ToArgb().ToString();
-        _settings["FontFamilyName"] = this.lblFontFamily.Text.Remove(0, 6); // Delete the leading "Font: " characters
-        _settings["WindowPosition"] = (this.chkStartUp.Checked ? 1 : 0).ToString();
-
-        _settings["PlayMode"] = (
-                                (this.chkSpeed.Checked ? 1 : 0) * 1 +
-                                (this.chkWaiting.Checked ? 1 : 0) * 2 +
-                                (this.radClassic.Checked ? 1 : 0) * 4 +
-                                (this.radAdds.Checked ? 1 : 0) * 8 +
-                                (this.radChoose.Checked ? 1 : 0) * 16 +
-                                (this.radBounce.Checked ? 1 : 0) * 32 +
-                                (this.radSurprise.Checked ? 1 : 0) * 64 +
-                                (this.radRewind.Checked ? 1 : 0) * 128 +
-                                (this.radRandom.Checked ? 1 : 0) * 256
-                                ).ToString();
-
-        _settings["TimeWaiting"] = numWaiting.Value.ToString();
+        Settings.TimeWaiting = Convert.ToInt32(numWaiting.Value);
 
         this.DialogResult = DialogResult.OK;
         Close();
@@ -201,7 +175,7 @@ public partial class frmSettings : Form
             this.DemoBoard.Font = new Font(_settings.GetOrDefault("FontFamilyName"), DemoBoard.Font.SizeInPoints);
             this.lblFontFamily.Text = "Font: " + this.DemoBoard.Font.FontFamily.Name;
 
-            this.chkStartUp.Checked = Convert.ToInt32(_settings.GetOrDefault("WindowPosition")) == 1 ? true : false;
+            this.chkStartUp.Checked = Convert.ToInt32(_settings.GetOrDefault("WindowPosition")) == 1;
 
         }
         catch (KeyNotFoundException e)
@@ -218,12 +192,12 @@ public partial class frmSettings : Form
     }
 
 
-    private void btnCancel_Click(object sender, EventArgs e)
+    private void Cancel_Click(object sender, EventArgs e)
     {
         this.DialogResult = DialogResult.Cancel;
     }
 
-    private void btnReset_Click(object sender, EventArgs e)
+    private void Reset_Click(object sender, EventArgs e)
     {
         // Ask for overriding confirmation
         DialogResult result;
@@ -240,10 +214,34 @@ public partial class frmSettings : Form
         // If "Yes", then reset values to default
         if (result == DialogResult.Yes)
         {
-            ApplySettings(_defaultSettings);
+            UpdateControls(new ClassSettings());
+            Settings.SplitterDistance = this.Parent.Width / 2;
             //_settings["SplitterDistance"] = "0.5";
         }
     }
+
+    private void OnDataGridChanged(object sender, DataColumnChangeEventArgs e)
+    {
+        this.DemoBoard.ButtonFrequencies = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[1].ToString()).ToArray(), float.Parse);
+        this.DemoBoard.ButtonColors = Array.ConvertAll(_table.Rows.OfType<DataRow>().Select(k => k[2].ToString()).ToArray(), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
+        //SendKeys.Send("{TAB}");
+        //SendKeys.Send("+{TAB}");
+    }
+
+    private void gridButtons_CellClick(object sender, DataGridViewCellEventArgs e)
+    {
+        if (e.ColumnIndex != 2) return;
+
+        //You can check for e.ColumnIndex to limit this to your specific column
+        this.gridButtons.BeginEdit(false);
+        var editingControl = (ColorPickerControl)this.gridButtons.EditingControl;
+        if (editingControl != null)
+            editingControl.ColorEditingControl_Click(null, null);
+        //editingControl.DroppedDown = true;
+        this.gridButtons.EndEdit();
+        this.gridButtons.CurrentCell = null;
+    }
+
 
     /// <summary>
     /// Update the table, gridButtons and DemoBoard
@@ -462,7 +460,7 @@ public partial class frmSettings : Form
     
     private void pctBack_Click(object sender, EventArgs e)
     {
-        ColorDialog ColorPicker = new ColorDialog();
+        ColorDialog ColorPicker = new();
         ColorPicker.AllowFullOpen = true;
         ColorPicker.AnyColor = true;
         ColorPicker.FullOpen = true;
@@ -487,7 +485,7 @@ public partial class frmSettings : Form
 
     private void pctOut_Click(object sender, EventArgs e)
     {
-        ColorDialog ColorPicker = new ColorDialog();
+        ColorDialog ColorPicker = new();
         ColorPicker.AllowFullOpen = true;
         ColorPicker.AnyColor = true;
         ColorPicker.FullOpen = true;
@@ -512,7 +510,7 @@ public partial class frmSettings : Form
 
     private void pctIn_Click(object sender, EventArgs e)
     {
-        ColorDialog ColorPicker = new ColorDialog();
+        ColorDialog ColorPicker = new();
         ColorPicker.AllowFullOpen = true;
         ColorPicker.AnyColor = true;
         ColorPicker.FullOpen = true;
@@ -537,7 +535,7 @@ public partial class frmSettings : Form
 
     private void btnFontFamily_Click(object sender, EventArgs e)
     {
-        FontDialog frmFont = new FontDialog()
+        FontDialog frmFont = new()
         {
             FontMustExist = true,
             Font = this.DemoBoard.Font,
