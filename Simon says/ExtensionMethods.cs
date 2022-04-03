@@ -12,13 +12,11 @@ public static class ExtensionMethods
     /// <param name="key">Key we are looking for</param>
     /// <param name="defaultValue">Default value to return when the TKey is not found in the dictionary</param>
     /// <returns></returns>
-    public static TValue GetOrDefault<TKey, TValue>(this System.Collections.Generic.Dictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue = default(TValue))
+    public static TValue GetOrDefault<TKey, TValue>(this System.Collections.Generic.Dictionary<TKey, TValue> dictionary, TKey key, TValue defaultValue = default)
     {
-        
         if(dictionary.TryGetValue(key, out var value))
-        {
             return value;
-        }
+
         return defaultValue;
         /*
         if (dictionary != null && dictionary.ContainsKey(key))

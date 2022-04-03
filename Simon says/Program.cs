@@ -16,7 +16,7 @@ namespace SimonSays
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmSimon());
+            Application.Run(new FrmSimon());
         }
     }
 }

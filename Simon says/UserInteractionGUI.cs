@@ -1,6 +1,6 @@
 ﻿namespace SimonSays;
 
-partial class frmSimon
+partial class FrmSimon
 {
     private void OnButtonClick(object sender, CustomBoard.ButtonClickEventArgs e)
     {
@@ -28,7 +28,7 @@ partial class frmSimon
 
     private void Settings_Click(object sender, EventArgs e)
     {
-        frmSettings frmSettings = new(_settings);
+        FrmSettings frmSettings = new(_settings);
         frmSettings.ShowDialog(this);
         if (frmSettings.DialogResult == DialogResult.OK)
         {
@@ -39,7 +39,7 @@ partial class frmSimon
 
     private void About_Click(object sender, EventArgs e)
     {
-        frmAbout form = new();
+        FrmAbout form = new();
         form.ShowDialog(this);
     }
 }

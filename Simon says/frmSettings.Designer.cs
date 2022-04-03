@@ -2,7 +2,7 @@
 
 namespace SimonSays
 {
-    partial class frmSettings
+    partial class FrmSettings
     {
         /// <summary>
         /// Required designer variable.
@@ -570,7 +570,7 @@ namespace SimonSays
             this.btnFontFamily.TabIndex = 25;
             this.btnFontFamily.Text = "Select font...";
             this.btnFontFamily.UseVisualStyleBackColor = true;
-            this.btnFontFamily.Click += new System.EventHandler(this.btnFontFamily_Click);
+            this.btnFontFamily.Click += new System.EventHandler(this.FontFamily_Click);
             // 
             // pctIn
             // 

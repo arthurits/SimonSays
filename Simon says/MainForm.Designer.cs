@@ -3,7 +3,7 @@ using System.Windows.Forms.VisualStyles;
 
 namespace SimonSays
 {
-    partial class frmSimon
+    partial class FrmSimon
     {
         /// <summary>
         /// Required designer variable.
@@ -31,7 +31,7 @@ namespace SimonSays
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSimon));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmSimon));
             this.tspTop = new System.Windows.Forms.ToolStripPanel();
             this.tspBottom = new System.Windows.Forms.ToolStripPanel();
             this.toolStripMain = new System.Windows.Forms.ToolStrip();
@@ -242,12 +242,12 @@ namespace SimonSays
             this.Name = "frmSimon";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Simon Says — Memory Game";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmSimon_FormClosing);
-            this.Load += new System.EventHandler(this.frmSimon_Load);
-            this.Shown += new System.EventHandler(this.frmSimon_Shown);
-            this.ResizeBegin += new System.EventHandler(this.frmSimon_ResizeBegin);
-            this.ResizeEnd += new System.EventHandler(this.frmSimon_ResizeEnd);
-            this.Resize += new System.EventHandler(this.frmSimon_Resize);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmSimon_FormClosing);
+            this.Load += new System.EventHandler(this.FrmSimon_Load);
+            this.Shown += new System.EventHandler(this.FrmSimon_Shown);
+            this.ResizeBegin += new System.EventHandler(this.FrmSimon_ResizeBegin);
+            this.ResizeEnd += new System.EventHandler(this.FrmSimon_ResizeEnd);
+            this.Resize += new System.EventHandler(this.FrmSimon_Resize);
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
             this.ResumeLayout(false);

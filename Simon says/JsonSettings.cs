@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace SimonSays;
 
-partial class frmSimon
+partial class FrmSimon
 {
     /// <summary>
     /// Loads all settings from file _sett.FileName into class instance _settings
@@ -19,8 +19,6 @@ partial class frmSimon
         {
             var jsonString = File.ReadAllText(_settings.FileName);
             _settings = JsonSerializer.Deserialize<ClassSettings>(jsonString) ?? _settings;
-
-            ApplySettingsJSON(_settings.WindowPosition);
         }
         catch (FileNotFoundException)
         {

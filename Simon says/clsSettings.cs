@@ -14,7 +14,7 @@ public class ClassSettings
     /// Remember window position on start up
     /// </summary>
     [JsonPropertyName("Window position")]
-    public bool WindowPosition { get; set; } = true;   // Remember window position
+    public bool WindowPosition { get; set; } = false;
 
     /// <summary>
     /// Window top-left x coordinate

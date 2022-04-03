@@ -5,14 +5,14 @@
 
 namespace SimonSays;
 
-public partial class frmSimon : Form
+public partial class FrmSimon : Form
 {
-    private SimonGame _Game = new();
+    private readonly SimonGame _Game = new();
     private ClassSettings _settings = new();
 
-    private readonly System.Resources.ResourceManager StringsRM = new("SimonSays.localization.strings", typeof(frmSimon).Assembly);
+    private readonly System.Resources.ResourceManager StringsRM = new("SimonSays.localization.strings", typeof(FrmSimon).Assembly);
 
-    public frmSimon()
+    public FrmSimon()
     {
         // Set form icon
         if (System.IO.File.Exists(_settings.AppPath + @"\images\simon.ico")) this.Icon = new Icon(_settings.AppPath + @"\images\simon.ico");
@@ -33,10 +33,9 @@ public partial class frmSimon : Form
 
         // Load and apply the program settings
         LoadProgramSettingsJSON();
-        
+        ApplySettingsJSON(_settings.WindowPosition);
     }
 
-    #region Events subscription
     /// <summary>
     /// Consumes the Tick event of the Game class
     /// </summary>
@@ -79,11 +78,9 @@ public partial class frmSimon : Form
         //MessageBox.Show("Well done!\nTotal score: " + e.Score.ToString());
         this.simonBoard.ScoreTotal = _Game.ScoreTotal;
         this.simonBoard.ScoreHighest = _Game.ScoreHighest;
-        
-        if ((this._Game.GameMode & SimonGame.PlayMode.SimonBounce)==SimonGame.PlayMode.SimonBounce)
-        {
+
+        if ((this._Game.GameMode & SimonGame.PlayMode.SimonBounce) == SimonGame.PlayMode.SimonBounce)
             this.simonBoard.RandomizeButtons();
-        }
         
         /*
         foreach (ColorButton.SimonButton button in simonBoard.Controls.OfType<ColorButton.SimonButton>())
@@ -95,20 +92,19 @@ public partial class frmSimon : Form
 
     private void OnGameOver(object sender, OverEventArgs e)
     {
-        MessageBox.Show("Your total score is: " + e.Score.ToString(),"Game over");
+        using (new CenterWinDialog(this))
+        {
+            MessageBox.Show(this, "Your total score is: " + e.Score.ToString(), "Game over");
+        }
         this.simonBoard.ScoreTotal = 0;
     }
 
-    #endregion Events subscription
-
-    #region Form events
-
-    private void frmSimon_Load(object sender, EventArgs e)
+    private void FrmSimon_Load(object sender, EventArgs e)
     {
         Win32.Win32API.AnimateWindow(this.Handle, 500, Win32.Win32API.AnimateWindowFlags.AW_BLEND);
     }
 
-    private void frmSimon_FormClosing(object sender, FormClosingEventArgs e)
+    private void FrmSimon_FormClosing(object sender, FormClosingEventArgs e)
     {
         using (new CenterWinDialog(this))
         {
@@ -130,14 +126,14 @@ public partial class frmSimon : Form
         SaveProgramSettingsJSON();
     }
 
-    private void frmSimon_Shown(object sender, EventArgs e)
+    private void FrmSimon_Shown(object sender, EventArgs e)
     {
         // Send Close event to the splash screen
         using var closeSplashEvent = new System.Threading.EventWaitHandle(false, System.Threading.EventResetMode.ManualReset, "CloseSplashScreenEvent");
         closeSplashEvent.Set();
     }
 
-    private void frmSimon_Resize(object sender, EventArgs e)
+    private void FrmSimon_Resize(object sender, EventArgs e)
     {
         // Force the client area to be painted again
         //Invalidate();
@@ -147,16 +143,13 @@ public partial class frmSimon : Form
         //this.btnGreen.Width = 400;
     }
 
-    private void frmSimon_ResizeBegin(object sender, EventArgs e)
+    private void FrmSimon_ResizeBegin(object sender, EventArgs e)
     {
         this.SuspendLayout();
     }
 
-    private void frmSimon_ResizeEnd(object sender, EventArgs e)
+    private void FrmSimon_ResizeEnd(object sender, EventArgs e)
     {
         this.ResumeLayout();
     }
-
-    #endregion Form events
-
 }

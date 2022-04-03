@@ -1,6 +1,6 @@
 ﻿namespace SimonSays
 {
-    partial class frmAbout
+    partial class FrmAbout
     {
         /// <summary>
         /// Variable del diseñador necesaria.
