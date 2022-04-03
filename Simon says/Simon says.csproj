@@ -57,4 +57,12 @@
     <Compile Remove="controls\WaveGenerator.cs" />
     <Compile Remove="IDropDownDisplayAdapte.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="settings.splash">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Simon says launcher.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
