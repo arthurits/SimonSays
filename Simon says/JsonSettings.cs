@@ -10,15 +10,18 @@ namespace SimonSays;
 partial class FrmSimon
 {
     /// <summary>
-    /// Loads all settings from file _sett.FileName into class instance _settings
+    /// Loads all settings from file _settings.FileName into class instance _settings
     /// Shows MessageBox error if unsuccessful
     /// </summary>
-    private void LoadProgramSettingsJSON()
+    /// <returns><see langword="True"/> if successful, <see langword="false"/> otherwise</returns>
+    private bool LoadProgramSettingsJSON()
     {
+        bool result = false;
         try
         {
             var jsonString = File.ReadAllText(_settings.FileName);
             _settings = JsonSerializer.Deserialize<ClassSettings>(jsonString) ?? _settings;
+            result = true;
         }
         catch (FileNotFoundException)
         {
@@ -34,6 +37,7 @@ partial class FrmSimon
                     MessageBoxIcon.Error);
             }
         }
+        return result;
     }
 
     /// <summary>
@@ -79,7 +83,7 @@ partial class FrmSimon
     /// <summary>
     /// Update UI with settings
     /// </summary>
-    /// <param name="WindowSettings">True if the window position and size should be applied. False if omitted</param>
+    /// <param name="WindowSettings"><see langword="True"/> if the window position and size should be applied. <see langword="False"/> if omitted</param>
     private void ApplySettingsJSON(bool WindowPosition = false)
     {
         if (WindowPosition)
