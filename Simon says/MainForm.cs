@@ -32,8 +32,11 @@ public partial class FrmSimon : Form
         this.DoubleBuffered = true;
 
         // Load and apply the program settings
-        LoadProgramSettingsJSON();
-        ApplySettingsJSON(_settings.WindowPosition);
+        bool result = LoadProgramSettingsJSON();
+        if (LoadProgramSettingsJSON())
+            ApplySettingsJSON(_settings.WindowPosition);
+        else
+            ApplySettingsJSON();
     }
 
     /// <summary>
