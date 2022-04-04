@@ -33,7 +33,7 @@ public partial class FrmSimon : Form
 
         // Load and apply the program settings
         bool result = LoadProgramSettingsJSON();
-        if (LoadProgramSettingsJSON())
+        if (result)
             ApplySettingsJSON(_settings.WindowPosition);
         else
             ApplySettingsJSON();
