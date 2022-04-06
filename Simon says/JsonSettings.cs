@@ -23,18 +23,18 @@ partial class FrmSimon
             _settings = JsonSerializer.Deserialize<ClassSettings>(jsonString) ?? _settings;
             result = true;
         }
-        catch (FileNotFoundException)
-        {
-        }
         catch (Exception ex)
         {
-            using (new CenterWinDialog(this))
+            if (ex is not FileNotFoundException)
+            {
+                using (new CenterWinDialog(this))
             {
                 MessageBox.Show(this,
                     StringsRM.GetString("strErrorDeserialize", _settings.AppCulture) ?? $"Error loading settings file.\n\n{ex.Message}\n\nDefault values will be used instead.",
                     StringsRM.GetString("strErrorDeserializeTitle", _settings.AppCulture) ?? "Error",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
+            }
             }
         }
         return result;
@@ -92,7 +92,9 @@ partial class FrmSimon
             this.DesktopLocation = new Point(_settings.WindowLeft, _settings.WindowTop);
             this.ClientSize = new Size(_settings.WindowWidth, _settings.WindowHeight);
         }
-
+        //this.splitStats.SplitterDistance = _settings.SplitterDistance;
+        
+        // Board configuration
         this.simonBoard.NumberOfButtons = _settings.NumberOfButtons;
         this.simonBoard.InnerButtonRatio = _settings.InnerButtonRatio;
         this.simonBoard.OuterButtonRatio = _settings.OuterButtonRatio;
@@ -111,6 +113,7 @@ partial class FrmSimon
         this.simonBoard.ButtonColors = Array.ConvertAll(_settings.ButtonColors.Split('-'), x => Color.FromArgb(int.Parse(x, System.Globalization.NumberStyles.HexNumber)));
         this._Game.GameMode = (SimonGame.PlayMode)_settings.PlayMode;
 
+        // Toolstrip status
         this.toolStripMain_Sound.Checked = _settings.Sound;
         this.toolStripMain_Stats.Checked = _settings.Stats;
     }
