@@ -1,4 +1,4 @@
-# Simon Says
+# <img src="Simon says/images/logo@256.png?raw=true" height="24" width="24"> Simon Says
 A recreation of the classic Simon game invented by Ralph H. Baer and Howard J. Morrison.
 
 Copyright © 2020-2022 by Arthurits Ltd. No commercial nor profit use allowed. This software is provided only for personal and not-for-profit use.
