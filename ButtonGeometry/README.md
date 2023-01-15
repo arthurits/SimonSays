@@ -1,4 +1,4 @@
-# Button geomtry diagram
+# Button geometry diagram
 
 ![Button geometry](Images/Geometry.png?raw=true "Button geometry")
 ![Screenshot](Images/Screenshot.png?raw=true "Screenshot")
