@@ -5,6 +5,8 @@ VisualStudioVersion = 17.1.32319.34
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simon says", "Simon says\Simon says.csproj", "{5C30595C-50CF-4F2E-8752-AED30F3ADD0C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ButtonGeometry", "ButtonGeometry\ButtonGeometry.csproj", "{9F64FA8C-38E8-4C13-8000-5497FFF4110A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,14 @@ Global
 		{5C30595C-50CF-4F2E-8752-AED30F3ADD0C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5C30595C-50CF-4F2E-8752-AED30F3ADD0C}.Release|x64.ActiveCfg = Release|Any CPU
 		{5C30595C-50CF-4F2E-8752-AED30F3ADD0C}.Release|x64.Build.0 = Release|Any CPU
+		{9F64FA8C-38E8-4C13-8000-5497FFF4110A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F64FA8C-38E8-4C13-8000-5497FFF4110A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F64FA8C-38E8-4C13-8000-5497FFF4110A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9F64FA8C-38E8-4C13-8000-5497FFF4110A}.Debug|x64.Build.0 = Debug|Any CPU
+		{9F64FA8C-38E8-4C13-8000-5497FFF4110A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F64FA8C-38E8-4C13-8000-5497FFF4110A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F64FA8C-38E8-4C13-8000-5497FFF4110A}.Release|x64.ActiveCfg = Release|Any CPU
+		{9F64FA8C-38E8-4C13-8000-5497FFF4110A}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
