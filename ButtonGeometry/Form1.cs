@@ -38,39 +38,38 @@ public partial class Form1 : Form
         if (updOuterRadius.Value == 0 || updButtons.Value == 0 || updInnerRadius.Value == 0) return false;
 
         double Ro = (double)updOuterRadius.Value;
+        double RoSep = Ro;
         double Ri = (double)updInnerRadius.Value;
         double Rc = (double)updCorner.Value;
         float Sep = (float)updSeparation.Value;
 
         double minusRo = (Sep / 2) / Math.Sin((Math.PI / 180) * angles[0] / 2);
-        Ro -= minusRo;
+        RoSep -= minusRo;
         
         angles[0] = 360f / (int)updButtons.Value;
 
         // Compute the outer points
         points[0] = new(this.pctDraw.Width / 2, this.pctDraw.Height / 2);
         points[1] = new(points[0].X + (float)((Sep / 2) / Math.Tan((Math.PI / 180) * angles[0] / 2)), points[0].Y + Sep / 2);
-        points[2] = new(points[1].X + (float)Ro, points[1].Y);
-        points[3] = RotatePoint(points[1], points[2], angles[0]);
 
         // Compute the inner points
-        points[4] = new(points[1].X + (float)(Rc / Math.Tan((Math.PI / 180) * angles[0] / 2)), points[1].Y + (float)Rc);
-        points[5] = new(points[1].X + (float)Math.Sqrt(Math.Pow(Ro - Rc, 2) - Math.Pow(Rc, 2)), points[4].Y);
-        points[6] = RotatePoint(points[4], points[5], angles[0]);
+        points[2] = new(points[1].X + (float)(Rc / Math.Tan((Math.PI / 180) * angles[0] / 2)), points[1].Y + (float)Rc);
+        points[3] = new(points[1].X + (float)Math.Sqrt(Math.Pow(Ri + Rc, 2) - Math.Pow(Rc, 2)), points[2].Y);
+        points[4] = new(points[1].X + (float)Math.Sqrt(Math.Pow(RoSep - Rc, 2) - Math.Pow(Rc, 2)), points[2].Y);
+        points[7] = RotatePoint(points[2], points[3], angles[0]);
+        points[8] = RotatePoint(points[2], points[4], angles[0]);
 
-        // Compute the line points
-        //points[7] = new(points[4].X, points[1].Y);
-        points[8] = new(points[5].X, points[1].Y);
-        //points[9] = RotatePoint(points[1], points[7], angles[0]);
-        points[10] = RotatePoint(points[1], points[8], angles[0]);
+        // Tangent points between arc and line
+        points[5] = new(points[3].X, points[1].Y);
+        points[6] = new(points[4].X, points[1].Y);
+        points[9] = RotatePoint(points[1], points[5], angles[0]);
+        points[10] = RotatePoint(points[1], points[6], angles[0]);
 
-        // Compute the points for the inner radius
-        points[11] = new(points[1].X + (float)Math.Sqrt(Math.Pow(Ri + Rc, 2) - Math.Pow(Rc, 2)), points[4].Y);
-        points[12] = RotatePoint(points[4], points[11], angles[0]);
-
-        // Compute new line points
-        points[13] = new(points[11].X, points[1].Y);
-        points[14] = RotatePoint(points[1], points[13], angles[0]);
+        // They are not needed to draw the shape, they are the tangent points between two arcs
+        points[11] = new(points[1].X + (float)((points[5].X - points[1].X) * Ri / (Ri + Rc)), points[1].Y + (float)(Rc * Ri / (Ri + Rc)));
+        points[12] = new(points[1].X + (float)((points[6].X - points[1].X) * RoSep / (RoSep - Rc)), points[1].Y + (float)(Rc * RoSep / (RoSep - Rc)));
+        points[13] = new(points[1].X + (float)((points[7].X - points[1].X) * Ri / (Ri + Rc)), points[1].Y + (float)((points[7].Y - points[1].Y) * Ri / (Ri + Rc)));
+        points[14] = new(points[1].X + (float)((points[8].X - points[1].X) * RoSep / (RoSep - Rc)), points[1].Y + (float)((points[8].Y - points[1].Y) * RoSep / (RoSep - Rc)));
 
         // Compute the angles for the drawing of corners
         angles[1] = -90;
@@ -78,16 +77,16 @@ public partial class Form1 : Form
 
         // Outer corners
         angles[3] = angles[1];
-        angles[4] = (float)((180 / Math.PI) * Math.Atan(Rc / (points[5].X - points[1].X))) - angles[3];
+        angles[4] = (float)((180 / Math.PI) * Math.Atan(Rc / (points[4].X - points[1].X))) - angles[3];
 
-        angles[5] = (float)((180 / Math.PI) * Math.Atan2((points[6].Y - points[1].Y), (points[6].X - points[1].X)));
+        angles[5] = (float)((180 / Math.PI) * Math.Atan2((points[8].Y - points[1].Y), (points[8].X - points[1].X)));
         angles[6] = angles[4];
 
         // Inner corners
         angles[7] = (float)((180 / Math.PI) * Math.Asin(Rc / (Ri + Rc)));
         angles[8] = angles[0] - 2 * (float)((180 / Math.PI) * Math.Asin(Rc / (Ri + Rc)));
 
-        angles[9] = (float)((180 / Math.PI) * Math.Atan2((points[12].Y - points[1].Y), (points[12].X - points[1].X))) - 180f;
+        angles[9] = (float)((180 / Math.PI) * Math.Atan2((points[7].Y - points[1].Y), (points[7].X - points[1].X))) - 180f;
         angles[10] = -(float)((180 / Math.PI) * Math.Acos(Rc / (Ri + Rc)));
 
         return true;
@@ -98,15 +97,13 @@ public partial class Form1 : Form
         float Ro = (float)updOuterRadius.Value;
         float Rc = (float)updCorner.Value;
         float Ri = (float)updInnerRadius.Value;
-        float smallR = points[5].X - points[4].X;
         float Sep = (float)updSeparation.Value;
 
         rects[0] = new(points[0].X, points[0].Y, Ro, Ro);
         Ro -= (float)((Sep / 2) / Math.Sin((Math.PI / 180) * angles[0] / 2));
 
         rects[1] = new(points[1].X - Ro, points[1].Y - Ro, 2 * Ro, 2 * Ro);
-        //rects[1] = new(points[4].X - smallR, points[4].Y - smallR, 2 * smallR, 2 * smallR);
-        rects[2] = new(points[4].X - Rc, points[4].Y - Rc, 2 * Rc, 2 * Rc);
+        rects[2] = new(points[2].X - Rc, points[2].Y - Rc, 2 * Rc, 2 * Rc);
         rects[3] = new(points[1].X - Ri, points[1].Y - Ri, 2 * Ri, 2 * Ri);
     }
 
@@ -120,7 +117,7 @@ public partial class Form1 : Form
         gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
         if (drawPoints)
-            DrawPoints(points.Where((x, i) => i != 7 && i != 9).ToList(), gfx);
+            DrawPoints(points, gfx);
 
         if (drawRectangles)
         {
@@ -130,7 +127,7 @@ public partial class Form1 : Form
 
         if (drawCircles)
         {
-            DrawCircles(points.Where((x, i) => i == 5 || i == 6 || i == 11 || i == 12).ToList(), gfx, (float)updCorner.Value);
+            DrawCircles(points.Where((x, i) => i == 3 || i == 4 || i == 7 || i == 8).ToList(), gfx, (float)updCorner.Value);
             DrawCircles(points.Where((x, i) => i == 1).ToList(), gfx, (float)updInnerRadius.Value);
             DrawCircles(points.Where((x, i) => i == 1).ToList(), gfx, rects[1].Width/2);
         }
@@ -138,8 +135,8 @@ public partial class Form1 : Form
         using Bitmap curve = new(this.pctDraw.Width, this.pctDraw.Height);
         using Graphics g = Graphics.FromImage(curve);
         g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-        g.DrawLine(penBlack, points[13], points[8]);
-        g.DrawLine(penBlack, points[14], points[10]);
+        g.DrawLine(penBlack, points[5], points[6]);
+        g.DrawLine(penBlack, points[9], points[10]);
         g.DrawArc(penBlack, rects[1], angles[4] + angles[3], angles[5] - angles[4] - angles[3]);
         g.DrawArc(penBlack, rects[3], angles[7], angles[8]);
 
@@ -149,19 +146,19 @@ public partial class Form1 : Form
             //g.DrawArc(penBlack, rects[2], angles[1], angles[2]);
 
             RectangleF rectCorner = rects[2];
-            rectCorner.X = points[5].X - (float)updCorner.Value;
+            rectCorner.X = points[4].X - (float)updCorner.Value;
             g.DrawArc(penBlack, rectCorner, angles[3], angles[4]);
 
-            rectCorner.X = points[6].X - (float)updCorner.Value;
-            rectCorner.Y = points[6].Y - (float)updCorner.Value;
+            rectCorner.X = points[8].X - (float)updCorner.Value;
+            rectCorner.Y = points[8].Y - (float)updCorner.Value;
             g.DrawArc(penBlack, rectCorner, angles[5], angles[6]);
 
-            rectCorner.X = points[11].X - (float)updCorner.Value;
-            rectCorner.Y = points[11].Y - (float)updCorner.Value;
+            rectCorner.X = points[3].X - (float)updCorner.Value;
+            rectCorner.Y = points[3].Y - (float)updCorner.Value;
             g.DrawArc(penBlack, rectCorner, angles[3], angles[10]);
 
-            rectCorner.X = points[12].X - (float)updCorner.Value;
-            rectCorner.Y = points[12].Y - (float)updCorner.Value;
+            rectCorner.X = points[7].X - (float)updCorner.Value;
+            rectCorner.Y = points[7].Y - (float)updCorner.Value;
             g.DrawArc(penBlack, rectCorner, angles[9], angles[10]);
         }
 
@@ -187,8 +184,8 @@ public partial class Form1 : Form
         using Graphics gfx = Graphics.FromImage(canvas);
 
         gfx.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-        gfx.DrawLine(penBlack, points[7], points[8]);
-        gfx.DrawLine(penBlack, points[9], points[10]);
+        gfx.DrawLine(penBlack, points[9], points[9]);
+        gfx.DrawLine(penBlack, points[10], points[10]);
         gfx.DrawArc(penBlack, rects[1], angles[4] + angles[3], angles[5] - angles[4] - angles[3]);
 
         if (rects[2].Width > 0 && rects[2].Height > 0)
@@ -196,11 +193,11 @@ public partial class Form1 : Form
             gfx.DrawArc(penBlack, rects[2], angles[1], angles[2]);
 
             RectangleF rectCorner = rects[2];
-            rectCorner.X = points[5].X - (float)updCorner.Value;
+            rectCorner.X = points[4].X - (float)updCorner.Value;
             gfx.DrawArc(penBlack, rectCorner, angles[3], angles[4]);
 
-            rectCorner.X = points[6].X - (float)updCorner.Value;
-            rectCorner.Y = points[6].Y - (float)updCorner.Value;
+            rectCorner.X = points[8].X - (float)updCorner.Value;
+            rectCorner.Y = points[8].Y - (float)updCorner.Value;
             gfx.DrawArc(penBlack, rectCorner, angles[5], angles[6]);
         }
 
